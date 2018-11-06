@@ -6,10 +6,13 @@ public class GameManager : MonoBehaviour {
 
     public struct MagneticPulse{
         public float pulseStrength;
+        public float pulseDuration;
         public Vector3 pulseLocation;
         public GameObject go;
     }
     public float pulseDistance = 3.0f;
+    public float pulseDisplaySize = 4.0f;
+    public float pulseStrength = 4.0f;
     public float magneticField = 0.0f;
     public float affectLimit = 2.5f;
     public float drainSpeed = 1.0f;
@@ -25,13 +28,13 @@ public class GameManager : MonoBehaviour {
         for (int i = 0; i < pulses.Count; i++)
         {
             MagneticPulse p = pulses[i];
-            float pStrength = p.pulseStrength - Time.deltaTime * drainSpeed;
-            pStrength = Mathf.Max(pStrength, 0.0f);
-            p.pulseStrength = pStrength;
-            if (p.pulseStrength > 0)
+            float pDuration = p.pulseDuration - Time.deltaTime * drainSpeed;
+            pDuration = Mathf.Max(pDuration, 0.0f);
+            p.pulseDuration = pDuration;
+            if (p.pulseDuration > 0)
             {
                 nextPulseList.Add(p);
-                float scaleSize = p.pulseStrength * pulseDistance * 2.0f;
+                float scaleSize = pulseDisplaySize * p.pulseDuration;
                 p.go.transform.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
             }
             else
@@ -45,8 +48,8 @@ public class GameManager : MonoBehaviour {
     void AddPulse()
     {
         MagneticPulse pulse = new MagneticPulse();
-        pulse.pulseStrength = 1.0f;
-
+        pulse.pulseStrength = pulseStrength;
+        pulse.pulseDuration = 1.0f;
         Vector2 loc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         pulse.pulseLocation = loc;
         pulse.go = Instantiate(pulseImage, loc, Quaternion.Euler(0.0f, 0.0f, 0.0f));

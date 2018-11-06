@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   magneticConstant: 7
-  dropSpeed: 2
+  dropSpeed: 0
   placeholderMagneticField: 0
 --- !u!135 &135956157714440512
 SphereCollider:
