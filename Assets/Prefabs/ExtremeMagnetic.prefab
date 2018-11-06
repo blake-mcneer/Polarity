@@ -59,7 +59,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 1597ef629f31c2f4b983f25936295393, type: 2}
+  - {fileID: 2100000, guid: 94abeab7fd3d54932981ff23e9782fea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -115,6 +115,7 @@ MonoBehaviour:
   magneticConstant: 7
   dropSpeed: 0
   placeholderMagneticField: 0
+  type: 2
 --- !u!135 &135956157714440512
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -51,25 +51,35 @@ public class GameManager : MonoBehaviour {
         pulse.pulseStrength = pulseStrength;
         pulse.pulseDuration = 1.0f;
         Vector2 loc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 pulseLocation = new Vector3(loc.x, loc.y, -10.0f);
         pulse.pulseLocation = loc;
-        pulse.go = Instantiate(pulseImage, loc, Quaternion.Euler(0.0f, 0.0f, 0.0f));
+        pulse.go = Instantiate(pulseImage, pulseLocation, Quaternion.Euler(0.0f, 0.0f, 0.0f));
         pulses.Add(pulse);
     }
     public Vector2 AffectOnPosition(Vector2 position)
     {
-        Vector2 pulsePower = new Vector2(0.0f, 0.0f);
+        Vector3 pulsePower = new Vector2(0.0f, 0.0f);
         foreach(MagneticPulse p in pulses)
         {
-            float dist = Vector3.Distance(position, p.pulseLocation);
-            if (dist < pulseDistance)
-            {
-                float distancePower = (pulseDistance - dist)/pulseDistance;
-                pulsePower.x += (p.pulseLocation.x - position.x) / pulseDistance * p.pulseStrength;
-                pulsePower.y += (position.y -  p.pulseLocation.y) / pulseDistance * p.pulseStrength;
-            }
+            float divideBy = Mathf.Abs(Vector3.Distance(position, p.pulseLocation));
+            float dist = divideBy < 0.5f ? 0.0f : 1.0f / divideBy;
+            pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * pulseStrength * dist;
+            //float dist = Vector3.Distance(position, p.pulseLocation);
+            //if (dist < pulseDistance)
+            //{
+            //    float distancePower = Mathf.Abs((pulseDistance - dist)/pulseDistance);
+            //    //float xVal = 1.0f / (p.pulseLocation.x - position.x) * distancePower;
+            //    //float yVal = 1.0f / (position.y - p.pulseLocation.y) * distancePower;
+
+            //    pulsePower.x += (p.pulseLocation.x - position.x) / pulseDistance * p.pulseStrength;
+            //    pulsePower.y += (position.y - p.pulseLocation.y) / pulseDistance * p.pulseStrength;
+
+            //    //pulsePower.x += xVal;
+            //    //pulsePower.y += yVal;
+            //}
         }
 
-        return pulsePower;
+        return new Vector2(-pulsePower.x, pulsePower.y);
     }
     private void Update()
     {
