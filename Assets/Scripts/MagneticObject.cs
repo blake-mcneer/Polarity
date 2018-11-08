@@ -10,6 +10,10 @@ public class MagneticObject : MonoBehaviour {
     public MagneticType type;
     public int totalCount = 1;
     public TextMesh tMesh;
+    float scale = 1.0f;
+    float targetScale = 1.0f;
+    float scaleSpeed = 4.0f;
+    bool shrinkingAway = false;
     [HideInInspector] public int index;
     Vector3 previousVelocity;
     Rigidbody rb;
@@ -19,8 +23,27 @@ public class MagneticObject : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         manager = FindObjectOfType<GameManager>();
     }
+    void UpdateScale()
+    {
+        float direction = shrinkingAway ? -1.0f : 1.0f;
+        scale += Time.deltaTime * scaleSpeed * direction;
+        if (shrinkingAway){
+            scale = Mathf.Max(0.0f, scale);
+        }else{
+            scale = Mathf.Min(scale, targetScale);
+        }
+        transform.localScale = Vector3.one * scale;
+    }
     private void Update()
     {
+        if (Mathf.Abs((targetScale - scale)) > 0.05f)
+        {
+            UpdateScale();
+        }else if (shrinkingAway){
+            Destroy(gameObject);    
+        }
+
+
         rb.velocity = Vector3.zero;
         Vector2 pulseAffect = manager.AffectOnPosition(transform.position, index);
         float xTarget = transform.position.x + pulseAffect.x * magneticConstant * Time.deltaTime;
@@ -69,9 +92,17 @@ public class MagneticObject : MonoBehaviour {
     }
     public void AbsorbObject(MagneticObject obj)
     {
-        totalCount++;
+        totalCount+= obj.totalCount;
         tMesh.text = totalCount.ToString();
-        Destroy(obj.gameObject);
+        targetScale = (float)(totalCount -1) * 0.25f + 1.0f;
+        obj.ShrinkAway();
+//        Destroy(obj.gameObject);
         
     }
+    public void ShrinkAway()
+    {
+        targetScale = 0.0f;
+        shrinkingAway = true;
+    }
+
 }

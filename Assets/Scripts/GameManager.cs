@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
     public float affectLimit = 2.5f;
     public float drainSpeed = 1.0f;
     public float pressedAmount = 0.0f;
+    public int score = 0;
     int tapCount = 0;
     float seconds = 0.0f;
     UI userInterface;
@@ -80,6 +81,11 @@ public class GameManager : MonoBehaviour {
         }
         attractionPulses = nextPulseList;
 
+    }
+    public void AddScore(int scoreAdjustment)
+    {
+        score += scoreAdjustment;
+        userInterface.SetScore(score);
     }
     public void AddRepulsion(Vector3 pos, int[] affectedIndeces)
     {

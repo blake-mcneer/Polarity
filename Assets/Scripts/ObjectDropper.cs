@@ -31,11 +31,11 @@ public class ObjectDropper : MonoBehaviour {
         //sequence.Add(new DropSequenceItem(Random.Range(leftDropLimit.position.x, rightDropLimit.position.x), 3, 4.2f, MagneticType.Medium));
         //sequence.Add(new DropSequenceItem(Random.Range(leftDropLimit.position.x, rightDropLimit.position.x), 4, 8.5f, MagneticType.Low));
         //sequence.Add(new DropSequenceItem(Random.Range(leftDropLimit.position.x, rightDropLimit.position.x), 5, 10.0f, MagneticType.Medium));
-        sequence.Add(new DropSequenceItem(10.0f, 1, 1.0f, MagneticType.Medium));
-        sequence.Add(new DropSequenceItem(20.0f, 2, 3.0f, MagneticType.High));
-        sequence.Add(new DropSequenceItem(30.0f, 3, 4.2f, MagneticType.Medium));
-        sequence.Add(new DropSequenceItem(40.0f, 4, 8.5f, MagneticType.Low));
-        sequence.Add(new DropSequenceItem(50.0f, 5, 10.0f, MagneticType.Medium));
+        sequence.Add(new DropSequenceItem(10.0f, 1, 1.0f, MagneticType.M2));
+        sequence.Add(new DropSequenceItem(20.0f, 2, 3.0f, MagneticType.M3));
+        sequence.Add(new DropSequenceItem(30.0f, 3, 4.2f, MagneticType.M2));
+        sequence.Add(new DropSequenceItem(40.0f, 4, 8.5f, MagneticType.M1));
+        sequence.Add(new DropSequenceItem(50.0f, 5, 10.0f, MagneticType.M2));
 
         return sequence;
     }

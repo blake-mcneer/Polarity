@@ -5,6 +5,9 @@ using UnityEngine;
 public class Goal : MonoBehaviour {
     public float rotationSpeed = 0.0f;
     public SkinnedMeshRenderer renderer;
+    public MagneticType type;
+    int positiveScore = 100;
+    int negativeScore = -50;
     GameManager manager;
     void Start () {
         manager = FindObjectOfType<GameManager>();
@@ -25,8 +28,12 @@ public class Goal : MonoBehaviour {
     }
     public void HitByMagneticObject(MagneticObject mag)
     {
-         
-       Destroy(mag.gameObject);
+        if (mag.type == type){
+            manager.AddScore(positiveScore * mag.totalCount);
+        }else{
+            manager.AddScore(negativeScore * mag.totalCount);
+        }
+        Destroy(mag.gameObject);
     } 
 
 }

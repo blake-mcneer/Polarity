@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum MagneticType
 {
-    Low = 0, Medium, High
+    M1 = 0, M2, M3
 }
 public struct DropSequenceItem
 {

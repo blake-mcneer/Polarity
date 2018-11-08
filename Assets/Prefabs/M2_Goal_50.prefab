@@ -208,6 +208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 20
   renderer: {fileID: 137216384240512272}
+  type: 1
 --- !u!135 &135712816205649416
 SphereCollider:
   m_ObjectHideFlags: 1
