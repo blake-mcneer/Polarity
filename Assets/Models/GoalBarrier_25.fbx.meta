@@ -10,7 +10,17 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: GoalBarrier.25
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Decal
+    second: {fileID: 2100000, guid: 7b8679d62f9f8e9459c6b580fe2971af, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GoalBarrier
+    second: {fileID: 2100000, guid: 8448f9b030c04494da89fe6a53d302d3, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
