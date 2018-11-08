@@ -6,6 +6,11 @@ public enum MagneticType
 {
     M1 = 0, M2, M3
 }
+public enum GoalBarrier
+{
+    BarrierNone = 0, Barrier25, Barrier50, Barrier75
+}
+
 public struct DropSequenceItem
 {
     public float xPosition;
