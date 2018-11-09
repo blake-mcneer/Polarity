@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour {
     int tapCount = 0;
     float seconds = 0.0f;
     UI userInterface;
-    public List<MagneticPulse> preconfiguredPulses = new List<MagneticPulse>();
+    [HideInInspector] public List<MagneticPulse> preconfiguredPulses = new List<MagneticPulse>();
     [HideInInspector] public List<MagneticPulse> attractionPulses = new List<MagneticPulse>();
     [HideInInspector] public List<MagneticPulse> repulsionPulses = new List<MagneticPulse>();
     public GameObject pulseImage;
@@ -54,10 +54,15 @@ public class GameManager : MonoBehaviour {
     }
     void LoadPreconfiguredPulses()
     {
-        foreach (MagneticPulse p in preconfiguredPulses)
+        Attractor[] attractors = FindObjectsOfType<Attractor>();
+        foreach (Attractor attract in attractors)
         {
-            Instantiate(p.prefab, p.pulseLocation, Quaternion.Euler(0.0f, 0.0f, 0.0f));
+            preconfiguredPulses.Add(CreatePulse(attract.transform.position, attract.strength, 1.0f));
         }
+        //foreach (MagneticPulse p in preconfiguredPulses)
+        //{
+        //    Instantiate(p.prefab, p.pulseLocation, Quaternion.Euler(0.0f, 0.0f, 0.0f));
+        //}
     }
     void UpdatePulses()
     {
@@ -93,8 +98,8 @@ public class GameManager : MonoBehaviour {
         p.specificIndeces = affectedIndeces;
         attractionPulses.Add(p);
     }
- 
-    MagneticPulse CreatePulse(Vector3 position, float strength, float duration, GameObject prefab)
+
+    MagneticPulse CreatePulse(Vector3 position, float strength, float duration)
     {
         MagneticPulse pulse = new MagneticPulse();
         pulse.index = pulseIndex;
@@ -103,6 +108,12 @@ public class GameManager : MonoBehaviour {
         pulse.pulseDuration = duration;
         pulse.pulseRemaining = pulse.pulseDuration;
         pulse.pulseLocation = position;
+        return pulse;
+    }
+
+    MagneticPulse CreatePulse(Vector3 position, float strength, float duration, GameObject prefab)
+    {
+        MagneticPulse pulse = CreatePulse(position, strength, duration);
         pulse.prefab = Instantiate(prefab, pulse.pulseLocation, Quaternion.Euler(0.0f, 0.0f, 0.0f));
         return pulse;
     }
