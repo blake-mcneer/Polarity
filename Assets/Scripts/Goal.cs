@@ -24,7 +24,7 @@ public class Goal : MonoBehaviour {
 
     void SetMaterial()
     {
-        Material[] mats = renderer.materials;
+        Material[] mats = renderer.sharedMaterials;
         switch (type)
         {
             case MagneticType.M1:
@@ -37,7 +37,7 @@ public class Goal : MonoBehaviour {
                 mats[0] = M3_Material;
                 break;
         }
-        renderer.materials = mats;
+        renderer.sharedMaterials = mats;
     }
     void SetBarrier()
     {
