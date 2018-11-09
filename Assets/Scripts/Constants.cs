@@ -10,6 +10,16 @@ public enum GoalBarrier
 {
     BarrierNone = 0, Barrier25, Barrier50, Barrier75
 }
+public struct CustomRange
+{
+    int min;
+    int max;
+    public CustomRange(int minimum, int maximum)
+    {
+        min = minimum;
+        max = maximum;
+    }
+}
 
 public struct DropSequenceItem
 {
