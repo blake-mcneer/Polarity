@@ -118,13 +118,17 @@ public class GameManager : MonoBehaviour {
         pulse.prefab = Instantiate(prefab, pulse.pulseLocation, Quaternion.Euler(0.0f, 0.0f, 0.0f));
         return pulse;
     }
+    void AddPulseAtPosition(Vector3 pos)
+    {
+        MagneticPulse p = CreatePulse(position: pos, strength: pulseStrength, duration: 1.5f, prefab: pulseImage);
+        attractionPulses.Add(p);
 
+    }
     void AddPulse()
     {
         Vector2 loc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 pulseLocation = new Vector3(loc.x, loc.y, -10.0f);
-        MagneticPulse p = CreatePulse(position: pulseLocation, strength: pulseStrength, duration: 1.5f, prefab: pulseImage);
-        attractionPulses.Add(p);
+        AddPulseAtPosition(pulseLocation);
     }
     public Vector2 AffectOnPosition(Vector2 position, int objectIndex)
     {
@@ -150,20 +154,39 @@ public class GameManager : MonoBehaviour {
     }
     void DidTap()
     {
-        tapCount++;
-        userInterface.SetTapCount(tapCount);
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            tapCount++;
+            AddPulse();
+            userInterface.SetTapCount(tapCount);
+        }
+    }
+    void CheckPhoneTaps()
+    {
+        foreach(Touch t in Input.touches)
+        {
+            if (t.phase == TouchPhase.Began)
+            {
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    tapCount++;
+                    Vector2 loc = (t.position);
+                    Vector3 pulseLocation = new Vector3(loc.x, loc.y, -10.0f);
+                    AddPulseAtPosition(pulseLocation);
+                    userInterface.SetTapCount(tapCount);
+                }
+            }
+        }
     }
     private void Update()
     {
         seconds += Time.deltaTime;
         if (Input.GetMouseButtonDown(0))
         {
-            if (!EventSystem.current.IsPointerOverGameObject())
-            {
-                DidTap();
-                AddPulse();
-            }
+            DidTap();
         }
+        CheckPhoneTaps();
+
         userInterface.SetTime(seconds);
         UpdatePulses();
     }

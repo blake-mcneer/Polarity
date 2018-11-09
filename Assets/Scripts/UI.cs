@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour {
 
@@ -13,6 +14,7 @@ public class UI : MonoBehaviour {
     private void Start()
     {
         manager = FindObjectOfType<GameManager>();
+        HidePauseMenu();
     }
     public void SetTapCount(int count)
     {
@@ -35,5 +37,9 @@ public class UI : MonoBehaviour {
     {
         Time.timeScale = 1.0f;
         PauseMenu.SetActive(false);
+    }
+    public void Reload()
+    {
+        SceneManager.LoadScene("SampleScene");
     }
 }
