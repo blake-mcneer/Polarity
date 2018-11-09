@@ -75,8 +75,19 @@ public class Goal : MonoBehaviour {
 	}
     IEnumerator AnimateGoal()
     {
-        yield return new WaitForSeconds(1.0f);
-        renderer.SetBlendShapeWeight(0, 50.0f);
+        int i = 1;
+        while (i < 100)
+        {
+            yield return new WaitForSeconds(0.25f);
+            renderer.SetBlendShapeWeight(0, (float)i);
+            i++;
+        }
+        while (i > 0)
+        {
+            yield return new WaitForSeconds(0.25f);
+            renderer.SetBlendShapeWeight(0, (float)i);
+            i--;
+        }
     }
     public void HitByMagneticObject(MagneticObject mag)
     {
@@ -85,6 +96,7 @@ public class Goal : MonoBehaviour {
         }else{
             manager.AddScore(negativeScore * mag.totalCount);
         }
+        //StartCoroutine(AnimateGoal());
         Destroy(mag.gameObject);
     }
     private void OnDrawGizmosSelected()
