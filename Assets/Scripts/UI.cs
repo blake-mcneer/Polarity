@@ -8,7 +8,12 @@ public class UI : MonoBehaviour {
     public Text timeText;
     public Text tapText;
     public Text scoreText;
-
+    public GameObject PauseMenu;
+    GameManager manager;
+    private void Start()
+    {
+        manager = FindObjectOfType<GameManager>();
+    }
     public void SetTapCount(int count)
     {
         tapText.text = "TAPS: " + count;
@@ -20,5 +25,15 @@ public class UI : MonoBehaviour {
     public void SetScore(int score)
     {
         scoreText.text = score.ToString();   
+    }
+    public void ShowPauseMenu()
+    {
+        Time.timeScale = 0.0f;
+        PauseMenu.SetActive(true);
+    }
+    public void HidePauseMenu()
+    {
+        Time.timeScale = 1.0f;
+        PauseMenu.SetActive(false);
     }
 }
