@@ -6,24 +6,17 @@ using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour {
 
-    [System.Serializable]
-    public struct MagneticPulse{
-        public float pulseStrength;
-        public float pulseDuration;
-        public float pulseRemaining;
-        public Vector3 pulseLocation;
-        public GameObject prefab;
-        public int index;
-        public int[] specificIndeces;
-    }
+
     public float pulseDistance = 3.0f;
     public float pulseDurationSetting = 5.0f;
     public float pulseDisplaySize = 4.0f;
     public float pulseStrength = 4.0f;
+    public float pulseDistanceThreshold = .05f;
     public float magneticField = 0.0f;
     public float affectLimit = 2.5f;
     public float drainSpeed = 1.0f;
     public float pressedAmount = 0.0f;
+    public bool gameComplete = false;
     public int score = 0;
     int tapCount = 0;
     float seconds = 0.0f;
@@ -75,7 +68,11 @@ public class GameManager : MonoBehaviour {
             float pDuration = p.pulseRemaining - Time.deltaTime * drainSpeed;
             pDuration = Mathf.Max(pDuration, 0.0f);
             p.pulseRemaining = pDuration;
-            if (p.pulseRemaining > 0)
+            if (p.hasBeenReached)
+            {
+                Debug.Log("I'm reached");
+            }
+            if (p.pulseRemaining > 0 && !p.hasBeenReached)
             {
                 nextPulseList.Add(p);
                 float scaleSize = pulseDisplaySize * p.pulseRemaining/p.pulseDuration;
@@ -110,6 +107,7 @@ public class GameManager : MonoBehaviour {
         pulse.pulseDuration = duration;
         pulse.pulseRemaining = pulse.pulseDuration;
         pulse.pulseLocation = position;
+        pulse.hasBeenReached = false;
         return pulse;
     }
 
@@ -128,27 +126,48 @@ public class GameManager : MonoBehaviour {
     void AddPulse()
     {
         Vector2 loc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 pulseLocation = new Vector3(loc.x, loc.y, -10.0f);
+        Vector3 pulseLocation = new Vector3(loc.x, loc.y, 10.0f);
         AddPulseAtPosition(pulseLocation);
     }
     public Vector2 AffectOnPosition(Vector2 position, int objectIndex)
     {
+        if (pulseDistanceThreshold <= 0.0f) pulseDistanceThreshold = 0.1f;
+
         Vector3 pulsePower = new Vector2(0.0f, 0.0f);
-        foreach(MagneticPulse p in attractionPulses)
+        List<MagneticPulse> pulsesReached = new List<MagneticPulse>();
+        for (int i = 0; i < attractionPulses.Count; i++)
         {
+            MagneticPulse p = attractionPulses[i];
             if (p.specificIndeces == null || p.specificIndeces.Contains(objectIndex))
             {
-                float divideBy = Mathf.Abs(Vector3.Distance(position, p.pulseLocation));
-                float dist = divideBy < 0.5f ? 0.0f : 1.0f / divideBy;
-                pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength * dist;
+                Vector3 vecA = new Vector3(position.x, position.y, 0.0f);
+                Vector3 vecB = new Vector3(p.pulseLocation.x,p.pulseLocation.y, 0.0f);
+
+                float distanceApart = Mathf.Abs(Vector3.Distance(vecA, vecB));
+                if (distanceApart > pulseDistanceThreshold)
+                {
+                    float dist = 1.0f / distanceApart;
+                    float pulseAffect = p.pulseRemaining / p.pulseDuration;
+                    Debug.Log("Distance: " + distanceApart + " invertedValue:" + distanceApart);
+                    pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength *pulseAffect*dist;
+                }
+                else{
+                    p.hasBeenReached = true;
+                }
             }
         }
 
         foreach (MagneticPulse p in preconfiguredPulses)
         {
-            float divideBy = Mathf.Abs(Vector3.Distance(position, p.pulseLocation));
-            float dist = divideBy < 0.5f ? 0.0f : 1.0f / divideBy;
-            pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength * dist;
+            Vector3 vecA = new Vector3(position.x, position.y, 0.0f);
+            Vector3 vecB = new Vector3(p.pulseLocation.x, p.pulseLocation.y, 0.0f);
+
+            float distanceApart = Mathf.Abs(Vector3.Distance(position, p.pulseLocation));
+            if (distanceApart > pulseDistanceThreshold)
+            {
+                float dist =  1.0f / distanceApart;
+                pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength * dist;
+            }
         }
 
         return new Vector2(-pulsePower.x, pulsePower.y);
@@ -181,14 +200,17 @@ public class GameManager : MonoBehaviour {
     }
     private void Update()
     {
-        seconds += Time.deltaTime;
+        if (!gameComplete)
+        {
+            seconds += Time.deltaTime;
+            userInterface.SetTime(seconds);
+        }
         if (Input.GetMouseButtonDown(0))
         {
             DidTap();
         }
         CheckPhoneTaps();
 
-        userInterface.SetTime(seconds);
         UpdatePulses();
     }
 }
