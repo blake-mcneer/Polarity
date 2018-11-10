@@ -2,13 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public enum MagneticType
 {
     M1 = 0, M2, M3
 }
+
+[System.Serializable]
 public enum GoalBarrier
 {
     BarrierNone = 0, Barrier25, Barrier50, Barrier75
+}
+
+[System.Serializable]
+public struct GoalData
+{
+    public float rotationSpeed;
+    public Vector3 location;
+    public MagneticType type;
+    public GoalBarrier barrier;
+    public GoalData(Vector3 pos, MagneticType t, GoalBarrier b, float rotSpeed)
+    {
+        rotationSpeed = rotSpeed;
+        location = pos;
+        type = t;
+        barrier = b;
+    }
+}
+
+[System.Serializable]
+public struct MagneticObjectData
+{
+    public int index;
+    public MagneticType type;
+    public Vector3 location;
+
+    public MagneticObjectData(Vector3 pos, MagneticType t, int ind)
+    {
+        index = ind;
+        type = t;
+        location = pos;
+    }
 }
 public struct CustomRange
 {

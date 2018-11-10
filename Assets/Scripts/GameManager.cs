@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
         public int[] specificIndeces;
     }
     public float pulseDistance = 3.0f;
+    public float pulseDurationSetting = 5.0f;
     public float pulseDisplaySize = 4.0f;
     public float pulseStrength = 4.0f;
     public float magneticField = 0.0f;
@@ -120,7 +121,7 @@ public class GameManager : MonoBehaviour {
     }
     void AddPulseAtPosition(Vector3 pos)
     {
-        MagneticPulse p = CreatePulse(position: pos, strength: pulseStrength, duration: 1.5f, prefab: pulseImage);
+        MagneticPulse p = CreatePulse(position: pos, strength: pulseStrength, duration: pulseDurationSetting, prefab: pulseImage);
         attractionPulses.Add(p);
 
     }
