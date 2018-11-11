@@ -66,13 +66,15 @@ public class MagneticObject : MonoBehaviour {
     }
     private void Update()
     {
+        if (manager == null) ConfigureBall();
+
         if (Mathf.Abs((targetScale - scale)) > 0.05f)
         {
             UpdateScale();
         }else if (shrinkingAway){
             Destroy(gameObject);    
         }
-
+        Debug.Log(transform.gameObject);
 
         rb.velocity = Vector3.zero;
         Vector2 pulseAffect = manager.AffectOnPosition(transform.position, index);
