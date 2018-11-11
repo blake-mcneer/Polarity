@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour {
     public GameObject BallPrefab;
     public GameObject AttractorPrefab;
     public GameObject GoalPrefab;
+    public GameObject GameManagerPrefab;
     Save saveFile;
 
     public void SaveLevel(int levelNumber)
