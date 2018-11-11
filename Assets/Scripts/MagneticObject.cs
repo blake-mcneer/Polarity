@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class MagneticObject : MonoBehaviour {
 
+    public Material M1_Material;
+    public Material M2_Material;
+    public Material M3_Material;
+
     public float magneticConstant = 1.0f;
     public float dropSpeed = 1.0f;
     public float placeholderMagneticField = 0.0f;
@@ -22,7 +26,28 @@ public class MagneticObject : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody>();
         manager = FindObjectOfType<GameManager>();
+        SetMaterial();
     }
+    void SetMaterial()
+    {
+        Material mat = GetComponent<Renderer>().sharedMaterial;
+        switch (type)
+        {
+            case MagneticType.M1:
+                mat = M1_Material;
+                break;
+            case MagneticType.M2:
+                mat = M2_Material;
+                break;
+            case MagneticType.M3:
+                mat = M3_Material;
+                break;
+        }
+        Renderer rend = GetComponent<Renderer>();
+        rend.sharedMaterial = mat;
+        //renderer.sharedMaterials = mats;
+    }
+
     void UpdateScale()
     {
         float direction = shrinkingAway ? -1.0f : 1.0f;
@@ -104,5 +129,8 @@ public class MagneticObject : MonoBehaviour {
         targetScale = 0.0f;
         shrinkingAway = true;
     }
-
+    private void OnDrawGizmosSelected()
+    {
+        SetMaterial();
+    }
 }

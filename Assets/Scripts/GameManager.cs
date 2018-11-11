@@ -54,10 +54,6 @@ public class GameManager : MonoBehaviour {
         {
             preconfiguredPulses.Add(CreatePulse(attract.transform.position, attract.strength, 1.0f));
         }
-        //foreach (MagneticPulse p in preconfiguredPulses)
-        //{
-        //    Instantiate(p.prefab, p.pulseLocation, Quaternion.Euler(0.0f, 0.0f, 0.0f));
-        //}
     }
     void UpdatePulses()
     {
@@ -68,11 +64,7 @@ public class GameManager : MonoBehaviour {
             float pDuration = p.pulseRemaining - Time.deltaTime * drainSpeed;
             pDuration = Mathf.Max(pDuration, 0.0f);
             p.pulseRemaining = pDuration;
-            if (p.hasBeenReached)
-            {
-                Debug.Log("I'm reached");
-            }
-            if (p.pulseRemaining > 0 && !p.hasBeenReached)
+            if (p.pulseRemaining > 0)
             {
                 nextPulseList.Add(p);
                 float scaleSize = pulseDisplaySize * p.pulseRemaining/p.pulseDuration;
@@ -81,6 +73,7 @@ public class GameManager : MonoBehaviour {
             else
             {
                 Destroy(p.prefab);
+                Destroy(p);
             }
         }
         attractionPulses = nextPulseList;
@@ -100,7 +93,7 @@ public class GameManager : MonoBehaviour {
 
     MagneticPulse CreatePulse(Vector3 position, float strength, float duration)
     {
-        MagneticPulse pulse = new MagneticPulse();
+        MagneticPulse pulse =  ScriptableObject.CreateInstance<MagneticPulse>();
         pulse.index = pulseIndex;
         pulseIndex++;
         pulse.pulseStrength = strength;
@@ -148,11 +141,11 @@ public class GameManager : MonoBehaviour {
                 {
                     float dist = 1.0f / distanceApart;
                     float pulseAffect = p.pulseRemaining / p.pulseDuration;
-                    Debug.Log("Distance: " + distanceApart + " invertedValue:" + distanceApart);
                     pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength *pulseAffect*dist;
                 }
                 else{
-                    p.hasBeenReached = true;
+                    p.Dissapate();
+
                 }
             }
         }

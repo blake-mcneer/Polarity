@@ -18,13 +18,17 @@ public enum GoalBarrier
 public struct GoalData
 {
     public float rotationSpeed;
-    public Vector3 location;
+    public float posX;
+    public float posY;
+    public float posZ;
     public MagneticType type;
     public GoalBarrier barrier;
     public GoalData(Vector3 pos, MagneticType t, GoalBarrier b, float rotSpeed)
     {
         rotationSpeed = rotSpeed;
-        location = pos;
+        posX = pos.x;
+        posY = pos.y;
+        posZ = pos.z;
         type = t;
         barrier = b;
     }
@@ -35,13 +39,18 @@ public struct MagneticObjectData
 {
     public int index;
     public MagneticType type;
-    public Vector3 location;
+    public float posX;
+    public float posY;
+    public float posZ;
+
 
     public MagneticObjectData(Vector3 pos, MagneticType t, int ind)
     {
         index = ind;
         type = t;
-        location = pos;
+        posX = pos.x;
+        posY = pos.y;
+        posZ = pos.z;
     }
 }
 public struct CustomRange
