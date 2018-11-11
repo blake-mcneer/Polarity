@@ -46,4 +46,9 @@ public class UI : MonoBehaviour {
     {
         SceneManager.LoadScene("SampleScene");
     }
+    public void Home()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
 }
