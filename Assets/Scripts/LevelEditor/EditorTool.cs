@@ -11,6 +11,7 @@ public class EditorTool : MonoBehaviour {
     }
     public GameObject GameManager;
     public GameObject LevelEditor;
+    public GameObject GeneralEditorToolbar;
 
     PlayMode currentMode = PlayMode.Edit;
 
@@ -36,13 +37,16 @@ public class EditorTool : MonoBehaviour {
         if (currentMode == PlayMode.Play)
         {
             GameManager.SetActive(true);
+            GameManager.GetComponent<GameManager>().SetupManager();
             LevelEditor.SetActive(false);
+            GeneralEditorToolbar.SetActive(false);
             GameManager.GetComponent<GameManager>().SetupManager();
         }
         else
         {
             GameManager.SetActive(false);
             LevelEditor.SetActive(true);
+            GeneralEditorToolbar.SetActive(true);
         }
     }
 }

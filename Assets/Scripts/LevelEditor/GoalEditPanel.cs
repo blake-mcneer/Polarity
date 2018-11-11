@@ -68,7 +68,11 @@ public class GoalEditPanel : MonoBehaviour {
         goalBeingModified.ConfigureSettings();
         barrierTypeText.text = barrier.ToString();
     }
-
+    public void Delete()
+    {
+        Destroy(goalBeingModified.gameObject);
+        ModificationsComplete();
+    }
 
 
 }

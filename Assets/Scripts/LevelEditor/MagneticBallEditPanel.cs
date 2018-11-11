@@ -42,4 +42,10 @@ public class MagneticBallEditPanel : MonoBehaviour {
         magneticObjectBeingModified.SetMaterial();
         objectTypeText.text = magType.ToString();
     }
+    public void Delete()
+    {
+        Destroy(magneticObjectBeingModified.gameObject);
+        ModificationsComplete();
+    }
+
 }

@@ -24,10 +24,15 @@ public class MagneticObject : MonoBehaviour {
     GameManager manager;
     private void Start()
     {
+        ConfigureBall();
+    }
+    public void ConfigureBall()
+    {
         rb = GetComponent<Rigidbody>();
         manager = FindObjectOfType<GameManager>();
         SetMaterial();
     }
+
     public void SetMaterial()
     {
         Material mat = GetComponent<Renderer>().sharedMaterial;

@@ -7,6 +7,7 @@ public class LevelEditor : MonoBehaviour
     public AttractorEditPanel attractorPanel;
     public GoalEditPanel goalPanel;
     public MagneticBallEditPanel magneticBallPanel;
+    public GeneralEditor editorPanel;
 
     GameObject objectHeld;
     Vector3 positionStarted;

@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour {
         SetupManager();
     }
     void LoadMagneticObjects()
-    {
+    {        
         magneticObjects = FindObjectsOfType<MagneticObject>();
         int index = 0;
         foreach (MagneticObject mag in magneticObjects)
@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour {
     }
     void LoadPreconfiguredPulses()
     {
+        preconfiguredPulses = new List<MagneticPulse>();
         Attractor[] attractors = FindObjectsOfType<Attractor>();
         foreach (Attractor attract in attractors)
         {

@@ -36,5 +36,10 @@ public class AttractorEditPanel : MonoBehaviour {
         if (attractorBeingModified == null) return;
         ModifyStrength(-strengthAmount);
     }
+    public void Delete()
+    {
+        Destroy(attractorBeingModified.gameObject);
+        ModificationsComplete();
+    }
 
 }
