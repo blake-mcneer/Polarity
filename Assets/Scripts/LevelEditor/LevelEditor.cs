@@ -5,12 +5,17 @@ using UnityEngine;
 public class LevelEditor : MonoBehaviour
 {
     public AttractorEditPanel attractorPanel;
+    public GoalEditPanel goalPanel;
+    public MagneticBallEditPanel magneticBallPanel;
 
     GameObject objectHeld;
     Vector3 positionStarted;
     Vector3 inputStarted;
 
-
+    private void Start()
+    {
+        HideAllPanels();
+    }
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -24,6 +29,13 @@ public class LevelEditor : MonoBehaviour
             objectHeld = null;
         }
     }
+    void HideAllPanels()
+    {
+        attractorPanel.gameObject.SetActive(false);
+        goalPanel.gameObject.SetActive(false);
+        magneticBallPanel.gameObject.SetActive(false);
+    }
+
     void CheckForGrab()
     {
         Vector2 loc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -40,12 +52,16 @@ public class LevelEditor : MonoBehaviour
                 GameObject magneticObjectObject = hit.collider.transform.gameObject;
                 MagneticObject magneticObject = magneticObjectObject.GetComponent<MagneticObject>();
                 GrabObject(magneticObjectObject);
+                HideAllPanels();
+                magneticBallPanel.gameObject.SetActive(true);
+
             }
             else if (tagHit == "Barrier")
             {
                 GameObject attractorObject = hit.collider.transform.parent.gameObject;
                 Attractor attractor = attractorObject.GetComponent<Attractor>();
                 GrabObject(attractorObject);
+                HideAllPanels();
                 attractorPanel.gameObject.SetActive(true);
                 attractorPanel.SetAttractor(attractor);
             }
@@ -54,6 +70,9 @@ public class LevelEditor : MonoBehaviour
                 GameObject goalObject = hit.collider.transform.parent.gameObject;
                 Goal goal = goalObject.GetComponent<Goal>();
                 GrabObject(goalObject);
+                HideAllPanels();
+                goalPanel.gameObject.SetActive(true);
+                goalPanel.SetGoal(goal);
             }
         }
     }
