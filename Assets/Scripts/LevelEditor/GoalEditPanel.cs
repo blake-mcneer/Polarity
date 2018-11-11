@@ -13,12 +13,13 @@ public class GoalEditPanel : MonoBehaviour {
     public void SetGoal(Goal newGoal)
     {
         goalBeingModified = newGoal;
+        goalTypeText.text = newGoal.type.ToString();
+        barrierTypeText.text = newGoal.barrier.ToString();
     }
     public void ModificationsComplete()
     {
         goalBeingModified = null;
         gameObject.SetActive(false);
-        //Animate panel
     }
     public void ChangeType()
     {

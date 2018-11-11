@@ -54,6 +54,7 @@ public class LevelEditor : MonoBehaviour
                 GrabObject(magneticObjectObject);
                 HideAllPanels();
                 magneticBallPanel.gameObject.SetActive(true);
+                magneticBallPanel.SetMagneticObject(magneticObject);
 
             }
             else if (tagHit == "Barrier")

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EditorTool : MonoBehaviour {
 
+    UI uiPanel;
     public enum PlayMode
     {
         Play, Edit
@@ -15,6 +16,7 @@ public class EditorTool : MonoBehaviour {
 
     private void Start()
     {
+        uiPanel = FindObjectOfType<UI>();
         SetMode(currentMode);
     }
     public void ToggleEditMode()
@@ -25,6 +27,7 @@ public class EditorTool : MonoBehaviour {
             SetMode(PlayMode.Play);
         }
 
+        uiPanel.HidePauseMenu();
     }
 
     public void SetMode(PlayMode mode)

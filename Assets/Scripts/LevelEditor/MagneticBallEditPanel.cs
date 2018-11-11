@@ -5,35 +5,41 @@ using UnityEngine.UI;
 
 public class MagneticBallEditPanel : MonoBehaviour {
 
-    public Attractor attractorBeingModified;
-    public Text strengthText;
+    public MagneticObject magneticObjectBeingModified;
+    public Text objectTypeText;
     //public Button typeButton;
 
-    public void SetAttractor(Attractor newAttractor)
+    public void SetMagneticObject(MagneticObject newMagneticObject)
     {
-        attractorBeingModified = newAttractor;
-        strengthText.text = "Strength:" + newAttractor.strength.ToString("0.0");
+        magneticObjectBeingModified = newMagneticObject;
+        objectTypeText.text = newMagneticObject.type.ToString();
     }
     public void ModificationsComplete()
     {
-        attractorBeingModified = null;
+        magneticObjectBeingModified = null;
         gameObject.SetActive(false);
-        //Animate panel
     }
-    void ModifyStrength(float amount)
+    public void ChangeType()
     {
-        attractorBeingModified.strength += amount;
-        strengthText.text = "Strength:" + attractorBeingModified.strength.ToString("0.0");
-    }
-
-    public void AddStrength(float strengthAmount)
-    {
-        if (attractorBeingModified == null) return;
-        ModifyStrength(strengthAmount);
-    }
-    public void SubtractStrength(float strengthAmount)
-    {
-        if (attractorBeingModified == null) return;
-        ModifyStrength(-strengthAmount);
+        if (magneticObjectBeingModified == null) return;
+        MagneticType magType;
+        switch (magneticObjectBeingModified.type)
+        {
+            case MagneticType.M1:
+                magType = MagneticType.M2;
+                break;
+            case MagneticType.M2:
+                magType = MagneticType.M3;
+                break;
+            case MagneticType.M3:
+                magType = MagneticType.M1;
+                break;
+            default:
+                magType = MagneticType.M1;
+                break;
+        }
+        magneticObjectBeingModified.type = magType;
+        magneticObjectBeingModified.SetMaterial();
+        objectTypeText.text = magType.ToString();
     }
 }
