@@ -18,6 +18,10 @@ public class Goal : MonoBehaviour {
     GameManager manager;
     void Start () {
         manager = FindObjectOfType<GameManager>();
+        ConfigureSettings();
+    }
+    public void ConfigureSettings()
+    {
         SetBarrier();
         SetMaterial();
     }
@@ -101,7 +105,6 @@ public class Goal : MonoBehaviour {
     }
     private void OnDrawGizmosSelected()
     {
-        SetBarrier();
-        SetMaterial();        
+        ConfigureSettings();
     }
 }

@@ -28,7 +28,7 @@ public class MagneticObject : MonoBehaviour {
         manager = FindObjectOfType<GameManager>();
         SetMaterial();
     }
-    void SetMaterial()
+    public void SetMaterial()
     {
         Material mat = GetComponent<Renderer>().sharedMaterial;
         switch (type)

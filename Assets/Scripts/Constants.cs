@@ -33,6 +33,31 @@ public struct GoalData
         barrier = b;
     }
 }
+[System.Serializable]
+public struct AttractorData
+{
+    public float rotX;
+    public float rotY;
+    public float rotZ;
+    public float rotW;
+    public float posX;
+    public float posY;
+    public float posZ;
+    public float strength;
+    public AttractorData(Vector3 pos, Quaternion rot, float attractorStrength)
+    {
+        rotX = rot.x;
+        rotY = rot.y;
+        rotZ = rot.z;
+        rotW = rot.w;
+
+        posX = pos.x;
+        posY = pos.y;
+        posZ = pos.z;
+
+        strength = attractorStrength;
+    }
+}
 
 [System.Serializable]
 public struct MagneticObjectData

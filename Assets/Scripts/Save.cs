@@ -6,6 +6,6 @@ using UnityEngine;
 public class Save {
     public List<MagneticObjectData> magneticObjectElements = new List<MagneticObjectData>();
     public List<GoalData> goalElements = new List<GoalData>();
-
+    public List<AttractorData> attractorElements = new List<AttractorData>();
 }
 

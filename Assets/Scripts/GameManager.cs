@@ -31,11 +31,16 @@ public class GameManager : MonoBehaviour {
     int pulseIndex = 1;
     MagneticObject[] magneticObjects;
 
+    public void SetupManager()
+    {
+        LoadMagneticObjects();
+        LoadPreconfiguredPulses();
+    }
+
     private void Start()
     {
         userInterface = FindObjectOfType<UI>();
-        LoadMagneticObjects();
-        LoadPreconfiguredPulses();
+        SetupManager();
     }
     void LoadMagneticObjects()
     {
