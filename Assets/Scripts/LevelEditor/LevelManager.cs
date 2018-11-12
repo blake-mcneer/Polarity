@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour {
     public GameObject BallPrefab;
     public GameObject AttractorPrefab;
     public GameObject GoalPrefab;
+    public GameObject SaveMenu;
+    public SaveConfig config;
     GameManager manager;
     Save saveFile;
 
@@ -17,9 +19,15 @@ public class LevelManager : MonoBehaviour {
     {
         manager = FindObjectOfType<GameManager>();
     }
-
-    public void SaveLevel(int levelNumber)
+    public void ShowSave()
     {
+        SaveMenu.SetActive(true);
+    }
+
+
+    public void SaveLevel()
+    {
+        int levelNumber = config.currentLevel;
         MagneticObject[] magneticObjects = FindObjectsOfType<MagneticObject>();
         Attractor[] attractors = FindObjectsOfType<Attractor>();
         Goal[] goals = FindObjectsOfType<Goal>();
@@ -42,6 +50,7 @@ public class LevelManager : MonoBehaviour {
         FileStream file = File.Create(Application.persistentDataPath + "/Level" + levelNumber.ToString() + ".save");
         bf.Serialize(file, save);
         file.Close();
+        SaveMenu.SetActive(false);
     }
     public void DeleteAll()
     {
@@ -62,9 +71,10 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    public void LoadLevel(int level)
+    public void LoadLevel()
     {
-        string filename = "/Level" + level.ToString() + ".save";
+        int levelNumber = config.currentLevel;
+        string filename = "/Level" + levelNumber.ToString() + ".save";
         if (File.Exists(Application.persistentDataPath+filename))
         {
             DeleteAll();
@@ -93,6 +103,7 @@ public class LevelManager : MonoBehaviour {
         {
             Debug.Log("Could not find save file:" + filename);
         }
+        SaveMenu.SetActive(false);
     }
     void LoadMagneticBall(MagneticObjectData d)
     {
