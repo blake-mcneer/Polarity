@@ -118,8 +118,10 @@ public class GameManager : MonoBehaviour {
     }
     void AddPulseAtPosition(Vector3 pos)
     {
-        MagneticPulse p = CreatePulse(position: pos, strength: pulseStrength, duration: pulseDurationSetting, prefab: pulseImage);
-        attractionPulses.Add(p);
+        if (Time.timeScale > 0){
+            MagneticPulse p = CreatePulse(position: pos, strength: pulseStrength, duration: pulseDurationSetting, prefab: pulseImage);
+            attractionPulses.Add(p);
+        }
 
     }
     void AddPulse()
