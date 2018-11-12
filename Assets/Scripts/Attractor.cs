@@ -11,6 +11,10 @@ public class Attractor : MonoBehaviour {
     void Start () {
         EnablePrefab();
 	}
+    public void ConfigureAttractor()
+    {
+        EnablePrefab();
+    }
 	void EnablePrefab()
     {
         positiveGameObject.SetActive(strength > 0.0f);

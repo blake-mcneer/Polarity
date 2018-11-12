@@ -8,13 +8,14 @@ public class GoalEditPanel : MonoBehaviour {
     public Goal goalBeingModified;
     public Text goalTypeText;
     public Text barrierTypeText;
-    //public Button typeButton;
+    public Text speedText;
 
     public void SetGoal(Goal newGoal)
     {
         goalBeingModified = newGoal;
         goalTypeText.text = newGoal.type.ToString();
         barrierTypeText.text = newGoal.barrier.ToString();
+        speedText.text = goalBeingModified.rotationSpeed.ToString("0.0");
     }
     public void ModificationsComplete()
     {
@@ -74,5 +75,21 @@ public class GoalEditPanel : MonoBehaviour {
         ModificationsComplete();
     }
 
+    void ModifySpeed(float amount)
+    {
+        goalBeingModified.rotationSpeed += amount;
+        speedText.text = goalBeingModified.rotationSpeed.ToString("0.0");
+    }
+
+    public void AddSpeed(float speedAmount)
+    {
+        if (goalBeingModified == null) return;
+        ModifySpeed(speedAmount);
+    }
+    public void SubtractSpeed(float speedAmount)
+    {
+        if (goalBeingModified == null) return;
+        ModifySpeed(-speedAmount);
+    }
 
 }

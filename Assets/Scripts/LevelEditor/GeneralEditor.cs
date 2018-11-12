@@ -7,6 +7,7 @@ public class GeneralEditor : MonoBehaviour {
     public GameObject BallPrefab;
     public GameObject AttractorPrefab;
     public GameObject GoalPrefab;
+    Vector3 spawnPosition = new Vector3(6.0f, 0.0f, 0.0f);
 
     EditorTool editorTool;
     private void Start()
@@ -15,15 +16,15 @@ public class GeneralEditor : MonoBehaviour {
     }
     public void CreateBall()
     {
-        Instantiate(BallPrefab,Vector3.zero, Quaternion.Euler(0.0f,0.0f,0.0f));   
+        Instantiate(BallPrefab,spawnPosition, Quaternion.Euler(0.0f,0.0f,0.0f));   
     }
     public void CreateAttractor()
     {
-        Instantiate(AttractorPrefab,Vector3.zero, Quaternion.Euler(0.0f,0.0f,0.0f));   
+        Instantiate(AttractorPrefab,spawnPosition, Quaternion.Euler(0.0f,0.0f,0.0f));   
     }
     public void CreateGoal()
     {
-     Instantiate(GoalPrefab,Vector3.zero, Quaternion.Euler(0.0f,0.0f,0.0f));   
+        Instantiate(GoalPrefab,spawnPosition, Quaternion.Euler(0.0f,0.0f,0.0f));   
     }
     public void TestMode()
     {

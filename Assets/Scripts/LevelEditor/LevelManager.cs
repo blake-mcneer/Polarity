@@ -43,11 +43,31 @@ public class LevelManager : MonoBehaviour {
         bf.Serialize(file, save);
         file.Close();
     }
+    public void DeleteAll()
+    {
+        MagneticObject[] magneticObjects = FindObjectsOfType<MagneticObject>();
+        Attractor[] attractors = FindObjectsOfType<Attractor>();
+        Goal[] goals = FindObjectsOfType<Goal>();
+
+        for (int i = 0; i < magneticObjects.Length; i++){
+            Destroy(magneticObjects[i].gameObject);
+        }
+        for (int i = 0; i < goals.Length; i++)
+        {
+            Destroy(goals[i].gameObject);
+        }
+        for (int i = 0; i < attractors.Length; i++)
+        {
+            Destroy(attractors[i].gameObject);
+        }
+    }
+
     public void LoadLevel(int level)
     {
         string filename = "/Level" + level.ToString() + ".save";
         if (File.Exists(Application.persistentDataPath+filename))
         {
+            DeleteAll();
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + filename, FileMode.Open);
 
@@ -101,6 +121,8 @@ public class LevelManager : MonoBehaviour {
         Quaternion rot = new Quaternion(d.rotX, d.rotY, d.rotZ, d.rotW);
         GameObject obj = Instantiate(AttractorPrefab, pos, rot, transform.parent);
         Attractor attractorObj = obj.GetComponent<Attractor>();
+        attractorObj.strength = d.strength;
+        attractorObj.ConfigureAttractor();
 
     }
 }
