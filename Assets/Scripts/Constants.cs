@@ -78,6 +78,13 @@ public struct MagneticObjectData
         posZ = pos.z;
     }
 }
+[System.Serializable]
+public struct GameManagerData
+{
+    float pulseDuration;
+    float pulseStrength;
+}
+
 public struct CustomRange
 {
     int min;

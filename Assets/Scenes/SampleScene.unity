@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657856, g: 0.49641234, b: 0.57481724, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -931,19 +931,6 @@ Prefab:
     - target: {fileID: 1026786455548916, guid: 3e091607eb50f1b44a884745257885ce, type: 2}
       propertyPath: m_Name
       value: Attractor (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 114798236671103392, guid: 3e091607eb50f1b44a884745257885ce,
-        type: 2}
-      propertyPath: strength
-      value: -0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1488072228826502, guid: 3e091607eb50f1b44a884745257885ce, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1939443464320450, guid: 3e091607eb50f1b44a884745257885ce, type: 2}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e091607eb50f1b44a884745257885ce, type: 2}
@@ -2429,6 +2416,16 @@ Prefab:
       propertyPath: m_Materials.Array.data[2]
       value: 
       objectReference: {fileID: 1963258180}
+    - target: {fileID: 114429317559147024, guid: 041673fe79840bc4d8c96d4cf00ae63a,
+        type: 2}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 137385657566683650, guid: 041673fe79840bc4d8c96d4cf00ae63a,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f060402825d786c4fb0bb551d762215e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 041673fe79840bc4d8c96d4cf00ae63a, type: 2}
   m_IsPrefabAsset: 0
@@ -3490,7 +3487,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Goal_Main (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
     (Instance) (Instance)
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 10704, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -3922,7 +3919,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Goal_InnerCircle (Instance) (Instance) (Instance) (Instance) (Instance)
     (Instance) (Instance) (Instance)
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 10704, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0

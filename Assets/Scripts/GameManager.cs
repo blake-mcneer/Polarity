@@ -12,10 +12,8 @@ public class GameManager : MonoBehaviour {
     public float pulseDisplaySize = 4.0f;
     public float pulseStrength = 4.0f;
     public float pulseDistanceThreshold = .05f;
-    public float magneticField = 0.0f;
     public float affectLimit = 2.5f;
     public float drainSpeed = 1.0f;
-    public float pressedAmount = 0.0f;
     public bool gameComplete = false;
     public int score = 0;
     int tapCount = 0;

@@ -23,7 +23,9 @@ public class LevelManager : MonoBehaviour {
     {
         SaveMenu.SetActive(true);
     }
-
+    public void SaveGameManagerSettings()
+    {
+    }
 
     public void SaveLevel()
     {
