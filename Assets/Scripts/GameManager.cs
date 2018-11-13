@@ -31,8 +31,18 @@ public class GameManager : MonoBehaviour {
 
     public void SetupManager()
     {
+        for (int i = 0; i < attractionPulses.Count; i++){
+            attractionPulses[i].pulseStrength = 0.0f;
+            Destroy(attractionPulses[i].prefab);
+        }
         LoadMagneticObjects();
         LoadPreconfiguredPulses();
+        tapCount = 0;
+        seconds = 0.0f;
+        score = 0;
+        userInterface.SetTapCount(tapCount);
+        userInterface.SetScore(score);
+        userInterface.SetTime(seconds);
     }
 
     private void Start()

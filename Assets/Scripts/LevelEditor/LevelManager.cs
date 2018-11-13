@@ -97,8 +97,8 @@ public class LevelManager : MonoBehaviour {
             {
                 LoadAttractor(a);
             }
-
             manager.SetupManager();
+            PlayerPrefs.SetInt("CurrentLevel",levelNumber);
         }
         else
         {
