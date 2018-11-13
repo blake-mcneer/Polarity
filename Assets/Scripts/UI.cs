@@ -9,12 +9,49 @@ public class UI : MonoBehaviour {
     public Text timeText;
     public Text tapText;
     public Text scoreText;
+    public Text pulseStrengthText;
+    public Text pulseDurationText;
     public GameObject PauseMenu;
     GameManager manager;
     private void Start()
     {
         manager = FindObjectOfType<GameManager>();
+        LoadManagerSettings();
         HidePauseMenu();
+        SetManagerLabels();
+    }
+    void SetManagerLabels()
+    {
+        pulseStrengthText.text = manager.pulseStrength.ToString("0.0") + " M";
+        pulseDurationText.text = manager.pulseDurationSetting.ToString("0.0") +" S";
+    }
+    public void AdjustDuration(float adjustment)
+    {
+        manager.pulseDurationSetting += adjustment;
+        SaveGameManagerSettings();
+        SetManagerLabels();
+    }
+    public void AdjustStrength(float adjustment)
+    {
+        manager.pulseStrength += adjustment;
+        SaveGameManagerSettings();
+        SetManagerLabels();
+    }
+    public void LoadManagerSettings()
+    {
+        if (PlayerPrefs.GetFloat("GameManagerStrength") > 0)
+        {
+            manager.pulseStrength = PlayerPrefs.GetFloat("GameManagerStrength");
+        }
+        if (PlayerPrefs.GetFloat("GameManagerDuration") > 0)
+        {
+            manager.pulseDurationSetting = PlayerPrefs.GetFloat("GameManagerDuration");
+        }
+    }
+    public void SaveGameManagerSettings()
+    {
+        PlayerPrefs.SetFloat("GameManagerStrength", manager.pulseStrength);
+        PlayerPrefs.SetFloat("GameManagerDuration", manager.pulseDurationSetting);
     }
     public void SetTapCount(int count)
     {

@@ -14,6 +14,6 @@ public class PolarizedWall : MonoBehaviour {
     }
     private void Update()
     {
-        renderer.SetBlendShapeWeight(0, manager.pressedAmount);
+
     }
 }

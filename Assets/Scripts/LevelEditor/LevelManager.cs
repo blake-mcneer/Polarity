@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.IO;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
 
@@ -23,9 +24,7 @@ public class LevelManager : MonoBehaviour {
     {
         SaveMenu.SetActive(true);
     }
-    public void SaveGameManagerSettings()
-    {
-    }
+
 
     public void SaveLevel()
     {
