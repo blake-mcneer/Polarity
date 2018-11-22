@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour {
         {
             DidTap();
         }
-        CheckPhoneTaps();
+//        CheckPhoneTaps();
 
         UpdatePulses();
     }
