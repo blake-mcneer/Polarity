@@ -133,6 +133,13 @@ public class GameManager : MonoBehaviour {
         }
 
     }
+    void RemoveActivePulses()
+    {
+        foreach (MagneticPulse p in attractionPulses){
+            p.Dissapate();
+        }
+    }
+
     void AddPulse()
     {
         Vector2 loc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -189,6 +196,7 @@ public class GameManager : MonoBehaviour {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             tapCount++;
+            RemoveActivePulses();
             AddPulse();
             userInterface.SetTapCount(tapCount);
         }
