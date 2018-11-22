@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
     public int score = 0;
     int tapCount = 0;
     float seconds = 0.0f;
+    float maxDistanceAffect = 0.75f;
     UI userInterface;
     [HideInInspector] public List<MagneticPulse> preconfiguredPulses = new List<MagneticPulse>();
     [HideInInspector] public List<MagneticPulse> attractionPulses = new List<MagneticPulse>();
@@ -156,6 +157,7 @@ public class GameManager : MonoBehaviour {
                 if (distanceApart > pulseDistanceThreshold)
                 {
                     float dist = 1.0f / distanceApart;
+                    dist = Mathf.Min(dist, maxDistanceAffect);
                     float pulseAffect = p.pulseRemaining / p.pulseDuration;
                     pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength *pulseAffect*dist;
                 }
@@ -175,6 +177,7 @@ public class GameManager : MonoBehaviour {
             if (distanceApart > pulseDistanceThreshold)
             {
                 float dist =  1.0f / distanceApart;
+                dist = Mathf.Min(dist, maxDistanceAffect);
                 pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength * dist;
             }
         }
