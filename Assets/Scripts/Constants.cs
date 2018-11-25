@@ -14,6 +14,7 @@ public enum GoalBarrier
     BarrierNone = 0, Barrier25, Barrier50, Barrier75
 }
 
+
 [System.Serializable]
 public struct GoalData
 {
@@ -94,6 +95,10 @@ public struct CustomRange
         min = minimum;
         max = maximum;
     }
+}
+public enum LevelButtonMode
+{
+    LoadLevelMode, EditLevelMode
 }
 
 public struct DropSequenceItem
