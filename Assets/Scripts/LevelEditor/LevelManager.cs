@@ -19,6 +19,7 @@ public class LevelManager : MonoBehaviour {
     private void Start()
     {
         manager = FindObjectOfType<GameManager>();
+        LoadLevel(GameSingleton.Instance.currentLevel);
     }
     public void ShowSave()
     {
@@ -71,10 +72,9 @@ public class LevelManager : MonoBehaviour {
             Destroy(attractors[i].gameObject);
         }
     }
-
-    public void LoadLevel()
+    public void LoadLevel(int level = 0)
     {
-        int levelNumber = config.currentLevel;
+        int levelNumber = level == 0 ? config.currentLevel : level;
         string filename = "/Level" + levelNumber.ToString() + ".save";
         if (File.Exists(Application.persistentDataPath+filename))
         {

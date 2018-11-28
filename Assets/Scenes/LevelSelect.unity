@@ -298,7 +298,7 @@ MonoBehaviour:
   LevelButtonPrefab: {fileID: 1959452127624414, guid: f32ff10593afc4ee4a0ccd6557254936,
     type: 2}
   buttonMode: 0
-  levelCount: 15
+  levelCount: 30
 --- !u!1 &648701304
 GameObject:
   m_ObjectHideFlags: 0

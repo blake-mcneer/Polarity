@@ -9,6 +9,21 @@ public class LevelEditor : MonoBehaviour
     public MagneticBallEditPanel magneticBallPanel;
     public GeneralEditor editorPanel;
 
+    int mLevel = 0;
+    public int Level
+    {
+        get
+        {
+            return mLevel;
+        }
+        set
+        {
+            mLevel = value;
+            LevelManager lm = FindObjectOfType<LevelManager>();
+            lm.LoadLevel(mLevel);
+        }
+    }
+
     GameObject objectHeld;
     Vector3 positionStarted;
     Vector3 inputStarted;

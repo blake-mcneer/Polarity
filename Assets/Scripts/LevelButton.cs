@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-
+using UnityEngine.SceneManagement;
 
 public class LevelButton : MonoBehaviour
 {
@@ -20,7 +20,6 @@ public class LevelButton : MonoBehaviour
         }
     }
     int mLevel = 0;
-
     public int Level{
         get{ 
             return mLevel; 
@@ -36,10 +35,10 @@ public class LevelButton : MonoBehaviour
     {
         if (mMode == LevelButtonMode.EditLevelMode){
             Debug.Log("Attempting an edit");
-            //EditLevel();
+            EditLevel();
         }else{
             Debug.Log("Attempting a load");
-            //LoadLevel();
+            LoadLevel();
         }
         
     }
@@ -52,6 +51,8 @@ public class LevelButton : MonoBehaviour
         FileStream file = File.Open(Application.persistentDataPath + filename, FileMode.OpenOrCreate);
         Save save = (Save)bf.Deserialize(file);
         file.Close();            
+        GameSingleton.Instance.currentLevel = mLevel;
+        SceneManager.LoadScene("LevelBuilder");
     }
     void LoadLevel()
     {
@@ -60,10 +61,12 @@ public class LevelButton : MonoBehaviour
 
         if (File.Exists(Application.persistentDataPath + filename))
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + filename, FileMode.Open);
-            Save save = (Save)bf.Deserialize(file);
-            file.Close();
+            //BinaryFormatter bf = new BinaryFormatter();
+            //FileStream file = File.Open(Application.persistentDataPath + filename, FileMode.Open);
+            //Save save = (Save)bf.Deserialize(file);
+            //file.Close();
+            GameSingleton.Instance.currentLevel = mLevel;
+            SceneManager.LoadScene("SampleScene");
         }
         else
         {
