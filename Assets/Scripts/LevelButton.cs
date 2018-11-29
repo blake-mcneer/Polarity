@@ -47,10 +47,14 @@ public class LevelButton : MonoBehaviour
     {
         if (mLevel == 0) return;
         string filename = "/Level" + mLevel.ToString() + ".save";
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Open(Application.persistentDataPath + filename, FileMode.OpenOrCreate);
-        Save save = (Save)bf.Deserialize(file);
-        file.Close();            
+        if (!File.Exists(Application.persistentDataPath + filename))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Create(Application.persistentDataPath + filename);
+            Save save = (Save)bf.Deserialize(file);
+            file.Close();            
+        }
+
         GameSingleton.Instance.currentLevel = mLevel;
         SceneManager.LoadScene("LevelBuilder");
     }
