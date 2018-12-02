@@ -28,7 +28,9 @@ public class GameManager : MonoBehaviour {
     public Transform leftLimit;
     public Transform rightLimit;
     int pulseIndex = 1;
+    List<int> indexList = new List<int>();
     MagneticObject[] magneticObjects;
+    //MagneticPulse activePulse;
 
     public void SetupManager()
     {
@@ -44,6 +46,15 @@ public class GameManager : MonoBehaviour {
         userInterface.SetTapCount(tapCount);
         userInterface.SetScore(score);
         userInterface.SetTime(seconds);
+    }
+    private List<int> FullIndexList()
+    {
+        List<int> returnList = new List<int>();
+        foreach (MagneticObject obj in magneticObjects)
+        {
+            returnList.Add(obj.index);
+        }
+        return returnList;
     }
 
     private void Start()
@@ -102,8 +113,19 @@ public class GameManager : MonoBehaviour {
     public void AddRepulsion(Vector3 pos, int[] affectedIndeces)
     {
         MagneticPulse p = CreatePulse(position: pos, strength: -pulseStrength, duration: 0.75f, prefab: repulsionImage);
-        p.specificIndeces = affectedIndeces;
+        p.specificIndeces = affectedIndeces.ToList();
         attractionPulses.Add(p);
+    }
+    public void RemoveFromCurrentAttractionPulses(int index)
+    {
+        foreach (MagneticPulse p in attractionPulses)
+        {
+            if (p.pulseStrength > 0.0f && p.specificIndeces != null){
+                if (p.specificIndeces.Contains(index)){
+                    p.specificIndeces.Remove(index);
+                }
+            }
+        }
     }
 
     MagneticPulse CreatePulse(Vector3 position, float strength, float duration)
@@ -129,6 +151,7 @@ public class GameManager : MonoBehaviour {
     {
         if (Time.timeScale > 0){
             MagneticPulse p = CreatePulse(position: pos, strength: pulseStrength, duration: pulseDurationSetting, prefab: pulseImage);
+            p.specificIndeces = FullIndexList();
             attractionPulses.Add(p);
         }
 
@@ -169,7 +192,8 @@ public class GameManager : MonoBehaviour {
                     pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength *pulseAffect*dist;
                 }
                 else{
-                    p.Dissapate();
+                    //This would shrink the pulse away if reached
+                    //p.Dissapate();
 
                 }
             }

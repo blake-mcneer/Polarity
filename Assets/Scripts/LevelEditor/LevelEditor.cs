@@ -107,8 +107,11 @@ public class LevelEditor : MonoBehaviour
         Vector2 loc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 currentInput = new Vector3(loc.x, loc.y, 0.0f);
 
-        objectHeld.transform.position = positionStarted - (inputStarted - currentInput);
-        
+        Vector3 newPos = positionStarted - (inputStarted - currentInput);
+        newPos = new Vector3((int)newPos.x, (int)newPos.y, (int)newPos.z);
+        objectHeld.transform.position = newPos;
+        Debug.Log(objectHeld.transform.position);
+
     }
 
 }

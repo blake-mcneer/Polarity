@@ -11,7 +11,7 @@ public class MagneticPulse : ScriptableObject {
     public Vector3 pulseLocation;
     public GameObject prefab;
     public int index;
-    public int[] specificIndeces;
+    public List<int> specificIndeces = new List<int>();
     public bool hasBeenReached;
         
     public void Dissapate()
@@ -25,5 +25,6 @@ public class MagneticPulse : ScriptableObject {
         emission.rateOverTime = 1.0f;
         pulseStrength = 0.0f;
     }
+
 
 }

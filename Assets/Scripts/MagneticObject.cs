@@ -104,6 +104,7 @@ public class MagneticObject : MonoBehaviour {
             {
                 int[] indecesAffected = { index, mag.index };
                 manager.AddRepulsion(transform.position, indecesAffected);
+                manager.RemoveFromCurrentAttractionPulses(index);
             }
         }else if (collision.gameObject.tag == "Barrier")
         {
