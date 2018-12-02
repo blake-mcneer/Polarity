@@ -112,6 +112,7 @@ public class MagneticObject : MonoBehaviour {
             Vector3 pos = (collision.transform.position - transform.position).normalized;
             pos = transform.position + pos;
             manager.AddRepulsion(pos, indecesAffected);
+            manager.RemoveFromCurrentAttractionPulses(index);
 
         }
     }

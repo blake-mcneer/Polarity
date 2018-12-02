@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657856, g: 0.49641234, b: 0.57481724, a: 1}
+  m_IndirectSpecularColor: {r: 0.45140302, g: 0.5008925, b: 0.57231426, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -126,27 +126,27 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4673465149964358, guid: 32119468c334643019697404ad3c0148, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.62305725
+      value: -5.24
       objectReference: {fileID: 0}
     - target: {fileID: 4673465149964358, guid: 32119468c334643019697404ad3c0148, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.109304234
+      value: 0.11
       objectReference: {fileID: 0}
     - target: {fileID: 4673465149964358, guid: 32119468c334643019697404ad3c0148, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0.7071068
+      value: 0.7105597
       objectReference: {fileID: 0}
     - target: {fileID: 4673465149964358, guid: 32119468c334643019697404ad3c0148, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.06162609
       objectReference: {fileID: 0}
     - target: {fileID: 4673465149964358, guid: 32119468c334643019697404ad3c0148, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.06162609
       objectReference: {fileID: 0}
     - target: {fileID: 4673465149964358, guid: 32119468c334643019697404ad3c0148, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.6982187
       objectReference: {fileID: 0}
     - target: {fileID: 4673465149964358, guid: 32119468c334643019697404ad3c0148, type: 2}
       propertyPath: m_RootOrder
@@ -449,13 +449,13 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -463,13 +463,13 @@ Light:
     m_NormalBias: 0.4
     m_NearPlane: 0.2
   m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
+  m_DrawHalo: 1
   m_Flare: {fileID: 0}
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 1
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -483,13 +483,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 170076733}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: -7.6045265, y: -7.5299997, z: 0.24087292}
+  m_LocalRotation: {x: 0.30894965, y: 0.2698947, z: 0.11003344, w: 0.9053174}
+  m_LocalPosition: {x: -17.17, y: 0, z: -17.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1343512758}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 40, z: 25}
 --- !u!1 &195227393
 GameObject:
   m_ObjectHideFlags: 0
@@ -4936,7 +4936,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4610211849244816, guid: 60b26bd9586ad4405a3adcc9eabb22a6, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.00000006084641
+      value: 18.42
       objectReference: {fileID: 0}
     - target: {fileID: 4610211849244816, guid: 60b26bd9586ad4405a3adcc9eabb22a6, type: 2}
       propertyPath: m_LocalPosition.y
@@ -4948,19 +4948,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4610211849244816, guid: 60b26bd9586ad4405a3adcc9eabb22a6, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0.7071068
+      value: 0.7105597
       objectReference: {fileID: 0}
     - target: {fileID: 4610211849244816, guid: 60b26bd9586ad4405a3adcc9eabb22a6, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.06162609
       objectReference: {fileID: 0}
     - target: {fileID: 4610211849244816, guid: 60b26bd9586ad4405a3adcc9eabb22a6, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.06162609
       objectReference: {fileID: 0}
     - target: {fileID: 4610211849244816, guid: 60b26bd9586ad4405a3adcc9eabb22a6, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.6982187
       objectReference: {fileID: 0}
     - target: {fileID: 4610211849244816, guid: 60b26bd9586ad4405a3adcc9eabb22a6, type: 2}
       propertyPath: m_RootOrder
