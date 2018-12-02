@@ -49,9 +49,29 @@ public class LevelButton : MonoBehaviour
         string filename = "/Level" + mLevel.ToString() + ".save";
         if (!File.Exists(Application.persistentDataPath + filename))
         {
+            //MagneticObject[] magneticObjects = FindObjectsOfType<MagneticObject>();
+            //Attractor[] attractors = FindObjectsOfType<Attractor>();
+            //Goal[] goals = FindObjectsOfType<Goal>();
+
+            Save save = new Save();
+
+            //foreach (MagneticObject obj in magneticObjects)
+            //{
+            //    save.magneticObjectElements.Add(new MagneticObjectData(obj.transform.position, obj.type, obj.index));
+            //}
+            //foreach (Goal g in goals)
+            //{
+            //    save.goalElements.Add(new GoalData(g.transform.position, g.type, g.barrier, g.rotationSpeed));
+            //}
+            //foreach (Attractor a in attractors)
+            //{
+            //    save.attractorElements.Add(new AttractorData(a.transform.position, a.transform.rotation, a.strength));
+            //}
+
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Create(Application.persistentDataPath + filename);
-            Save save = (Save)bf.Deserialize(file);
+            //Save save = (Save)bf.Deserialize(file);
+            bf.Serialize(file, save);
             file.Close();            
         }
 

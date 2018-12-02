@@ -8,5 +8,5 @@ public class GameSingleton : Singleton<GameSingleton>
     {
     }
     public int currentLevel;
-
+    public LevelButtonMode currentMode = LevelButtonMode.LoadLevelMode;
 }

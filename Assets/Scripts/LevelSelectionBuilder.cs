@@ -11,7 +11,7 @@ public class LevelSelectionBuilder : MonoBehaviour {
         {
             GameObject levelButtonObject = Instantiate(LevelButtonPrefab,transform);
             levelButtonObject.GetComponent<LevelButton>().Level = i;
-            levelButtonObject.GetComponent<LevelButton>().Mode = buttonMode;
+            levelButtonObject.GetComponent<LevelButton>().Mode = GameSingleton.Instance.currentMode;
         }
 	}
 }

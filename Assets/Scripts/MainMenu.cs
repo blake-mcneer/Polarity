@@ -7,11 +7,18 @@ public class MainMenu : MonoBehaviour {
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        GameSingleton.Instance.currentMode = LevelButtonMode.LoadLevelMode;
+        SceneManager.LoadScene("LevelSelect");
     }
     public void LevelEditor()
     {
-        SceneManager.LoadScene("LevelBuilder");
+        GameSingleton.Instance.currentMode = LevelButtonMode.EditLevelMode;
+        SceneManager.LoadScene("LevelSelect");
     }
+    public void Home()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
 
 }

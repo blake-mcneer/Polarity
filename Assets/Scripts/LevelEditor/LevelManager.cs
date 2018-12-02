@@ -30,6 +30,7 @@ public class LevelManager : MonoBehaviour {
     public void SaveLevel()
     {
         int levelNumber = config.currentLevel;
+        levelNumber = GameSingleton.Instance.currentLevel;
         MagneticObject[] magneticObjects = FindObjectsOfType<MagneticObject>();
         Attractor[] attractors = FindObjectsOfType<Attractor>();
         Goal[] goals = FindObjectsOfType<Goal>();
