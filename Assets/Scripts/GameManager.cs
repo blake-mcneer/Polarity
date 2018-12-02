@@ -215,10 +215,30 @@ public class GameManager : MonoBehaviour {
 
         return new Vector2(-pulsePower.x, pulsePower.y);
     }
+
+    bool TouchingUI(Vector2 position)
+    {
+        PointerEventData pointer = new PointerEventData(EventSystem.current);
+        pointer.position = position;
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointer, raycastResults);
+
+        return raycastResults.Count == 0;  
+        //if (raycastResults.Count > 0)
+        //{
+        //    foreach (var go in raycastResults)
+        //    {
+        //        Debug.Log(go.gameObject.name, go.gameObject);
+        //    }
+        //}
+    }
     void DidTap()
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
-        {
+        bool canTap = !EventSystem.current.IsPointerOverGameObject();
+        if (Input.touches.Count() > 0){
+            canTap = TouchingUI(Input.touches[0].position);
+        }
+        if (canTap){
             tapCount++;
             RemoveActivePulses();
             AddPulse();
@@ -253,7 +273,6 @@ public class GameManager : MonoBehaviour {
         {
             DidTap();
         }
-//        CheckPhoneTaps();
 
         UpdatePulses();
     }
