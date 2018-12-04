@@ -117,7 +117,7 @@ public class MagneticObject : MonoBehaviour {
         //if (targetPos.x < limits.leftLimit) targetPos.x = limits.leftLimit;
         rb.MovePosition(targetPos);
         //Vector2 testLoc = Camera.main.WorldToViewportPoint(transform.position);
-        //Debug.Log(testLoc);
+        //Debug.Log(testLoc.x.ToString("0.000") + " : " + testLoc.y.ToString("0.000"));
         //rb.AddForce(new Vector3(pulseAffect.x, -pulseAffect.y, 0.0f),ForceMode.VelocityChange);
     }
     private void OnCollisionEnter(Collision collision)

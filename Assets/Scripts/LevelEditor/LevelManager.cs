@@ -39,15 +39,21 @@ public class LevelManager : MonoBehaviour {
 
         foreach (MagneticObject obj in magneticObjects)
         {
-            save.magneticObjectElements.Add(new MagneticObjectData(obj.transform.position, obj.type, obj.index));
+            Vector3 pos = obj.transform.position;
+            pos = Camera.main.WorldToViewportPoint(pos);
+            save.magneticObjectElements.Add(new MagneticObjectData(pos, obj.type, obj.index));
         }
         foreach(Goal g in goals)
         {
-            save.goalElements.Add(new GoalData(g.transform.position, g.type,g.barrier, g.rotationSpeed));
+            Vector3 pos = g.transform.position;
+            pos = Camera.main.WorldToViewportPoint(pos);
+            save.goalElements.Add(new GoalData(pos, g.type,g.barrier, g.rotationSpeed));
         }
         foreach (Attractor a in attractors)
         {
-            save.attractorElements.Add(new AttractorData(a.transform.position, a.transform.rotation, a.strength));
+            Vector3 pos = a.transform.position;
+            pos = Camera.main.WorldToViewportPoint(pos);
+            save.attractorElements.Add(new AttractorData(pos, a.transform.rotation, a.strength));
         }
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/Level" + levelNumber.ToString() + ".save");
@@ -110,6 +116,7 @@ public class LevelManager : MonoBehaviour {
     void LoadMagneticBall(MagneticObjectData d)
     {
         Vector3 pos = new Vector3(d.posX, d.posY, d.posZ);
+        pos = Camera.main.ViewportToWorldPoint(pos);
         Quaternion rot = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
         GameObject obj = Instantiate(BallPrefab, pos, rot, transform.parent);
         MagneticObject magObj = obj.GetComponent<MagneticObject>();
@@ -120,6 +127,7 @@ public class LevelManager : MonoBehaviour {
     void LoadGoal(GoalData d)
     {
         Vector3 pos = new Vector3(d.posX, d.posY, d.posZ);
+        pos = Camera.main.ViewportToWorldPoint(pos);
         Quaternion rot = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
         GameObject obj = Instantiate(GoalPrefab, pos, rot, transform.parent);
         Goal goalObj = obj.GetComponent<Goal>();
@@ -131,6 +139,7 @@ public class LevelManager : MonoBehaviour {
     void LoadAttractor(AttractorData d)
     {
         Vector3 pos = new Vector3(d.posX, d.posY, d.posZ);
+        pos = Camera.main.ViewportToWorldPoint(pos);
         Quaternion rot = new Quaternion(d.rotX, d.rotY, d.rotZ, d.rotW);
         GameObject obj = Instantiate(AttractorPrefab, pos, rot, transform.parent);
         Attractor attractorObj = obj.GetComponent<Attractor>();
