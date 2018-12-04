@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour {
     {
         userInterface = FindObjectOfType<UI>();
         SetupManager();
+        Debug.Log(Screen.width + ", " + Screen.height);
     }
     void LoadMagneticObjects()
     {        
@@ -166,7 +167,9 @@ public class GameManager : MonoBehaviour {
     void AddPulse()
     {
         Vector2 loc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 loc2 = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         Vector3 pulseLocation = new Vector3(loc.x, loc.y, 10.0f);
+        //Debug.Log("Viewport location: " + loc2 + " Modified Location: " + pulseLocation);
         AddPulseAtPosition(pulseLocation);
     }
     public Vector2 AffectOnPosition(Vector2 position, int objectIndex)

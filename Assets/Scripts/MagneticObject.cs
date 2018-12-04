@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct ScreenLimits
+{
+    public float leftLimit;
+    public float rightLimit;
+    public float topLimit;
+    public float bottomLimit;
+}
 public class MagneticObject : MonoBehaviour {
 
     public Material M1_Material;
@@ -18,14 +25,26 @@ public class MagneticObject : MonoBehaviour {
     float targetScale = 1.0f;
     float scaleSpeed = 4.0f;
     bool shrinkingAway = false;
+    ScreenLimits limits;
     [HideInInspector] public int index;
     Vector3 previousVelocity;
     Rigidbody rb;
     GameManager manager;
     private void Start()
     {
+        ConfigureScreenLimits();
         ConfigureBall();
     }
+    void ConfigureScreenLimits()
+    {
+        Vector3 lowerLeftCorner = Camera.main.ViewportToWorldPoint(Vector3.zero);
+        Vector3 upperRightCorner = Camera.main.ViewportToWorldPoint(Vector3.one);
+        limits.leftLimit = lowerLeftCorner.x;
+        limits.rightLimit = upperRightCorner.x;
+        limits.bottomLimit = lowerLeftCorner.y;
+        limits.topLimit = upperRightCorner.y;
+    }
+
     public void ConfigureBall()
     {
         rb = GetComponent<Rigidbody>();
@@ -64,6 +83,16 @@ public class MagneticObject : MonoBehaviour {
         }
         transform.localScale = Vector3.one * scale;
     }
+    Vector3 LimitPosition(Vector3 rawPosition)
+    {
+        float x = Mathf.Max(rawPosition.x, limits.leftLimit);
+        x = Mathf.Min(x, limits.rightLimit);
+        float y = Mathf.Max(rawPosition.y, limits.bottomLimit);
+        y = Mathf.Min(y, limits.topLimit);
+
+        Vector3 limitedPosition = new Vector3(x, y, rawPosition.z);
+        return limitedPosition;
+    }
     private void Update()
     {
         if (manager == null) ConfigureBall();
@@ -82,10 +111,13 @@ public class MagneticObject : MonoBehaviour {
         float xTarget = transform.position.x + pulseAffect.x * magneticConstant * Time.deltaTime;
         float yTarget = transform.position.y - pulseAffect.y * magneticConstant * Time.deltaTime;
         yTarget -= dropSpeed * Time.deltaTime;
-        Vector3 targetPos = new Vector3(xTarget, yTarget, 0.0f);
-        if (targetPos.x > manager.rightLimit.position.x) targetPos.x = manager.rightLimit.position.x;
-        if (targetPos.x < manager.leftLimit.position.x) targetPos.x = manager.leftLimit.position.x;
+        Vector3 targetPos = LimitPosition(new Vector3(xTarget, yTarget, 0.0f));
+        //Vector3 targetPos = new Vector3(xTarget, yTarget, 0.0f);
+        //if (targetPos.x > limits.rightLimit) targetPos.x = limits.rightLimit;
+        //if (targetPos.x < limits.leftLimit) targetPos.x = limits.leftLimit;
         rb.MovePosition(targetPos);
+        //Vector2 testLoc = Camera.main.WorldToViewportPoint(transform.position);
+        //Debug.Log(testLoc);
         //rb.AddForce(new Vector3(pulseAffect.x, -pulseAffect.y, 0.0f),ForceMode.VelocityChange);
     }
     private void OnCollisionEnter(Collision collision)
