@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4615863596919798}
   - component: {fileID: 114429317559147024}
+  - component: {fileID: 95469260404295558}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Goal
@@ -366,6 +367,24 @@ Animator:
   m_Avatar: {fileID: 9000000, guid: 49a4201ce6d285a45a52dbd0725b5623, type: 3}
   m_Controller: {fileID: 0}
   m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!95 &95469260404295558
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1061835083860130}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e10303dbf7def44459c479391405818d, type: 2}
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0

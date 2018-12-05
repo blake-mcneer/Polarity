@@ -106,6 +106,8 @@ public class MagneticObject : MonoBehaviour {
             Destroy(gameObject);    
         }
 
+        if (shrinkingAway) return;
+
         rb.velocity = Vector3.zero;
         Vector2 pulseAffect = manager.AffectOnPosition(transform.position, index);
         float xTarget = transform.position.x + pulseAffect.x * magneticConstant * Time.deltaTime;
@@ -153,8 +155,18 @@ public class MagneticObject : MonoBehaviour {
         if (other.tag == "Finish")
         {
             Goal g = other.transform.parent.GetComponent<Goal>();
-            Debug.Log(g);
-            g.HitByMagneticObject(gameObject.GetComponent<MagneticObject>());
+            if (g.type == type)
+            {
+                g.HitByMagneticObject(gameObject.GetComponent<MagneticObject>());
+                ShrinkAway();
+            }
+            else
+            {
+                int[] indecesAffected = { index };
+                Vector3 pos = (g.transform.position - transform.position).normalized;
+                pos = transform.position + pos;
+                manager.AddRepulsion(pos, indecesAffected);
+            }
         }
     }
     public void AbsorbObject(MagneticObject obj)

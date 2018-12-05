@@ -13,12 +13,14 @@ public class Goal : MonoBehaviour {
     public GameObject Barrier25;
     public GameObject Barrier50;
     public GameObject Barrier75;
+    Animator anim;
     int positiveScore = 100;
     int negativeScore = -50;
     GameManager manager;
     void Start () {
         manager = FindObjectOfType<GameManager>();
         ConfigureSettings();
+        anim = GetComponentInChildren<Animator>();
     }
     public void ConfigureSettings()
     {
@@ -93,6 +95,18 @@ public class Goal : MonoBehaviour {
             i--;
         }
     }
+    IEnumerator WaitForTime(float duration)
+    {
+        anim.SetBool("BallAbsorbed", true);
+        yield return new WaitForSeconds(duration);
+        anim.SetBool("BallAbsorbed", false);
+    }
+    public void AnimateGrow()
+    {
+        StopAllCoroutines();
+        anim.SetBool("BallAbsorbed", false);
+        StartCoroutine(WaitForTime(1.0f));
+    }
     public void HitByMagneticObject(MagneticObject mag)
     {
         if (mag.type == type){
@@ -100,8 +114,10 @@ public class Goal : MonoBehaviour {
         }else{
             manager.AddScore(negativeScore * mag.totalCount);
         }
+        AnimateGrow();
+
         //StartCoroutine(AnimateGoal());
-        Destroy(mag.gameObject);
+//        Destroy(mag.gameObject);
     }
     private void OnDrawGizmosSelected()
     {
