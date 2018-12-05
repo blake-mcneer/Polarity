@@ -146,6 +146,9 @@ public class GameManager : MonoBehaviour {
     {
         MagneticPulse pulse = CreatePulse(position, strength, duration);
         pulse.prefab = Instantiate(prefab, pulse.pulseLocation, Quaternion.Euler(0.0f, 0.0f, 0.0f));
+        pulse.prefab.GetComponent<ParticleSystem>().Simulate(2.0f);
+        pulse.prefab.GetComponent<ParticleSystem>().Play();
+
         return pulse;
     }
     void AddPulseAtPosition(Vector3 pos)
