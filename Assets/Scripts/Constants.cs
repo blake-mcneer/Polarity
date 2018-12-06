@@ -59,7 +59,12 @@ public struct AttractorData
         strength = attractorStrength;
     }
 }
-
+[System.Serializable]
+public enum BorderPieceType
+{
+    BorderPieceStraight,
+    BorderPieceCorner    
+}
 [System.Serializable]
 public struct MagneticObjectData
 {

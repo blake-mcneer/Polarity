@@ -178,7 +178,6 @@ public class MagneticObject : MonoBehaviour {
     {
         if (other.tag == "Finish")
         {
-            Debug.Log("Calling goal handle from triggerStay");
             Goal g = other.transform.parent.GetComponent<Goal>();
             HandleCollisionWithGoal(g);
         }
