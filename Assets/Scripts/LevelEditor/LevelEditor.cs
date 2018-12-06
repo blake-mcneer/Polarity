@@ -8,6 +8,7 @@ public class LevelEditor : MonoBehaviour
     public GoalEditPanel goalPanel;
     public MagneticBallEditPanel magneticBallPanel;
     public GeneralEditor editorPanel;
+    public BorderPieceEditPanel borderPiecePanel;
 
     int mLevel = 0;
     public int Level
@@ -72,6 +73,15 @@ public class LevelEditor : MonoBehaviour
                 magneticBallPanel.gameObject.SetActive(true);
                 magneticBallPanel.SetMagneticObject(magneticObject);
 
+            }
+            else if (tagHit == "BorderPiece")
+            {
+                GameObject borderPieceObject = hit.collider.transform.parent.gameObject;
+                BorderPiece borderPiece = borderPieceObject.GetComponent<BorderPiece>();
+                GrabObject(borderPieceObject);
+                HideAllPanels();
+                borderPiecePanel.gameObject.SetActive(true);
+                borderPiecePanel.SetBorderPiece(borderPiece);
             }
             else if (tagHit == "Barrier")
             {

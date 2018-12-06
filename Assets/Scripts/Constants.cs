@@ -66,6 +66,15 @@ public enum BorderPieceType
     BorderPieceCorner    
 }
 [System.Serializable]
+public enum RotationDegrees
+{
+    None,
+    Quarter,
+    Half,
+    ThreeQuarter
+}
+
+[System.Serializable]
 public struct MagneticObjectData
 {
     public int index;

@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BorderPiece : MonoBehaviour {
-    public enum RotationDegrees{
-        None,
-        Quarter,
-        Half,
-        ThreeQuarter,
-        Full
-    }
     public BorderPieceType type = BorderPieceType.BorderPieceStraight;
     public RotationDegrees rot = RotationDegrees.None;
     public GameObject cornerPrefab;
@@ -17,8 +10,7 @@ public class BorderPiece : MonoBehaviour {
 
     private void Start()
     {
-        ActivateSelectedPrefab();
-        SetRotation();
+        ForceUpdate();
     }
     void ActivateSelectedPrefab()
     {
@@ -39,8 +31,6 @@ public class BorderPiece : MonoBehaviour {
         switch(rot){
             case RotationDegrees.None:
                 break;
-            case RotationDegrees.Full:
-                break;
             case RotationDegrees.Quarter:
                 amt = 90.0f;
                 break;
@@ -56,9 +46,13 @@ public class BorderPiece : MonoBehaviour {
         Quaternion rotQuat = Quaternion.Euler(rotVec3);
         transform.rotation = rotQuat;
     }
-    private void OnDrawGizmosSelected()
+    public void ForceUpdate()
     {
         ActivateSelectedPrefab();
         SetRotation();
+    }
+    private void OnDrawGizmosSelected()
+    {
+        ForceUpdate();
     }
 }

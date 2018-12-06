@@ -140,7 +140,7 @@ public class MagneticObject : MonoBehaviour {
                 manager.AddRepulsion(transform.position, indecesAffected);
                 manager.RemoveFromCurrentAttractionPulses(index);
             }
-        }else if (collision.gameObject.tag == "Barrier")
+        }else if (collision.gameObject.tag == "Barrier" || collision.gameObject.tag == "BorderPiece")
         {
             int[] indecesAffected = { index};
             Vector3 pos = (collision.transform.position - transform.position).normalized;
