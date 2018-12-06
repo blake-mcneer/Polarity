@@ -25,8 +25,6 @@ public class GameManager : MonoBehaviour {
     [HideInInspector] public List<MagneticPulse> repulsionPulses = new List<MagneticPulse>();
     public GameObject pulseImage;
     public GameObject repulsionImage;
-    public Transform leftLimit;
-    public Transform rightLimit;
     int pulseIndex = 1;
     List<int> indexList = new List<int>();
     MagneticObject[] magneticObjects;
