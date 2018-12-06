@@ -150,23 +150,37 @@ public class MagneticObject : MonoBehaviour {
 
         }
     }
+    void HandleCollisionWithGoal(Goal g)
+    {
+        if (g.type == type)
+        {
+            g.HitByMagneticObject(gameObject.GetComponent<MagneticObject>());
+            ShrinkAway();
+        }
+        else
+        {
+            int[] indecesAffected = { index };
+            Vector3 pos = (g.transform.position - transform.position).normalized;
+            pos = transform.position + pos;
+            manager.AddRepulsion(pos, indecesAffected);
+        }
+
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Finish")
         {
             Goal g = other.transform.parent.GetComponent<Goal>();
-            if (g.type == type)
-            {
-                g.HitByMagneticObject(gameObject.GetComponent<MagneticObject>());
-                ShrinkAway();
-            }
-            else
-            {
-                int[] indecesAffected = { index };
-                Vector3 pos = (g.transform.position - transform.position).normalized;
-                pos = transform.position + pos;
-                manager.AddRepulsion(pos, indecesAffected);
-            }
+            HandleCollisionWithGoal(g);
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Finish")
+        {
+            Debug.Log("Calling goal handle from triggerStay");
+            Goal g = other.transform.parent.GetComponent<Goal>();
+            HandleCollisionWithGoal(g);
         }
     }
     public void AbsorbObject(MagneticObject obj)
