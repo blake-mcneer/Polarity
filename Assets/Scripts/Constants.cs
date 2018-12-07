@@ -35,6 +35,23 @@ public struct GoalData
     }
 }
 [System.Serializable]
+public struct BorderPieceData
+{
+    public BorderPieceType type;
+    public RotationDegrees rot;
+    public float posX;
+    public float posY;
+    public float posZ;
+    public BorderPieceData(Vector3 pos, BorderPieceType t, RotationDegrees r)
+    {
+        rot = r;
+        type = t;
+        posX = pos.x;
+        posY = pos.y;
+        posZ = pos.z;
+    }
+}
+[System.Serializable]
 public struct AttractorData
 {
     public float rotX;

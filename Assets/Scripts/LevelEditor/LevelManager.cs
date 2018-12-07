@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour {
     public GameObject BallPrefab;
     public GameObject AttractorPrefab;
     public GameObject GoalPrefab;
+    public GameObject BorderPiecePrefab;
     public GameObject SaveMenu;
     public SaveConfig config;
     GameManager manager;
@@ -34,7 +35,7 @@ public class LevelManager : MonoBehaviour {
         MagneticObject[] magneticObjects = FindObjectsOfType<MagneticObject>();
         Attractor[] attractors = FindObjectsOfType<Attractor>();
         Goal[] goals = FindObjectsOfType<Goal>();
-
+        BorderPiece[] borderPieces = FindObjectsOfType<BorderPiece>();
         Save save = new Save();
 
         foreach (MagneticObject obj in magneticObjects)
@@ -54,6 +55,13 @@ public class LevelManager : MonoBehaviour {
             Vector3 pos = a.transform.position;
             pos = Camera.main.WorldToViewportPoint(pos);
             save.attractorElements.Add(new AttractorData(pos, a.transform.rotation, a.strength));
+        }
+        foreach (BorderPiece p in borderPieces)
+        {
+            Vector3 pos = p.transform.position;
+            pos = Camera.main.WorldToViewportPoint(pos);
+            save.borderPieceElements.Add(new BorderPieceData(pos, p.type, p.rot));
+
         }
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/Level" + levelNumber.ToString() + ".save");
@@ -104,6 +112,10 @@ public class LevelManager : MonoBehaviour {
             {
                 LoadAttractor(a);
             }
+            foreach (BorderPieceData p in save.borderPieceElements)
+            {
+                LoadBorderPiece(p);
+            }
             manager.SetupManager();
             PlayerPrefs.SetInt("CurrentLevel",levelNumber);
         }
@@ -146,5 +158,16 @@ public class LevelManager : MonoBehaviour {
         attractorObj.strength = d.strength;
         attractorObj.ConfigureAttractor();
 
+    }
+    void LoadBorderPiece(BorderPieceData p)
+    {
+        Vector3 pos = new Vector3(p.posX, p.posY, p.posZ);
+        pos = Camera.main.ViewportToWorldPoint(pos);
+        Quaternion rot = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+        GameObject obj = Instantiate(BorderPiecePrefab, pos, rot, transform.parent);
+        BorderPiece bPiece = obj.GetComponent<BorderPiece>();
+        bPiece.type = p.type;
+        bPiece.rot = p.rot;
+        bPiece.ForceUpdate();
     }
 }

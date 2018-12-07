@@ -12,7 +12,8 @@ public class BorderPieceEditPanel : MonoBehaviour {
     public void SetBorderPiece(BorderPiece newBorderPiece)
     {
         borderPieceBeingModified = newBorderPiece;
-        borderPieceTypeText.text = newBorderPiece.type.ToString();
+        borderPieceRotationText.text = "0";
+        borderPieceTypeText.text = "Straight";
     }
     public void ModificationsComplete()
     {

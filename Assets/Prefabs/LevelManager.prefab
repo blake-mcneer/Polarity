@@ -55,5 +55,7 @@ MonoBehaviour:
   AttractorPrefab: {fileID: 1026786455548916, guid: 3e091607eb50f1b44a884745257885ce,
     type: 2}
   GoalPrefab: {fileID: 1061835083860130, guid: 041673fe79840bc4d8c96d4cf00ae63a, type: 2}
+  BorderPiecePrefab: {fileID: 1190111127521682, guid: 3dcebb12b3e8b4f49a3db0b7ed42f15b,
+    type: 2}
   SaveMenu: {fileID: 0}
   config: {fileID: 0}
