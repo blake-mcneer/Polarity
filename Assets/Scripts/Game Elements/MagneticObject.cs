@@ -39,10 +39,10 @@ public class MagneticObject : MonoBehaviour {
     {
         Vector3 lowerLeftCorner = Camera.main.ViewportToWorldPoint(Vector3.zero);
         Vector3 upperRightCorner = Camera.main.ViewportToWorldPoint(Vector3.one);
-        limits.leftLimit = lowerLeftCorner.x;
-        limits.rightLimit = upperRightCorner.x;
-        limits.bottomLimit = lowerLeftCorner.y;
-        limits.topLimit = upperRightCorner.y;
+        limits.leftLimit = lowerLeftCorner.x + transform.localScale.x /2.0f;
+        limits.rightLimit = upperRightCorner.x - transform.localScale.x /2.0f;
+        limits.bottomLimit = lowerLeftCorner.y + transform.localScale.x/2.0f;
+        limits.topLimit = upperRightCorner.y - transform.localScale.x/2.0f;
     }
 
     public void ConfigureBall()
