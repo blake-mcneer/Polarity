@@ -129,7 +129,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &52765808
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4213,12 +4213,6 @@ Prefab:
       propertyPath: config
       value: 
       objectReference: {fileID: 774855223}
-    - target: {fileID: 114893862200096126, guid: 0d8094548a0804de78f85b181b329a78,
-        type: 2}
-      propertyPath: BorderPiecePrefab
-      value: 
-      objectReference: {fileID: 1190111127521682, guid: 3dcebb12b3e8b4f49a3db0b7ed42f15b,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d8094548a0804de78f85b181b329a78, type: 2}
   m_IsPrefabAsset: 0

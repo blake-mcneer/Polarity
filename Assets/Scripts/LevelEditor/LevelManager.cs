@@ -14,13 +14,23 @@ public class LevelManager : MonoBehaviour {
     public GameObject BorderPiecePrefab;
     public GameObject SaveMenu;
     public SaveConfig config;
+    float calculatedScale = 1.0f;
     GameManager manager;
     Save saveFile;
-
+    Vector2 BaseViewSize;
     private void Start()
     {
+        BaseViewSize = new Vector2(750.0f, 1334.0f);
         manager = FindObjectOfType<GameManager>();
+        SetupScales();
         LoadLevel(GameSingleton.Instance.currentLevel);
+    }
+    void SetupScales()
+    {
+        //Debug.Log(Screen.width + ", " + Screen.height);
+        float widthScale = Screen.width / BaseViewSize.x;
+        float heightScale= Screen.height / BaseViewSize.y;
+        calculatedScale = Mathf.Min(widthScale, heightScale);
     }
     public void ShowSave()
     {
@@ -132,6 +142,7 @@ public class LevelManager : MonoBehaviour {
         Quaternion rot = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
         GameObject obj = Instantiate(BallPrefab, pos, rot, transform.parent);
         MagneticObject magObj = obj.GetComponent<MagneticObject>();
+        magObj.transform.localScale = Vector3.one * calculatedScale;
         magObj.index = d.index;
         magObj.type = d.type;
         magObj.SetMaterial();
@@ -143,6 +154,7 @@ public class LevelManager : MonoBehaviour {
         Quaternion rot = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
         GameObject obj = Instantiate(GoalPrefab, pos, rot, transform.parent);
         Goal goalObj = obj.GetComponent<Goal>();
+        goalObj.transform.localScale = Vector3.one * calculatedScale;
         goalObj.rotationSpeed = d.rotationSpeed;
         goalObj.type = d.type;
         goalObj.barrier = d.barrier;
@@ -155,6 +167,7 @@ public class LevelManager : MonoBehaviour {
         Quaternion rot = new Quaternion(d.rotX, d.rotY, d.rotZ, d.rotW);
         GameObject obj = Instantiate(AttractorPrefab, pos, rot, transform.parent);
         Attractor attractorObj = obj.GetComponent<Attractor>();
+        attractorObj.transform.localScale = Vector3.one * calculatedScale;
         attractorObj.strength = d.strength;
         attractorObj.ConfigureAttractor();
 
@@ -165,6 +178,7 @@ public class LevelManager : MonoBehaviour {
         pos = Camera.main.ViewportToWorldPoint(pos);
         Quaternion rot = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
         GameObject obj = Instantiate(BorderPiecePrefab, pos, rot, transform.parent);
+        obj.transform.localScale = Vector3.one * calculatedScale;
         BorderPiece bPiece = obj.GetComponent<BorderPiece>();
         bPiece.type = p.type;
         bPiece.rot = p.rot;

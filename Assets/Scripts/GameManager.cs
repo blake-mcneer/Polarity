@@ -59,7 +59,6 @@ public class GameManager : MonoBehaviour {
     {
         userInterface = FindObjectOfType<UI>();
         SetupManager();
-        Debug.Log(Screen.width + ", " + Screen.height);
     }
     void LoadMagneticObjects()
     {        
