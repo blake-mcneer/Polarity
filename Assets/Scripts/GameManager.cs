@@ -92,6 +92,11 @@ public class GameManager : MonoBehaviour {
             {
                 nextPulseList.Add(p);
                 float scaleSize = pulseDisplaySize * p.pulseRemaining/p.pulseDuration;
+                if (p.pulseStrength < 0.0f)
+                {
+                        scaleSize = pulseDisplaySize * (p.pulseDuration / p.pulseRemaining * 2.0f);
+                        scaleSize = Mathf.Min(scaleSize, 8.0f);
+                }
                 p.prefab.transform.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
             }
             else
@@ -169,7 +174,6 @@ public class GameManager : MonoBehaviour {
         Vector2 loc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 loc2 = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         Vector3 pulseLocation = new Vector3(loc.x, loc.y, 10.0f);
-        //Debug.Log("Viewport location: " + loc2 + " Modified Location: " + pulseLocation);
         AddPulseAtPosition(pulseLocation);
     }
     public Vector2 AffectOnPosition(Vector2 position, int objectIndex)
@@ -197,6 +201,7 @@ public class GameManager : MonoBehaviour {
                 else{
                     //This would shrink the pulse away if reached
                     //p.Dissapate();
+                    RemoveFromCurrentAttractionPulses(objectIndex);
 
                 }
             }

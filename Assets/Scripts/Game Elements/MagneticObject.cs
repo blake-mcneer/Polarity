@@ -114,9 +114,6 @@ public class MagneticObject : MonoBehaviour {
         float yTarget = transform.position.y - pulseAffect.y * magneticConstant * Time.deltaTime;
         yTarget -= dropSpeed * Time.deltaTime;
         Vector3 targetPos = LimitPosition(new Vector3(xTarget, yTarget, 0.0f));
-        //Vector3 targetPos = new Vector3(xTarget, yTarget, 0.0f);
-        //if (targetPos.x > limits.rightLimit) targetPos.x = limits.rightLimit;
-        //if (targetPos.x < limits.leftLimit) targetPos.x = limits.leftLimit;
         rb.MovePosition(targetPos);
         //Vector2 testLoc = Camera.main.WorldToViewportPoint(transform.position);
         //Debug.Log(testLoc.x.ToString("0.000") + " : " + testLoc.y.ToString("0.000"));
@@ -188,7 +185,6 @@ public class MagneticObject : MonoBehaviour {
         tMesh.text = totalCount.ToString();
         targetScale = (float)(totalCount -1) * 0.25f + 1.0f;
         obj.ShrinkAway();
-//        Destroy(obj.gameObject);
         
     }
     public void ShrinkAway()
