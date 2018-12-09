@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
     public float drainSpeed = 1.0f;
     public bool gameComplete = false;
     public int score = 0;
+    public int tapScoreEffect = -50;
     int tapCount = 0;
     float seconds = 0.0f;
     float maxDistanceAffect = 0.75f;
@@ -111,6 +112,7 @@ public class GameManager : MonoBehaviour {
     public void AddScore(int scoreAdjustment)
     {
         score += scoreAdjustment;
+        score = Mathf.Max(score, 0);
         userInterface.SetScore(score);
     }
     public void AddRepulsion(Vector3 pos, int[] affectedIndeces)
@@ -147,7 +149,7 @@ public class GameManager : MonoBehaviour {
     MagneticPulse CreatePulse(Vector3 position, float strength, float duration, GameObject prefab)
     {
         MagneticPulse pulse = CreatePulse(position, strength, duration);
-        pulse.prefab = Instantiate(prefab, pulse.pulseLocation, Quaternion.Euler(0.0f, 0.0f, 0.0f));
+        pulse.prefab = Instantiate(prefab, pulse.pulseLocation, Quaternion.Euler(0.0f, 0.0f, 0.0f),transform);
         pulse.prefab.GetComponent<ParticleSystem>().Simulate(2.0f);
         pulse.prefab.GetComponent<ParticleSystem>().Play();
 
@@ -173,7 +175,7 @@ public class GameManager : MonoBehaviour {
     {
         Vector2 loc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 loc2 = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        Vector3 pulseLocation = new Vector3(loc.x, loc.y, 10.0f);
+        Vector3 pulseLocation = new Vector3(loc.x, loc.y, 0.0f);
         AddPulseAtPosition(pulseLocation);
     }
     public Vector2 AffectOnPosition(Vector2 position, int objectIndex)
@@ -248,6 +250,7 @@ public class GameManager : MonoBehaviour {
         }
         if (canTap){
             tapCount++;
+            AddScore(tapScoreEffect);
             RemoveActivePulses();
             AddPulse();
             userInterface.SetTapCount(tapCount);

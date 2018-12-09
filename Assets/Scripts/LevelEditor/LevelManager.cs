@@ -140,7 +140,7 @@ public class LevelManager : MonoBehaviour {
         Vector3 pos = new Vector3(d.posX, d.posY, d.posZ);
         pos = Camera.main.ViewportToWorldPoint(pos);
         Quaternion rot = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
-        GameObject obj = Instantiate(BallPrefab, pos, rot, transform.parent);
+        GameObject obj = Instantiate(BallPrefab, pos, rot);
         MagneticObject magObj = obj.GetComponent<MagneticObject>();
         magObj.transform.localScale = Vector3.one * calculatedScale;
         magObj.index = d.index;
@@ -152,7 +152,7 @@ public class LevelManager : MonoBehaviour {
         Vector3 pos = new Vector3(d.posX, d.posY, d.posZ);
         pos = Camera.main.ViewportToWorldPoint(pos);
         Quaternion rot = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
-        GameObject obj = Instantiate(GoalPrefab, pos, rot, transform.parent);
+        GameObject obj = Instantiate(GoalPrefab, pos, rot, transform);
         Goal goalObj = obj.GetComponent<Goal>();
         goalObj.transform.localScale = Vector3.one * calculatedScale;
         goalObj.rotationSpeed = d.rotationSpeed;
@@ -165,7 +165,7 @@ public class LevelManager : MonoBehaviour {
         Vector3 pos = new Vector3(d.posX, d.posY, d.posZ);
         pos = Camera.main.ViewportToWorldPoint(pos);
         Quaternion rot = new Quaternion(d.rotX, d.rotY, d.rotZ, d.rotW);
-        GameObject obj = Instantiate(AttractorPrefab, pos, rot, transform.parent);
+        GameObject obj = Instantiate(AttractorPrefab, pos, rot, transform);
         Attractor attractorObj = obj.GetComponent<Attractor>();
         attractorObj.transform.localScale = Vector3.one * calculatedScale;
         attractorObj.strength = d.strength;
@@ -177,7 +177,7 @@ public class LevelManager : MonoBehaviour {
         Vector3 pos = new Vector3(p.posX, p.posY, p.posZ);
         pos = Camera.main.ViewportToWorldPoint(pos);
         Quaternion rot = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
-        GameObject obj = Instantiate(BorderPiecePrefab, pos, rot, transform.parent);
+        GameObject obj = Instantiate(BorderPiecePrefab, pos, rot, transform);
         obj.transform.localScale = Vector3.one * calculatedScale;
         BorderPiece bPiece = obj.GetComponent<BorderPiece>();
         bPiece.type = p.type;

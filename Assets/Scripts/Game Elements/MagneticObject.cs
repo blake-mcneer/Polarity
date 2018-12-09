@@ -27,6 +27,7 @@ public class MagneticObject : MonoBehaviour {
     bool shrinkingAway = false;
     ScreenLimits limits;
     [HideInInspector] public int index;
+    [HideInInspector] public bool hasBeenScored = false;
     Vector3 previousVelocity;
     Rigidbody rb;
     GameManager manager;
@@ -160,6 +161,7 @@ public class MagneticObject : MonoBehaviour {
             Vector3 pos = (g.transform.position - transform.position).normalized;
             pos = transform.position + pos;
             manager.AddRepulsion(pos, indecesAffected);
+            manager.RemoveFromCurrentAttractionPulses(index);
         }
 
     }

@@ -110,7 +110,10 @@ public class Goal : MonoBehaviour {
     public void HitByMagneticObject(MagneticObject mag)
     {
         if (mag.type == type){
-            manager.AddScore(positiveScore * mag.totalCount);
+            if (!mag.hasBeenScored){
+                mag.hasBeenScored = true;
+                manager.AddScore(positiveScore * mag.totalCount);
+            }
         }else{
             manager.AddScore(negativeScore * mag.totalCount);
         }
