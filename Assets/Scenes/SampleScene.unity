@@ -2074,6 +2074,7 @@ MonoBehaviour:
   drainSpeed: 1
   gameComplete: 0
   score: 0
+  tapScoreEffect: -50
   preconfiguredPulses: []
   attractionPulses: []
   repulsionPulses: []
@@ -3863,6 +3864,16 @@ Prefab:
       propertyPath: config
       value: 
       objectReference: {fileID: 774855223}
+    - target: {fileID: 114893862200096126, guid: 0d8094548a0804de78f85b181b329a78,
+        type: 2}
+      propertyPath: uiPanel
+      value: 
+      objectReference: {fileID: 1525943923}
+    - target: {fileID: 114893862200096126, guid: 0d8094548a0804de78f85b181b329a78,
+        type: 2}
+      propertyPath: UIPanel
+      value: 
+      objectReference: {fileID: 1525943923}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d8094548a0804de78f85b181b329a78, type: 2}
   m_IsPrefabAsset: 0

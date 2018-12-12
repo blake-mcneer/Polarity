@@ -147,7 +147,6 @@ public struct DropSequenceItem
         magneticType = type;
     }
 }
-
 public class Constants{
 
 }

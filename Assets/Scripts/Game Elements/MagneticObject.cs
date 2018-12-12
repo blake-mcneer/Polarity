@@ -40,6 +40,10 @@ public class MagneticObject : MonoBehaviour {
     {
         Vector3 lowerLeftCorner = Camera.main.ViewportToWorldPoint(Vector3.zero);
         Vector3 upperRightCorner = Camera.main.ViewportToWorldPoint(Vector3.one);
+        Vector3 upperRightScreenPoint = Camera.main.ViewportToScreenPoint(Vector3.one);
+        upperRightScreenPoint.y = Screen.height * 0.95f;
+        upperRightCorner = Camera.main.ScreenToWorldPoint(upperRightScreenPoint);
+
         limits.leftLimit = lowerLeftCorner.x + transform.localScale.x /2.0f;
         limits.rightLimit = upperRightCorner.x - transform.localScale.x /2.0f;
         limits.bottomLimit = lowerLeftCorner.y + transform.localScale.x/2.0f;

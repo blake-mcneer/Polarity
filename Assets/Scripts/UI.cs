@@ -12,13 +12,25 @@ public class UI : MonoBehaviour {
     public Text pulseStrengthText;
     public Text pulseDurationText;
     public GameObject PauseMenu;
+    public GameObject UIBanner;
     GameManager manager;
     private void Start()
     {
+        ResizeBanner();
         manager = FindObjectOfType<GameManager>();
         LoadManagerSettings();
         HidePauseMenu();
         SetManagerLabels();
+    }
+    void ResizeBanner()
+    {
+        
+        Vector3 lowerLeftCorner = Camera.main.ViewportToWorldPoint(Vector3.zero);
+        Vector3 upperRightCorner = Camera.main.ViewportToWorldPoint(Vector3.one);
+        RectTransform tForm = UIBanner.GetComponent<RectTransform>();
+        float bannerSize = Screen.height * 0.05f;
+        tForm.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,bannerSize);
+
     }
     void SetManagerLabels()
     {
