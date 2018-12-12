@@ -28,6 +28,7 @@ public class MagneticObject : MonoBehaviour {
     ScreenLimits limits;
     [HideInInspector] public int index;
     [HideInInspector] public bool hasBeenScored = false;
+    [HideInInspector] public bool hasBeenAbsorbed = false;
     Vector3 previousVelocity;
     Rigidbody rb;
     GameManager manager;
@@ -87,6 +88,7 @@ public class MagneticObject : MonoBehaviour {
             scale = Mathf.Min(scale, targetScale);
         }
         transform.localScale = Vector3.one * scale;
+        ConfigureScreenLimits();
     }
     Vector3 LimitPosition(Vector3 rawPosition)
     {
@@ -187,6 +189,8 @@ public class MagneticObject : MonoBehaviour {
     }
     public void AbsorbObject(MagneticObject obj)
     {
+        if (obj.hasBeenAbsorbed) return;
+        obj.hasBeenAbsorbed = true;
         totalCount+= obj.totalCount;
         tMesh.text = totalCount.ToString();
         targetScale = (float)(totalCount -1) * 0.25f + 1.0f;

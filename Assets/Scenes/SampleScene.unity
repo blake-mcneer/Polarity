@@ -4002,6 +4002,7 @@ MonoBehaviour:
   pulseStrengthText: {fileID: 489324875}
   pulseDurationText: {fileID: 70110140}
   PauseMenu: {fileID: 52765807}
+  UIBanner: {fileID: 1525943922}
 --- !u!1 &2034360544
 GameObject:
   m_ObjectHideFlags: 0
