@@ -201,9 +201,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ea05c92b4fb5c4d8fc5f392e16eef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  M1_Material: {fileID: 2100000, guid: 3802ba0645e71d54bb9d17a276a14711, type: 2}
-  M2_Material: {fileID: 2100000, guid: f060402825d786c4fb0bb551d762215e, type: 2}
-  M3_Material: {fileID: 2100000, guid: 4ab22664dabd5214fa354de30a03c8d8, type: 2}
+  M1_Material: {fileID: 2100000, guid: 1d9d6ffc887e044d8814d92c8b15df83, type: 2}
+  M2_Material: {fileID: 2100000, guid: 45be0316fc4ca4b2aa88bdd9b7afa9dd, type: 2}
+  M3_Material: {fileID: 2100000, guid: 7bc3d73d5dfe8415a816ca353509cd2e, type: 2}
   magneticConstant: 7
   dropSpeed: 0
   placeholderMagneticField: 0
@@ -211,6 +211,8 @@ MonoBehaviour:
   totalCount: 1
   tMesh: {fileID: 102230429431349322}
   index: 0
+  hasBeenScored: 0
+  hasBeenAbsorbed: 0
 --- !u!135 &135822578737558288
 SphereCollider:
   m_ObjectHideFlags: 1

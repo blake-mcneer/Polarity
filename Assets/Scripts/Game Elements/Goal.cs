@@ -113,6 +113,7 @@ public class Goal : MonoBehaviour {
             if (!mag.hasBeenScored){
                 mag.hasBeenScored = true;
                 manager.AddScore(positiveScore * mag.totalCount);
+//                manager.RemoveActivePulses();
             }
         }else{
             manager.AddScore(negativeScore * mag.totalCount);

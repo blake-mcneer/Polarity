@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour {
         }
 
     }
-    void RemoveActivePulses()
+    public void RemoveActivePulses()
     {
         foreach (MagneticPulse p in attractionPulses){
             p.Dissapate();
@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour {
     {
         Vector2 loc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 loc2 = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        Vector3 pulseLocation = new Vector3(loc.x, loc.y, 0.0f);
+        Vector3 pulseLocation = new Vector3(loc.x, loc.y, 1.0f);
         AddPulseAtPosition(pulseLocation);
     }
     public Vector2 AffectOnPosition(Vector2 position, int objectIndex)
