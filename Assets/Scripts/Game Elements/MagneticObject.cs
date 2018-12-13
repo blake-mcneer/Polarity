@@ -131,6 +131,7 @@ public class MagneticObject : MonoBehaviour {
         if (collision.gameObject.tag == "MagneticBall")
         {
             MagneticObject mag = collision.gameObject.GetComponent<MagneticObject>();
+            //if (index < mag.index) return;
             if (mag.type == type)
             {
                 if (index > mag.index)
@@ -141,8 +142,11 @@ public class MagneticObject : MonoBehaviour {
             else
             {
                 int[] indecesAffected = { index, mag.index };
-                manager.AddRepulsion(transform.position, indecesAffected);
+                Vector3 pos = (collision.transform.position - transform.position).normalized;
+                pos = transform.position + pos;
+                manager.AddRepulsion(pos, indecesAffected);
                 manager.RemoveFromCurrentAttractionPulses(index);
+                manager.RemoveFromCurrentAttractionPulses(mag.index);
             }
         }else if (collision.gameObject.tag == "Barrier" || collision.gameObject.tag == "BorderPiece")
         {
