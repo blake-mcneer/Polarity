@@ -117,6 +117,8 @@ public class GameManager : MonoBehaviour {
             if (obj != null) return;
         }
         gameComplete = true;
+        RemoveActivePulses();
+        userInterface.ShowGameCompleteMenu();
     }
     public void AddScore(int scoreAdjustment)
     {

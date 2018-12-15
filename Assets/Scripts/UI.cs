@@ -9,10 +9,13 @@ public class UI : MonoBehaviour {
     public Text timeText;
     public Text tapText;
     public Text scoreText;
+    public Text finishedGameScoreText;
     public Text pulseStrengthText;
     public Text pulseDurationText;
     public GameObject PauseMenu;
     public GameObject UIBanner;
+    public GameObject GameCompleteMenu;
+    public RectTransform scoreFillBar;
     GameManager manager;
     private void Start()
     {
@@ -77,6 +80,18 @@ public class UI : MonoBehaviour {
     public void SetScore(int score)
     {
         scoreText.text = score.ToString();   
+        if (finishedGameScoreText)
+        {
+            finishedGameScoreText.text = score.ToString();
+        }
+    }
+    public void ShowGameCompleteMenu()
+    {
+        GameCompleteMenu.SetActive(true);
+    }
+    public void HideGameCompleteMenu()
+    {
+        GameCompleteMenu.SetActive(false);
     }
     public void ShowPauseMenu()
     {
@@ -104,5 +119,10 @@ public class UI : MonoBehaviour {
     {
         SceneManager.LoadScene("LevelSelect");
     }
+    public void NextLevel()
+    {
+        GameSingleton.Instance.currentLevel = GameSingleton.Instance.currentLevel + 1;
+        SceneManager.LoadScene("GameScene");
 
+    }
 }
