@@ -100,5 +100,9 @@ public class UI : MonoBehaviour {
     {
         SceneManager.LoadScene("MainMenu");
     }
+    public void LevelSelect()
+    {
+        SceneManager.LoadScene("LevelSelect");
+    }
 
 }

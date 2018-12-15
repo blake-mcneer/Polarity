@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
     public float pulseDisplaySize = 4.0f;
     public float pulseStrength = 4.0f;
     public float pulseDistanceThreshold = .05f;
-    public float affectLimit = 2.5f;
+    public float affectLimit = 2.5f;    
     public float drainSpeed = 1.0f;
     public bool gameComplete = false;
     public int score = 0;
@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour {
     int tapCount = 0;
     float seconds = 0.0f;
     float maxDistanceAffect = 0.75f;
+    float maxPulseAffect = 1.0f;
     UI userInterface;
     [HideInInspector] public List<MagneticPulse> preconfiguredPulses = new List<MagneticPulse>();
     [HideInInspector] public List<MagneticPulse> attractionPulses = new List<MagneticPulse>();
@@ -109,15 +110,25 @@ public class GameManager : MonoBehaviour {
         attractionPulses = nextPulseList;
 
     }
+    void CheckForRemaining()
+    {
+        foreach (MagneticObject obj in magneticObjects)
+        {
+            if (obj != null) return;
+        }
+        gameComplete = true;
+    }
     public void AddScore(int scoreAdjustment)
     {
         score += scoreAdjustment;
         score = Mathf.Max(score, 0);
         userInterface.SetScore(score);
     }
-    public void AddRepulsion(Vector3 pos, int[] affectedIndeces)
+    public void AddRepulsion(Vector3 pos, int[] affectedIndeces, float repulsionStrength = 0.0f)
     {
-        MagneticPulse p = CreatePulse(position: pos, strength: -pulseStrength, duration: 0.75f, prefab: repulsionImage);
+        if (repulsionStrength == 0.0f) repulsionStrength = -pulseStrength;
+        repulsionStrength = (-pulseStrength) / 2.5f;
+        MagneticPulse p = CreatePulse(position: pos, strength: repulsionStrength, duration: 0.75f, prefab: repulsionImage);
         p.specificIndeces = affectedIndeces.ToList();
         attractionPulses.Add(p);
     }
@@ -223,7 +234,10 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        return new Vector2(-pulsePower.x, pulsePower.y);
+        float xVal = Mathf.Max(-pulsePower.x,-maxPulseAffect);
+        float yVal = Mathf.Min(pulsePower.y, maxPulseAffect);
+        Vector2 returnVec = new Vector2(xVal, yVal);
+        return returnVec;
     }
 
     bool TouchingUI(Vector2 position)
@@ -234,13 +248,6 @@ public class GameManager : MonoBehaviour {
         EventSystem.current.RaycastAll(pointer, raycastResults);
 
         return raycastResults.Count == 0;  
-        //if (raycastResults.Count > 0)
-        //{
-        //    foreach (var go in raycastResults)
-        //    {
-        //        Debug.Log(go.gameObject.name, go.gameObject);
-        //    }
-        //}
     }
     void DidTap()
     {
@@ -279,6 +286,7 @@ public class GameManager : MonoBehaviour {
         {
             seconds += Time.deltaTime;
             userInterface.SetTime(seconds);
+            CheckForRemaining();
         }
         if (Input.GetMouseButtonDown(0))
         {

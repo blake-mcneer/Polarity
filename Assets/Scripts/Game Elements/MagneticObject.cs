@@ -144,7 +144,7 @@ public class MagneticObject : MonoBehaviour {
                 int[] indecesAffected = { index, mag.index };
                 Vector3 pos = (collision.transform.position - transform.position).normalized;
                 pos = transform.position + pos;
-                manager.AddRepulsion(pos, indecesAffected);
+                manager.AddRepulsion(pos, indecesAffected, -1.0f);
                 manager.RemoveFromCurrentAttractionPulses(index);
                 manager.RemoveFromCurrentAttractionPulses(mag.index);
             }
@@ -153,7 +153,7 @@ public class MagneticObject : MonoBehaviour {
             int[] indecesAffected = { index};
             Vector3 pos = (collision.transform.position - transform.position).normalized;
             pos = transform.position + pos;
-            manager.AddRepulsion(pos, indecesAffected);
+            manager.AddRepulsion(pos, indecesAffected, -2.0f);
             manager.RemoveFromCurrentAttractionPulses(index);
 
         }
@@ -170,7 +170,7 @@ public class MagneticObject : MonoBehaviour {
             int[] indecesAffected = { index };
             Vector3 pos = (g.transform.position - transform.position).normalized;
             pos = transform.position + pos;
-            manager.AddRepulsion(pos, indecesAffected);
+            manager.AddRepulsion(pos, indecesAffected, -2.0f);
             manager.RemoveFromCurrentAttractionPulses(index);
         }
 
