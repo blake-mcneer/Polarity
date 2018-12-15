@@ -152,5 +152,4 @@ public struct DropSequenceItem
     }
 }
 public class Constants{
-
 }

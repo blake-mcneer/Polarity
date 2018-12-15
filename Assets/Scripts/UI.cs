@@ -28,7 +28,7 @@ public class UI : MonoBehaviour {
         Vector3 lowerLeftCorner = Camera.main.ViewportToWorldPoint(Vector3.zero);
         Vector3 upperRightCorner = Camera.main.ViewportToWorldPoint(Vector3.one);
         RectTransform tForm = UIBanner.GetComponent<RectTransform>();
-        float bannerSize = Screen.height * 0.05f;
+        float bannerSize = Screen.height * GameSingleton.Instance.bannerPercentage;
         tForm.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,bannerSize);
 
     }

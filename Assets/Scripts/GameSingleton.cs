@@ -9,4 +9,5 @@ public class GameSingleton : Singleton<GameSingleton>
     }
     public int currentLevel;
     public LevelButtonMode currentMode = LevelButtonMode.LoadLevelMode;
+    public float bannerPercentage = 0.08f;
 }

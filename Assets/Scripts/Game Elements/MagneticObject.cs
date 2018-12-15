@@ -42,7 +42,7 @@ public class MagneticObject : MonoBehaviour {
         Vector3 lowerLeftCorner = Camera.main.ViewportToWorldPoint(Vector3.zero);
         Vector3 upperRightCorner = Camera.main.ViewportToWorldPoint(Vector3.one);
         Vector3 upperRightScreenPoint = Camera.main.ViewportToScreenPoint(Vector3.one);
-        upperRightScreenPoint.y = Screen.height * 0.95f;
+        upperRightScreenPoint.y = Screen.height * (1.0f - GameSingleton.Instance.bannerPercentage);
         upperRightCorner = Camera.main.ScreenToWorldPoint(upperRightScreenPoint);
 
         limits.leftLimit = lowerLeftCorner.x + transform.localScale.x /2.0f;
