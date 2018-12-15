@@ -52,20 +52,32 @@ public class BorderPieceEditPanel : MonoBehaviour {
         switch (borderPieceBeingModified.rot)
         {
             case RotationDegrees.None:
-                degRot = RotationDegrees.Quarter;
+                degRot = RotationDegrees.S1_FortyFive;
+                rotString = "45";
+                break;
+            case RotationDegrees.S1_FortyFive:
+                degRot = RotationDegrees.S2_Ninety;
                 rotString = "90";
                 break;
-            case RotationDegrees.Quarter:
-                degRot = RotationDegrees.Half;
+            case RotationDegrees.S2_Ninety:
+                degRot = RotationDegrees.S3_OneThirtyFive;
+                rotString = "135";
+                break;
+            case RotationDegrees.S3_OneThirtyFive:
+                degRot = RotationDegrees.S4_OneEighty;
                 rotString = "180";
                 break;
-            case RotationDegrees.Half:
-                degRot = RotationDegrees.ThreeQuarter;
+            case RotationDegrees.S4_OneEighty:
+                degRot = RotationDegrees.S5_TwoTwentyFive;
+                rotString = "225";
+                break;
+            case RotationDegrees.S5_TwoTwentyFive:
+                degRot = RotationDegrees.S6_TwoSeventy;
                 rotString = "270";
                 break;
-            case RotationDegrees.ThreeQuarter:
-                degRot = RotationDegrees.None;
-                rotString = "0";
+            case RotationDegrees.S6_TwoSeventy:
+                degRot = RotationDegrees.S7_ThreeFifteen;
+                rotString = "315";
                 break;
             default:
                 degRot = RotationDegrees.None;

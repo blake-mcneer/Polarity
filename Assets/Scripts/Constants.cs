@@ -86,9 +86,13 @@ public enum BorderPieceType
 public enum RotationDegrees
 {
     None,
-    Quarter,
-    Half,
-    ThreeQuarter
+    S1_FortyFive,
+    S2_Ninety,
+    S3_OneThirtyFive,
+    S4_OneEighty,
+    S5_TwoTwentyFive,
+    S6_TwoSeventy,
+    S7_ThreeFifteen
 }
 
 [System.Serializable]
