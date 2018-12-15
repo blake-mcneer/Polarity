@@ -34,6 +34,7 @@ public class UI : MonoBehaviour {
     }
     void SetManagerLabels()
     {
+        if (pulseStrengthText == null || pulseDurationText == null) return;
         pulseStrengthText.text = manager.pulseStrength.ToString("0.0") + " M";
         pulseDurationText.text = manager.pulseDurationSetting.ToString("0.0") +" S";
     }
