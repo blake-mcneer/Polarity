@@ -126,7 +126,8 @@ public class LevelManager : MonoBehaviour {
             {
                 LoadBorderPiece(p);
             }
-            manager.SetupManager();
+            LevelScoring scoreData = new LevelScoring(save.tier1Score, save.tier2Score, save.tier3Score, save.topScore);
+            manager.SetupManager(scoreData);
             PlayerPrefs.SetInt("CurrentLevel",levelNumber);
         }
         else

@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
     public bool gameComplete = false;
     public int score = 0;
     public int tapScoreEffect = -50;
+    public LevelScoring scoring;
     int tapCount = 0;
     float seconds = 0.0f;
     float maxDistanceAffect = 0.75f;
@@ -32,12 +33,13 @@ public class GameManager : MonoBehaviour {
     MagneticObject[] magneticObjects;
     //MagneticPulse activePulse;
 
-    public void SetupManager()
+    public void SetupManager(LevelScoring scoreConfiguration)
     {
         for (int i = 0; i < attractionPulses.Count; i++){
             attractionPulses[i].pulseStrength = 0.0f;
             Destroy(attractionPulses[i].prefab);
         }
+        scoring = scoreConfiguration;
         LoadMagneticObjects();
         LoadPreconfiguredPulses();
         tapCount = 0;
@@ -60,7 +62,7 @@ public class GameManager : MonoBehaviour {
     private void Start()
     {
         userInterface = FindObjectOfType<UI>();
-        SetupManager();
+//        SetupManager();
     }
     void LoadMagneticObjects()
     {        

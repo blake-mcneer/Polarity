@@ -121,6 +121,25 @@ public struct GameManagerData
     float pulseStrength;
 }
 
+public struct LevelScoring
+{
+    public float tier1;
+    public float tier2;
+    public float tier3;
+    public float topScore;
+    public LevelScoring(float t1, float t2, float t3, float top)
+    {
+        if (t1 == 0.0f) t1 = 50.0f;
+        if (t2 == 0.0f) t2 = 100.0f;
+        if (t3 == 0.0f) t3 = 500.0f;
+        if (top == 0.0f) top = 1000.0f;
+        tier1 = t1;
+        tier2 = t2;
+        tier3 = t3;
+        topScore = top;
+    }
+}
+
 public struct CustomRange
 {
     int min;

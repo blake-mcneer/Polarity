@@ -37,10 +37,10 @@ public class EditorTool : MonoBehaviour {
         if (currentMode == PlayMode.Play)
         {
             GameManager.SetActive(true);
-            GameManager.GetComponent<GameManager>().SetupManager();
+//            GameManager.GetComponent<GameManager>().SetupManager();
             LevelEditor.SetActive(false);
             GeneralEditorToolbar.SetActive(false);
-            GameManager.GetComponent<GameManager>().SetupManager();
+//            GameManager.GetComponent<GameManager>().SetupManager();
         }
         else
         {

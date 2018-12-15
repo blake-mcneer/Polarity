@@ -16,11 +16,15 @@ public class UI : MonoBehaviour {
     public GameObject UIBanner;
     public GameObject GameCompleteMenu;
     public RectTransform scoreFillBar;
+    public RectTransform tick1;
+    public RectTransform tick2;
+    public RectTransform tick3;
     GameManager manager;
     private void Start()
     {
         ResizeBanner();
         manager = FindObjectOfType<GameManager>();
+        PlaceScoreTicks();
         LoadManagerSettings();
         HidePauseMenu();
         SetManagerLabels();
@@ -84,6 +88,10 @@ public class UI : MonoBehaviour {
         {
             finishedGameScoreText.text = score.ToString();
         }
+        if (scoreFillBar)
+        {
+            UpdateScoreBar((float)score);
+        }
     }
     public void ShowGameCompleteMenu()
     {
@@ -124,5 +132,25 @@ public class UI : MonoBehaviour {
         GameSingleton.Instance.currentLevel = GameSingleton.Instance.currentLevel + 1;
         SceneManager.LoadScene("GameScene");
 
+    }
+    void UpdateScoreBar(float score)
+    {
+        if (!manager) return;
+        LevelScoring scoring = manager.scoring;
+        float fullWidth = 474.0f;
+        float fillBarLoc = score / scoring.topScore;
+        scoreFillBar.localScale = new Vector3(fillBarLoc, 1.0f);
+    }
+    void PlaceScoreTicks()
+    {
+        LevelScoring scoring = manager.scoring;
+        float fullWidth = 474.0f;
+        float t1Loc = (scoring.tier1 / scoring.topScore) * fullWidth;
+        float t2Loc = (scoring.tier2 / scoring.topScore) * fullWidth;
+        float t3Loc = (scoring.tier3 / scoring.topScore) * fullWidth;
+        Debug.Log("T3Loc:" + t3Loc + " when scoringt3:" + scoring.tier3 + " on fullScore:" + scoring.topScore);
+        tick1.localPosition = new Vector3(t1Loc - fullWidth / 2.0f, tick1.localPosition.y);
+        tick2.localPosition = new Vector3(t2Loc - fullWidth / 2.0f, tick2.localPosition.y);
+        tick3.localPosition = new Vector3(t3Loc - fullWidth / 2.0f, tick3.localPosition.y);
     }
 }
