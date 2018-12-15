@@ -90,7 +90,7 @@ public class LevelButton : MonoBehaviour
             //Save save = (Save)bf.Deserialize(file);
             //file.Close();
             GameSingleton.Instance.currentLevel = mLevel;
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("GameScene");
         }
         else
         {

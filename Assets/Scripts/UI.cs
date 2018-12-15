@@ -94,7 +94,7 @@ public class UI : MonoBehaviour {
     }
     public void Reload()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("GameScene");
     }
     public void Home()
     {
