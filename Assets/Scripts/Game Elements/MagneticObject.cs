@@ -122,9 +122,6 @@ public class MagneticObject : MonoBehaviour {
         yTarget -= dropSpeed * Time.deltaTime;
         Vector3 targetPos = LimitPosition(new Vector3(xTarget, yTarget, 0.0f));
         rb.MovePosition(targetPos);
-        //Vector2 testLoc = Camera.main.WorldToViewportPoint(transform.position);
-        //Debug.Log(testLoc.x.ToString("0.000") + " : " + testLoc.y.ToString("0.000"));
-        //rb.AddForce(new Vector3(pulseAffect.x, -pulseAffect.y, 0.0f),ForceMode.VelocityChange);
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -146,7 +143,7 @@ public class MagneticObject : MonoBehaviour {
                 pos = transform.position + pos;
                 manager.AddRepulsion(pos, indecesAffected, -1.0f);
                 manager.RemoveFromCurrentAttractionPulses(index);
-                manager.RemoveFromCurrentAttractionPulses(mag.index);
+//                manager.RemoveFromCurrentAttractionPulses(mag.index);
             }
         }else if (collision.gameObject.tag == "Barrier" || collision.gameObject.tag == "BorderPiece")
         {

@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour {
     {
         foreach (MagneticPulse p in attractionPulses)
         {
-            if (p.pulseStrength > 0.0f && p.specificIndeces != null){
+            if (p.pulseStrength > 0.0f){
                 if (p.specificIndeces.Contains(index)){
                     p.specificIndeces.Remove(index);
                 }
@@ -202,7 +202,7 @@ public class GameManager : MonoBehaviour {
         for (int i = 0; i < attractionPulses.Count; i++)
         {
             MagneticPulse p = attractionPulses[i];
-            if (p.specificIndeces == null || p.specificIndeces.Contains(objectIndex))
+            if (p.specificIndeces.Contains(objectIndex))
             {
                 Vector3 vecA = new Vector3(position.x, position.y, 0.0f);
                 Vector3 vecB = new Vector3(p.pulseLocation.x,p.pulseLocation.y, 0.0f);
@@ -213,12 +213,14 @@ public class GameManager : MonoBehaviour {
                     float dist = 1.0f / distanceApart;
                     dist = Mathf.Min(dist, maxDistanceAffect);
                     float pulseAffect = p.pulseRemaining / p.pulseDuration;
-                    pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength *pulseAffect*dist;
+                    pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength * pulseAffect * dist;
                 }
                 else{
-                    //This would shrink the pulse away if reached
-                    //p.Dissapate();
-                    RemoveFromCurrentAttractionPulses(objectIndex);
+                    if (p.specificIndeces.Contains(objectIndex))
+                    {
+                        p.specificIndeces.Remove(objectIndex);
+                    }
+                    //RemoveFromCurrentAttractionPulses(objectIndex);
 
                 }
             }

@@ -13,11 +13,13 @@ public class MagneticPulse : ScriptableObject {
     public int index;
     public List<int> specificIndeces = new List<int>();
     public bool hasBeenReached;
+    public bool isDisabled = false;
         
     public void Dissapate()
     {
         ParticleSystem pSystem = prefab.GetComponent<ParticleSystem>();
         var sys = pSystem.main;
+        isDisabled = true;
         //sys.maxParticles = 10;
         sys.simulationSpeed = 10.0f;
         sys.startColor = Color.black;
