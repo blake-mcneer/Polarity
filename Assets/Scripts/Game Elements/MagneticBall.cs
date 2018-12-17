@@ -9,11 +9,10 @@ public struct ScreenLimits
     public float topLimit;
     public float bottomLimit;
 }
-public class MagneticObject : MonoBehaviour {
+public class MagneticBall : MonoBehaviour {
 
-    public Material M1_Material;
-    public Material M2_Material;
-    public Material M3_Material;
+    public Material[] MagneticMaterials;
+    public GameObject[] Explosions;
 
     public float magneticConstant = 1.0f;
     public float dropSpeed = 1.0f;
@@ -21,10 +20,13 @@ public class MagneticObject : MonoBehaviour {
     public MagneticType type;
     public int totalCount = 1;
     public TextMesh tMesh;
+    int collisionCount = 0;
     float scale = 1.0f;
     float targetScale = 1.0f;
     float scaleSpeed = 4.0f;
     bool shrinkingAway = false;
+    bool hasExploded = false;
+    int collisionLimit = 3;
     ScreenLimits limits;
     [HideInInspector] public int index;
     [HideInInspector] public bool hasBeenScored = false;
@@ -64,13 +66,16 @@ public class MagneticObject : MonoBehaviour {
         switch (type)
         {
             case MagneticType.M1:
-                mat = M1_Material;
+                mat = MagneticMaterials[0];
+                //mat = M1_Material;
                 break;
             case MagneticType.M2:
-                mat = M2_Material;
+                mat = MagneticMaterials[1];
+                //mat = M2_Material;
                 break;
             case MagneticType.M3:
-                mat = M3_Material;
+                mat = MagneticMaterials[2];
+                //mat = M3_Material;
                 break;
         }
         Renderer rend = GetComponent<Renderer>();
@@ -123,12 +128,42 @@ public class MagneticObject : MonoBehaviour {
         Vector3 targetPos = LimitPosition(new Vector3(xTarget, yTarget, 0.0f));
         rb.MovePosition(targetPos);
     }
+    void TallyCollision()
+    {
+        if (hasExploded) return;
+        collisionCount++;
+        if (collisionCount >= collisionLimit)
+        {
+            SelfDestruct();
+        }
+
+
+    }
+    void HandleCollisionWithBall(MagneticBall ball)
+    {
+        TallyCollision();
+        int[] indecesAffected = { index, ball.index };
+        Vector3 pos = (ball.transform.position - transform.position).normalized;
+        pos = transform.position + pos;
+        manager.AddRepulsion(pos, indecesAffected, -1.0f);
+        manager.RemoveFromCurrentAttractionPulses(index);
+        //Debug.Log(gameObject + " at(" + collisionCount +") collisions");
+    }
+    void HandleCollisionWithBarrier(Transform collisionTransform)
+    {
+        TallyCollision();
+        int[] indecesAffected = { index };
+        Vector3 pos = (collisionTransform.position - transform.position).normalized;
+        pos = transform.position + pos;
+        manager.AddRepulsion(pos, indecesAffected, -2.0f);
+        manager.RemoveFromCurrentAttractionPulses(index);
+        //Debug.Log(gameObject + " at(" + collisionCount + ") collisions");
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "MagneticBall")
         {
-            MagneticObject mag = collision.gameObject.GetComponent<MagneticObject>();
-            //if (index < mag.index) return;
+            MagneticBall mag = collision.gameObject.GetComponent<MagneticBall>();
             if (mag.type == type)
             {
                 if (index > mag.index)
@@ -138,28 +173,18 @@ public class MagneticObject : MonoBehaviour {
             }
             else
             {
-                int[] indecesAffected = { index, mag.index };
-                Vector3 pos = (collision.transform.position - transform.position).normalized;
-                pos = transform.position + pos;
-                manager.AddRepulsion(pos, indecesAffected, -1.0f);
-                manager.RemoveFromCurrentAttractionPulses(index);
-//                manager.RemoveFromCurrentAttractionPulses(mag.index);
+                HandleCollisionWithBall(mag);
             }
         }else if (collision.gameObject.tag == "Barrier" || collision.gameObject.tag == "BorderPiece")
         {
-            int[] indecesAffected = { index};
-            Vector3 pos = (collision.transform.position - transform.position).normalized;
-            pos = transform.position + pos;
-            manager.AddRepulsion(pos, indecesAffected, -2.0f);
-            manager.RemoveFromCurrentAttractionPulses(index);
-
+            HandleCollisionWithBarrier(collision.transform);
         }
     }
     void HandleCollisionWithGoal(Goal g)
     {
         if (g.type == type)
         {
-            g.HitByMagneticObject(gameObject.GetComponent<MagneticObject>());
+            g.HitByMagneticObject(gameObject.GetComponent<MagneticBall>());
             ShrinkAway();
         }
         else
@@ -188,15 +213,37 @@ public class MagneticObject : MonoBehaviour {
             HandleCollisionWithGoal(g);
         }
     }
-    public void AbsorbObject(MagneticObject obj)
+    public void AbsorbObject(MagneticBall obj)
     {
         if (obj.hasBeenAbsorbed) return;
         obj.hasBeenAbsorbed = true;
         totalCount+= obj.totalCount;
+        collisionCount = 0;
         tMesh.text = totalCount.ToString();
         targetScale = (float)(totalCount -1) * 0.25f + 1.0f;
         obj.ShrinkAway();
         
+    }
+    public void SelfDestruct()
+    {
+        hasExploded = true;
+        GameObject explosionPrefab = Explosions[0];
+        switch (type)
+        {
+            case MagneticType.M1:
+                explosionPrefab = Explosions[0];
+                break;
+            case MagneticType.M2:
+                explosionPrefab = Explosions[1];
+                break;
+            case MagneticType.M3:
+                explosionPrefab = Explosions[2];
+                break;
+        }
+        Instantiate(explosionPrefab, transform.position, Quaternion.Euler(0.0f, 0.0f, 0.0f));
+        ShrinkAway();
+        //pulse.prefab = Instantiate(prefab, pulse.pulseLocation, Quaternion.Euler(0.0f, 0.0f, 0.0f), transform);
+
     }
     public void ShrinkAway()
     {

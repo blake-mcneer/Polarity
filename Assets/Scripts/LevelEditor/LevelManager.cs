@@ -42,13 +42,13 @@ public class LevelManager : MonoBehaviour {
     {
         int levelNumber = config.currentLevel;
         levelNumber = GameSingleton.Instance.currentLevel;
-        MagneticObject[] magneticObjects = FindObjectsOfType<MagneticObject>();
+        MagneticBall[] magneticObjects = FindObjectsOfType<MagneticBall>();
         Attractor[] attractors = FindObjectsOfType<Attractor>();
         Goal[] goals = FindObjectsOfType<Goal>();
         BorderPiece[] borderPieces = FindObjectsOfType<BorderPiece>();
         Save save = new Save();
 
-        foreach (MagneticObject obj in magneticObjects)
+        foreach (MagneticBall obj in magneticObjects)
         {
             Vector3 pos = obj.transform.position;
             pos = Camera.main.WorldToViewportPoint(pos);
@@ -81,7 +81,7 @@ public class LevelManager : MonoBehaviour {
     }
     public void DeleteAll()
     {
-        MagneticObject[] magneticObjects = FindObjectsOfType<MagneticObject>();
+        MagneticBall[] magneticObjects = FindObjectsOfType<MagneticBall>();
         Attractor[] attractors = FindObjectsOfType<Attractor>();
         Goal[] goals = FindObjectsOfType<Goal>();
 
@@ -142,7 +142,7 @@ public class LevelManager : MonoBehaviour {
         pos = Camera.main.ViewportToWorldPoint(pos);
         Quaternion rot = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
         GameObject obj = Instantiate(BallPrefab, pos, rot);
-        MagneticObject magObj = obj.GetComponent<MagneticObject>();
+        MagneticBall magObj = obj.GetComponent<MagneticBall>();
         magObj.transform.localScale = Vector3.one * calculatedScale;
         magObj.index = d.index;
         magObj.type = d.type;

@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour {
     public GameObject repulsionImage;
     int pulseIndex = 1;
     List<int> indexList = new List<int>();
-    MagneticObject[] magneticObjects;
+    MagneticBall[] magneticObjects;
     //MagneticPulse activePulse;
 
     public void SetupManager(LevelScoring scoreConfiguration)
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour {
     private List<int> FullIndexList()
     {
         List<int> returnList = new List<int>();
-        foreach (MagneticObject obj in magneticObjects)
+        foreach (MagneticBall obj in magneticObjects)
         {
             returnList.Add(obj.index);
         }
@@ -66,9 +66,9 @@ public class GameManager : MonoBehaviour {
     }
     void LoadMagneticObjects()
     {        
-        magneticObjects = FindObjectsOfType<MagneticObject>();
+        magneticObjects = FindObjectsOfType<MagneticBall>();
         int index = 0;
-        foreach (MagneticObject mag in magneticObjects)
+        foreach (MagneticBall mag in magneticObjects)
         {
             mag.index = index;
             index++;
@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour {
     }
     void CheckForRemaining()
     {
-        foreach (MagneticObject obj in magneticObjects)
+        foreach (MagneticBall obj in magneticObjects)
         {
             if (obj != null) return;
         }

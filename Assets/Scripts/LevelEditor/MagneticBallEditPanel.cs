@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class MagneticBallEditPanel : MonoBehaviour {
 
-    public MagneticObject magneticObjectBeingModified;
+    public MagneticBall magneticObjectBeingModified;
     public Text objectTypeText;
     //public Button typeButton;
 
-    public void SetMagneticObject(MagneticObject newMagneticObject)
+    public void SetMagneticObject(MagneticBall newMagneticObject)
     {
         magneticObjectBeingModified = newMagneticObject;
         objectTypeText.text = newMagneticObject.type.ToString();

@@ -107,7 +107,7 @@ public class Goal : MonoBehaviour {
         anim.SetBool("BallAbsorbed", false);
         StartCoroutine(WaitForTime(1.0f));
     }
-    public void HitByMagneticObject(MagneticObject mag)
+    public void HitByMagneticObject(MagneticBall mag)
     {
         if (mag.type == type){
             if (!mag.hasBeenScored){

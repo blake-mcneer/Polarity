@@ -68,7 +68,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1516696007505906}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.7894032, y: 1.6170872, z: -6.440956}
+  m_LocalPosition: {x: 7.7124004, y: 10.078903, z: -23.249172}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4271944486741990}
@@ -204,6 +204,14 @@ MonoBehaviour:
   M1_Material: {fileID: 2100000, guid: 1d9d6ffc887e044d8814d92c8b15df83, type: 2}
   M2_Material: {fileID: 2100000, guid: 45be0316fc4ca4b2aa88bdd9b7afa9dd, type: 2}
   M3_Material: {fileID: 2100000, guid: 7bc3d73d5dfe8415a816ca353509cd2e, type: 2}
+  MagneticMaterials:
+  - {fileID: 2100000, guid: 1d9d6ffc887e044d8814d92c8b15df83, type: 2}
+  - {fileID: 2100000, guid: 45be0316fc4ca4b2aa88bdd9b7afa9dd, type: 2}
+  - {fileID: 2100000, guid: 7bc3d73d5dfe8415a816ca353509cd2e, type: 2}
+  Explosions:
+  - {fileID: 1405558358815994, guid: ffae75a2666147446a1aff4b346eba6e, type: 2}
+  - {fileID: 1405558358815994, guid: e6cc6eac93e57794a90ba77599a25fa8, type: 2}
+  - {fileID: 1405558358815994, guid: 720386954f3b63341a1e706801478fb0, type: 2}
   magneticConstant: 7
   dropSpeed: 0
   placeholderMagneticField: 0

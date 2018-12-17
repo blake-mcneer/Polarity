@@ -67,7 +67,7 @@ public class LevelEditor : MonoBehaviour
             if (tagHit == "MagneticBall")
             {
                 GameObject magneticObjectObject = hit.collider.transform.gameObject;
-                MagneticObject magneticObject = magneticObjectObject.GetComponent<MagneticObject>();
+                MagneticBall magneticObject = magneticObjectObject.GetComponent<MagneticBall>();
                 GrabObject(magneticObjectObject);
                 HideAllPanels();
                 magneticBallPanel.gameObject.SetActive(true);
@@ -120,7 +120,7 @@ public class LevelEditor : MonoBehaviour
         Vector3 newPos = positionStarted - (inputStarted - currentInput);
         newPos = new Vector3((int)newPos.x, (int)newPos.y, (int)newPos.z);
         objectHeld.transform.position = newPos;
-        Debug.Log(objectHeld.transform.position);
+        //Debug.Log(objectHeld.transform.position);
 
     }
 
