@@ -18,8 +18,8 @@ public class GameManager : MonoBehaviour {
     public int score = 0;
     public int tapScoreEffect = -50;
     public LevelScoring scoring;
-    int tapCount = 0;
-    float seconds = 0.0f;
+    [HideInInspector] public int tapCount = 0;
+    [HideInInspector] public float seconds = 0.0f;
     float maxDistanceAffect = 0.75f;
     float maxPulseAffect = 1.0f;
     UI userInterface;
