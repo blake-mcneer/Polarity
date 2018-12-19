@@ -142,7 +142,7 @@ public class MagneticBall : MonoBehaviour {
     }
     void HandleCollisionWithBall(MagneticBall ball)
     {
-        AudioClipCollide.Play();
+        AudioManager.Instance.PlayClip(AudioClipCollide);
         TallyCollision();
         int[] indecesAffected = { index, ball.index };
         Vector3 pos = (ball.transform.position - transform.position).normalized;
@@ -153,7 +153,7 @@ public class MagneticBall : MonoBehaviour {
     }
     void HandleCollisionWithBarrier(Transform collisionTransform)
     {
-        AudioClipCollide.Play();
+        AudioManager.Instance.PlayClip(AudioClipCollide);
         TallyCollision();
         int[] indecesAffected = { index };
         Vector3 pos = (collisionTransform.position - transform.position).normalized;
@@ -192,7 +192,7 @@ public class MagneticBall : MonoBehaviour {
         }
         else
         {
-            AudioClipCollide.Play();
+            AudioManager.Instance.PlayClip(AudioClipCollide);
             int[] indecesAffected = { index };
             Vector3 pos = (g.transform.position - transform.position).normalized;
             pos = transform.position + pos;
@@ -230,7 +230,7 @@ public class MagneticBall : MonoBehaviour {
     }
     public void SelfDestruct()
     {
-        AudioClipExplode.Play();
+        AudioManager.Instance.PlayClip(AudioClipExplode);
         hasExploded = true;
         GameObject explosionPrefab = Explosions[0];
         switch (type)

@@ -102,6 +102,12 @@ public class UI : MonoBehaviour {
         Time.timeScale = 1.0f;
         PauseMenu.SetActive(false);
     }
+    public void ToggleAudio()
+    {
+        int audioSetting = PlayerPrefs.GetInt("Audio");
+        bool audioOn = audioSetting == 1 ? false : true;
+        AudioManager.Instance.SetAudio(audioOn);
+    }
     public void Shuffle()
     {
         Debug.Log("Shuffle");

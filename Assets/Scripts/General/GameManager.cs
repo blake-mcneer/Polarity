@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour {
     [HideInInspector] public List<MagneticPulse> attractionPulses = new List<MagneticPulse>();
     [HideInInspector] public List<MagneticPulse> repulsionPulses = new List<MagneticPulse>();
     public GameObject pulseImage;
+    public AudioSource attractPulseAudio;
     public GameObject repulsionImage;
     int pulseIndex = 1;
     List<int> indexList = new List<int>();
@@ -266,6 +267,7 @@ public class GameManager : MonoBehaviour {
             AddScore(tapScoreEffect);
             RemoveActivePulses();
             AddPulse();
+            AudioManager.Instance.PlayClip(attractPulseAudio);
             userInterface.SetTapCount(tapCount);
         }
     }
