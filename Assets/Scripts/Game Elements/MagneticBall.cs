@@ -13,7 +13,8 @@ public class MagneticBall : MonoBehaviour {
 
     public Material[] MagneticMaterials;
     public GameObject[] Explosions;
-
+    public AudioSource AudioClipCollide;
+    public AudioSource AudioClipExplode;
     public float magneticConstant = 1.0f;
     public float dropSpeed = 1.0f;
     public float placeholderMagneticField = 0.0f;
@@ -141,6 +142,7 @@ public class MagneticBall : MonoBehaviour {
     }
     void HandleCollisionWithBall(MagneticBall ball)
     {
+        AudioClipCollide.Play();
         TallyCollision();
         int[] indecesAffected = { index, ball.index };
         Vector3 pos = (ball.transform.position - transform.position).normalized;
@@ -151,6 +153,7 @@ public class MagneticBall : MonoBehaviour {
     }
     void HandleCollisionWithBarrier(Transform collisionTransform)
     {
+        AudioClipCollide.Play();
         TallyCollision();
         int[] indecesAffected = { index };
         Vector3 pos = (collisionTransform.position - transform.position).normalized;
@@ -189,6 +192,7 @@ public class MagneticBall : MonoBehaviour {
         }
         else
         {
+            AudioClipCollide.Play();
             int[] indecesAffected = { index };
             Vector3 pos = (g.transform.position - transform.position).normalized;
             pos = transform.position + pos;
@@ -226,6 +230,7 @@ public class MagneticBall : MonoBehaviour {
     }
     public void SelfDestruct()
     {
+        AudioClipExplode.Play();
         hasExploded = true;
         GameObject explosionPrefab = Explosions[0];
         switch (type)
