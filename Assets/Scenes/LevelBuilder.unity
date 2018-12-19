@@ -1855,7 +1855,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 548.8333, y: -57.1}
+  m_AnchoredPosition: {x: 446.83334, y: -57.1}
   m_SizeDelta: {x: 97.666664, y: 114.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &389996674
@@ -2513,7 +2513,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 673.8333, y: -57.1}
+  m_AnchoredPosition: {x: 546.3333, y: -57.1}
   m_SizeDelta: {x: 97.666664, y: 114.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &476301363
@@ -3000,7 +3000,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 298.83334, y: -57.1}
+  m_AnchoredPosition: {x: 247.83333, y: -57.1}
   m_SizeDelta: {x: 97.666664, y: 114.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &590500291
@@ -4579,7 +4579,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 423.83334, y: -57.1}
+  m_AnchoredPosition: {x: 347.33334, y: -57.1}
   m_SizeDelta: {x: 97.666664, y: 114.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1130922958
@@ -5468,7 +5468,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 173.83333, y: -57.1}
+  m_AnchoredPosition: {x: 148.33333, y: -57.1}
   m_SizeDelta: {x: 97.666664, y: 114.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1273202434
@@ -8670,10 +8670,16 @@ MonoBehaviour:
   timeText: {fileID: 680191384}
   tapText: {fileID: 1064262592}
   scoreText: {fileID: 1633316388}
+  finishedGameScoreText: {fileID: 0}
   pulseStrengthText: {fileID: 0}
   pulseDurationText: {fileID: 0}
   PauseMenu: {fileID: 52765807}
   UIBanner: {fileID: 1525943922}
+  GameCompleteMenu: {fileID: 0}
+  scoreFillBar: {fileID: 0}
+  tick1: {fileID: 0}
+  tick2: {fileID: 0}
+  tick3: {fileID: 0}
 --- !u!1 &2022086209
 GameObject:
   m_ObjectHideFlags: 0

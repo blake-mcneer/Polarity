@@ -19,6 +19,10 @@ public class UI : MonoBehaviour {
     public RectTransform tick1;
     public RectTransform tick2;
     public RectTransform tick3;
+    bool animatingScore = false;
+    float animatingDuration = 0.0f;
+    float fullAnimationDuration = 1.5f;
+    float scoreAnimationTarget;
     GameManager manager;
     private void Start()
     {
@@ -84,18 +88,26 @@ public class UI : MonoBehaviour {
     public void SetScore(int score)
     {
         scoreText.text = score.ToString();   
-        if (finishedGameScoreText)
-        {
-            finishedGameScoreText.text = score.ToString();
-        }
-        if (scoreFillBar)
-        {
-            UpdateScoreBar((float)score);
-        }
+        //if (finishedGameScoreText)
+        //{
+        //    finishedGameScoreText.text = score.ToString();
+        //}
     }
+    IEnumerator CompleteAfterDelay(float delayTime = 1.0f)
+    {
+        yield return new WaitForSeconds(delayTime);
+        GameCompleteMenu.SetActive(true);
+        StartCoroutine(AnimateAfterDelay());
+    }
+    IEnumerator AnimateAfterDelay(float delayTime = 0.5f)
+    {
+        yield return new WaitForSeconds(delayTime);
+        UpdateScoreBar();
+    }
+
     public void ShowGameCompleteMenu()
     {
-        GameCompleteMenu.SetActive(true);
+        StartCoroutine(CompleteAfterDelay());
     }
     public void HideGameCompleteMenu()
     {
@@ -133,13 +145,32 @@ public class UI : MonoBehaviour {
         SceneManager.LoadScene("GameScene");
 
     }
-    void UpdateScoreBar(float score)
+    private void Update()
+    {
+        if (animatingScore)
+        {
+            animatingDuration += Time.deltaTime;
+            animatingDuration = Mathf.Min(fullAnimationDuration, animatingDuration);
+            float targetScore = (float)manager.score;
+            float percentage = animatingDuration / fullAnimationDuration;
+            percentage = Mathf.Min(1.0f, percentage);
+            float showScore = targetScore * percentage;
+            finishedGameScoreText.text = showScore.ToString("0");
+            float fillBarCur = scoreAnimationTarget * percentage;
+            scoreFillBar.localScale = new Vector3(fillBarCur, 1.0f);
+
+        }
+    }
+    void UpdateScoreBar()
     {
         if (!manager) return;
+        animatingScore = true;
+        float score = (float)manager.score;
         LevelScoring scoring = manager.scoring;
         float fullWidth = 474.0f;
-        float fillBarLoc = score / scoring.topScore;
-        scoreFillBar.localScale = new Vector3(fillBarLoc, 1.0f);
+        float fillBarTarget = score / scoring.topScore;
+        scoreAnimationTarget = fillBarTarget;
+        //scoreFillBar.localScale = new Vector3(fillBarTarget, 1.0f);
     }
     void PlaceScoreTicks()
     {
