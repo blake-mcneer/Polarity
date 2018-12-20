@@ -302,7 +302,7 @@ public class GameManager : MonoBehaviour {
             if (activePulse != null)
             {
                 activePulse.dissapates = true;
-                activePulse.specificIndeces.RemoveRange(0, activePulse.specificIndeces.Count());
+                //activePulse.specificIndeces.RemoveRange(0, activePulse.specificIndeces.Count());
             }
         }
 
