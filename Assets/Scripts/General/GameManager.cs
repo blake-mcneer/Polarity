@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
     public int score = 0;
     public int tapScoreEffect = -50;
     public LevelScoring scoring;
+    MagneticPulse activePulse;
     [HideInInspector] public int tapCount = 0;
     [HideInInspector] public float seconds = 0.0f;
     float maxDistanceAffect = 0.75f;
@@ -90,7 +91,8 @@ public class GameManager : MonoBehaviour {
         for (int i = 0; i < attractionPulses.Count; i++)
         {
             MagneticPulse p = attractionPulses[i];
-            float pDuration = p.pulseRemaining - Time.deltaTime * drainSpeed;
+            float dissapateFactor = p.dissapates ? 1.0f : 0.0f;
+            float pDuration = p.pulseRemaining - (Time.deltaTime * drainSpeed) * dissapateFactor;
             pDuration = Mathf.Max(pDuration, 0.0f);
             p.pulseRemaining = pDuration;
             if (p.pulseRemaining > 0)
@@ -176,6 +178,11 @@ public class GameManager : MonoBehaviour {
         if (Time.timeScale > 0){
             MagneticPulse p = CreatePulse(position: pos, strength: pulseStrength, duration: pulseDurationSetting, prefab: pulseImage);
             p.specificIndeces = FullIndexList();
+            if (p.pulseStrength > 0.0f)
+            {
+                p.dissapates = false;
+                activePulse = p;
+            }
             attractionPulses.Add(p);
         }
 
@@ -288,6 +295,31 @@ public class GameManager : MonoBehaviour {
             }
         }
     }
+    void CheckForTapComplete()
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (activePulse != null)
+            {
+                activePulse.dissapates = true;
+                activePulse.specificIndeces.RemoveRange(0, activePulse.specificIndeces.Count());
+            }
+        }
+
+        //Debug.Log("Touch count:" + Input.touches.Count());
+        //foreach (Touch t in Input.touches)
+        //{
+        //    Debug.Log("Touch phase:" + t.phase);
+        //    //if (t.phase == TouchPhase.)
+        //    //{
+        //    //    if (!EventSystem.current.IsPointerOverGameObject())
+        //    //    {
+        //    //        RemoveActivePulses();
+        //    //    }
+        //    //}
+        //}
+    }
+
     private void Update()
     {
         if (!gameComplete)
@@ -300,7 +332,7 @@ public class GameManager : MonoBehaviour {
         {
             DidTap();
         }
-
+        CheckForTapComplete();
         UpdatePulses();
     }
 }
