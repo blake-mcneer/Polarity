@@ -14,6 +14,7 @@ public class UI : MonoBehaviour {
     public GameObject PauseMenu;
     public GameObject UIBanner;
     public GameObject gameCompleteMenuPrefab;
+    bool menuEnabled = true;
     GameManager manager;
     private void Start()
     {
@@ -90,10 +91,12 @@ public class UI : MonoBehaviour {
 
     public void ShowGameCompleteMenu()
     {
+        menuEnabled = false;
         StartCoroutine(CompleteAfterDelay());
     }
     public void ShowPauseMenu()
     {
+        if (!menuEnabled) return;
         Time.timeScale = 0.0f;
         PauseMenu.SetActive(true);
     }

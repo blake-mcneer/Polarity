@@ -145,6 +145,7 @@ public class LevelManager : MonoBehaviour {
         MagneticBall magObj = obj.GetComponent<MagneticBall>();
         magObj.transform.localScale = Vector3.one * calculatedScale;
         magObj.index = d.index;
+        magObj.transform.name = "MagObj-" +d.type+"-"+d.index;
         magObj.type = d.type;
         magObj.SetMaterial();
     }

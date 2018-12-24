@@ -119,7 +119,10 @@ public class GameManager : MonoBehaviour {
     {
         foreach (MagneticBall obj in magneticObjects)
         {
-            if (obj != null) return;
+            if (obj != null)
+            {
+                return;
+            }
         }
         gameComplete = true;
         RemoveActivePulses();
@@ -305,26 +308,6 @@ public class GameManager : MonoBehaviour {
                 activePulse.dissapates = true;
             }
         }
-        //if (Input.GetMouseButtonUp(0))
-        //{
-        //    if (activePulse != null)
-        //    {
-        //        activePulse.dissapates = true;
-        //    }
-        //}
-
-        //Debug.Log("Touch count:" + Input.touches.Count());
-        //foreach (Touch t in Input.touches)
-        //{
-        //    Debug.Log("Touch phase:" + t.phase);
-        //    //if (t.phase == TouchPhase.)
-        //    //{
-        //    //    if (!EventSystem.current.IsPointerOverGameObject())
-        //    //    {
-        //    //        RemoveActivePulses();
-        //    //    }
-        //    //}
-        //}
     }
 
     private void Update()
