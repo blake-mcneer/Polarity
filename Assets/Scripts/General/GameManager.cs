@@ -297,14 +297,21 @@ public class GameManager : MonoBehaviour {
     }
     void CheckForTapComplete()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (activePulse != null)
         {
-            if (activePulse != null)
+            bool touchIsActive = (Input.GetMouseButton(0) || Input.touches.Count() >0);
+            if (!touchIsActive)
             {
                 activePulse.dissapates = true;
-                //activePulse.specificIndeces.RemoveRange(0, activePulse.specificIndeces.Count());
             }
         }
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    if (activePulse != null)
+        //    {
+        //        activePulse.dissapates = true;
+        //    }
+        //}
 
         //Debug.Log("Touch count:" + Input.touches.Count());
         //foreach (Touch t in Input.touches)
