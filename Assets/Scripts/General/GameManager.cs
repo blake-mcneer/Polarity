@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour {
     int pulseIndex = 1;
     List<int> indexList = new List<int>();
     MagneticBall[] magneticObjects;
-    //MagneticPulse activePulse;
 
     public void SetupManager(LevelScoring scoreConfiguration)
     {
@@ -64,7 +63,6 @@ public class GameManager : MonoBehaviour {
     private void Start()
     {
         userInterface = FindObjectOfType<UI>();
-//        SetupManager();
     }
     void LoadMagneticObjects()
     {        
@@ -309,7 +307,6 @@ public class GameManager : MonoBehaviour {
             }
         }
     }
-
     private void Update()
     {
         if (!gameComplete)

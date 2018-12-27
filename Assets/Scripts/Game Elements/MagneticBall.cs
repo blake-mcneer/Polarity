@@ -137,8 +137,6 @@ public class MagneticBall : MonoBehaviour {
         {
             SelfDestruct();
         }
-
-
     }
     void HandleCollisionWithBall(MagneticBall ball)
     {
@@ -149,7 +147,6 @@ public class MagneticBall : MonoBehaviour {
         pos = transform.position + pos;
         manager.AddRepulsion(pos, indecesAffected, -1.0f);
         manager.RemoveFromCurrentAttractionPulses(index);
-        //Debug.Log(gameObject + " at(" + collisionCount +") collisions");
     }
     void HandleCollisionWithBarrier(Transform collisionTransform)
     {
@@ -160,7 +157,25 @@ public class MagneticBall : MonoBehaviour {
         pos = transform.position + pos;
         manager.AddRepulsion(pos, indecesAffected, -2.0f);
         manager.RemoveFromCurrentAttractionPulses(index);
-        //Debug.Log(gameObject + " at(" + collisionCount + ") collisions");
+    }
+    void HandleCollisionWithGoal(Goal g)
+    {
+        if (g.type == type)
+        {
+            g.HitByMagneticObject(gameObject.GetComponent<MagneticBall>());
+            ShrinkAway();
+        }
+        else
+        {
+            TallyCollision();
+            AudioManager.Instance.PlayClip(AudioClipCollide);
+            int[] indecesAffected = { index };
+            Vector3 pos = (g.transform.position - transform.position).normalized;
+            pos = transform.position + pos;
+            manager.AddRepulsion(pos, indecesAffected, -2.0f);
+            manager.RemoveFromCurrentAttractionPulses(index);
+        }
+
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -183,24 +198,7 @@ public class MagneticBall : MonoBehaviour {
             HandleCollisionWithBarrier(collision.transform);
         }
     }
-    void HandleCollisionWithGoal(Goal g)
-    {
-        if (g.type == type)
-        {
-            g.HitByMagneticObject(gameObject.GetComponent<MagneticBall>());
-            ShrinkAway();
-        }
-        else
-        {
-            AudioManager.Instance.PlayClip(AudioClipCollide);
-            int[] indecesAffected = { index };
-            Vector3 pos = (g.transform.position - transform.position).normalized;
-            pos = transform.position + pos;
-            manager.AddRepulsion(pos, indecesAffected, -2.0f);
-            manager.RemoveFromCurrentAttractionPulses(index);
-        }
-
-    }
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Finish")
@@ -209,14 +207,14 @@ public class MagneticBall : MonoBehaviour {
             HandleCollisionWithGoal(g);
         }
     }
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.tag == "Finish")
-        {
-            Goal g = other.transform.parent.GetComponent<Goal>();
-            HandleCollisionWithGoal(g);
-        }
-    }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.tag == "Finish")
+    //    {
+    //        Goal g = other.transform.parent.GetComponent<Goal>();
+    //        HandleCollisionWithGoal(g);
+    //    }
+    //}
     public void AbsorbObject(MagneticBall obj)
     {
         if (obj.hasBeenAbsorbed) return;
