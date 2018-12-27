@@ -13,6 +13,8 @@ public class Goal : MonoBehaviour {
     public GameObject Barrier25;
     public GameObject Barrier50;
     public GameObject Barrier75;
+    public AudioSource AudioClipAbsorb;
+
     Animator anim;
     int positiveScore = 100;
     int negativeScore = -50;
@@ -112,6 +114,7 @@ public class Goal : MonoBehaviour {
         if (mag.type == type){
             if (!mag.hasBeenScored){
                 mag.hasBeenScored = true;
+                AudioManager.Instance.PlayClip(AudioClipAbsorb);
                 manager.AddScore(positiveScore * mag.totalCount);
 //                manager.RemoveActivePulses();
             }
