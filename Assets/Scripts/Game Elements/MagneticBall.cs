@@ -15,6 +15,7 @@ public class MagneticBall : MonoBehaviour {
     public GameObject[] Explosions;
     public AudioSource AudioClipCollide;
     public AudioSource AudioClipExplode;
+    public GameObject trailPrefab;
     public float magneticConstant = 1.0f;
     public float dropSpeed = 1.0f;
     public float placeholderMagneticField = 0.0f;
@@ -34,11 +35,13 @@ public class MagneticBall : MonoBehaviour {
     [HideInInspector] public bool hasBeenAbsorbed = false;
     Vector3 previousVelocity;
     Rigidbody rb;
+    GameObject myTrail;
     GameManager manager;
     private void Start()
     {
         ConfigureScreenLimits();
         ConfigureBall();
+        myTrail = Instantiate(trailPrefab, transform.parent);
     }
     void ConfigureScreenLimits()
     {
@@ -128,6 +131,7 @@ public class MagneticBall : MonoBehaviour {
         yTarget -= dropSpeed * Time.deltaTime;
         Vector3 targetPos = LimitPosition(new Vector3(xTarget, yTarget, 0.0f));
         rb.MovePosition(targetPos);
+        myTrail.transform.position = transform.position;
     }
     void TallyCollision()
     {

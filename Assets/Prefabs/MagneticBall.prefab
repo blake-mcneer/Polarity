@@ -119,6 +119,8 @@ MonoBehaviour:
   - {fileID: 1405558358815994, guid: 720386954f3b63341a1e706801478fb0, type: 3}
   AudioClipCollide: {fileID: 82474178244171256}
   AudioClipExplode: {fileID: 82795596211567518}
+  trailPrefab: {fileID: 7217563939820988492, guid: d93d3f36652496240936b0c1059d5291,
+    type: 3}
   magneticConstant: 7
   dropSpeed: 0
   placeholderMagneticField: 0
@@ -344,13 +346,13 @@ TrailRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1516696007505906}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 3
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -444,7 +446,7 @@ TrailRenderer:
     numCapVertices: 0
     alignment: 0
     textureMode: 0
-    shadowBias: 1
+    shadowBias: 0
     generateLightingData: 1
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
