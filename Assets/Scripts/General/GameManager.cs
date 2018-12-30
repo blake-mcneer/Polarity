@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
     public float pulseDurationSetting = 5.0f;
     public float pulseDisplaySize = 4.0f;
     public float pulseStrength = 4.0f;
-    public float pulseDistanceThreshold = .05f;
+    public float pulseDistanceThreshold = .25f;
     public float affectLimit = 2.5f;    
     public float drainSpeed = 1.0f;
     public bool gameComplete = false;

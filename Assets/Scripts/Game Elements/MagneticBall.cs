@@ -147,9 +147,14 @@ public class MagneticBall : MonoBehaviour {
         AudioManager.Instance.PlayClip(AudioClipCollide);
         TallyCollision();
         int[] indecesAffected = { index, ball.index };
-        Vector3 pos = (ball.transform.position - transform.position).normalized;
-        pos = transform.position + pos;
-        manager.AddRepulsion(pos, indecesAffected, -1.0f);
+        Vector3 pos = (ball.transform.position + transform.position)/2.0f;
+        //Vector3 mult = (ball.transform.position - transform.position).normalized;
+        //Vector3 addVec = new Vector3(pos.x * mult.x, pos.y * mult.y, pos.z * mult.z);
+        //pos = transform.position - addVec;
+        if (index > ball.index)
+        {
+            manager.AddRepulsion(pos, indecesAffected, -2.5f);
+        }
         manager.RemoveFromCurrentAttractionPulses(index);
     }
     void HandleCollisionWithBarrier(Transform collisionTransform)
@@ -157,10 +162,10 @@ public class MagneticBall : MonoBehaviour {
         AudioManager.Instance.PlayClip(AudioClipCollide);
         TallyCollision();
         int[] indecesAffected = { index };
-        Vector3 pos = (collisionTransform.position - transform.position).normalized;
-        pos = transform.position + pos;
-        manager.AddRepulsion(pos, indecesAffected, -2.0f);
+        Vector3 pos = (collisionTransform.position + transform.position)/2.0f;
+        //pos = transform.position + pos;
         manager.RemoveFromCurrentAttractionPulses(index);
+        manager.AddRepulsion(pos, indecesAffected, -2.5f);
     }
     void HandleCollisionWithGoal(Goal g)
     {
@@ -174,9 +179,9 @@ public class MagneticBall : MonoBehaviour {
             TallyCollision();
             AudioManager.Instance.PlayClip(AudioClipCollide);
             int[] indecesAffected = { index };
-            Vector3 pos = (g.transform.position - transform.position).normalized;
-            pos = transform.position + pos;
-            manager.AddRepulsion(pos, indecesAffected, -2.0f);
+            Vector3 pos = (g.transform.position + transform.position)/2.0f;
+            //pos = transform.position + pos;
+            manager.AddRepulsion(pos, indecesAffected, -2.5f);
             manager.RemoveFromCurrentAttractionPulses(index);
         }
 
