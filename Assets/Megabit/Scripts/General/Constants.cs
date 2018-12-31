@@ -2,6 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+public struct ScreenLimits
+{
+    public float leftLimit;
+    public float rightLimit;
+    public float topLimit;
+    public float bottomLimit;
+}
 [System.Serializable]
 public enum MagneticType
 {
