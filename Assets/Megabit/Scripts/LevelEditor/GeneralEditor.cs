@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GeneralEditor : MonoBehaviour {
 
@@ -8,12 +9,14 @@ public class GeneralEditor : MonoBehaviour {
     public GameObject AttractorPrefab;
     public GameObject GoalPrefab;
     public GameObject BorderPiecePrefab;
+    public Text levelText;
     Vector3 spawnPosition = new Vector3(6.0f, 0.0f, 0.0f);
 
     EditorTool editorTool;
     private void Start()
     {
         editorTool = FindObjectOfType<EditorTool>();
+        levelText.text = GameSingleton.Instance.currentLevel.ToString();
     }
     public void CreateBall()
     {

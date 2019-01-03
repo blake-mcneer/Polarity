@@ -194,6 +194,17 @@ public class GameManager : MonoBehaviour {
             p.Dissapate();
         }
     }
+    void SetPulseToInputPos()
+    {
+        Vector2 loc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 loc2 = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        Vector3 pulseLocation = new Vector3(loc.x, loc.y, 1.0f);
+        if (activePulse){
+            activePulse.prefab.transform.position = pulseLocation;
+            activePulse.pulseLocation = pulseLocation;
+//            obj.transform.position = pulseLocation;
+        }
+    }
 
     void AddPulse()
     {
@@ -318,6 +329,11 @@ public class GameManager : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             DidTap();
+        }else if (Input.GetMouseButton(0))
+        {
+            if (activePulse){
+                SetPulseToInputPos();
+            }
         }
         CheckForTapComplete();
         UpdatePulses();

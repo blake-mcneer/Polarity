@@ -9,6 +9,7 @@ public class LevelEditor : MonoBehaviour
     public MagneticBallEditPanel magneticBallPanel;
     public GeneralEditor editorPanel;
     public BorderPieceEditPanel borderPiecePanel;
+    ScreenLimits limits;
 
     int mLevel = 0;
     public int Level
@@ -32,7 +33,22 @@ public class LevelEditor : MonoBehaviour
     private void Start()
     {
         HideAllPanels();
+        ConfigureScreenLimits();
     }
+    void ConfigureScreenLimits()
+    {
+        Vector3 lowerLeftCorner = Camera.main.ViewportToWorldPoint(Vector3.zero);
+        Vector3 upperRightCorner = Camera.main.ViewportToWorldPoint(Vector3.one);
+        Vector3 upperRightScreenPoint = Camera.main.ViewportToScreenPoint(Vector3.one);
+        upperRightScreenPoint.y = Screen.height * (1.0f - GameSingleton.Instance.bannerPercentage);
+        upperRightCorner = Camera.main.ScreenToWorldPoint(upperRightScreenPoint);
+
+        limits.leftLimit = lowerLeftCorner.x + transform.localScale.x / 2.0f;
+        limits.rightLimit = upperRightCorner.x - transform.localScale.x / 2.0f;
+        limits.bottomLimit = lowerLeftCorner.y + transform.localScale.x / 2.0f;
+        limits.topLimit = upperRightCorner.y - transform.localScale.x / 2.0f;
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -118,6 +134,15 @@ public class LevelEditor : MonoBehaviour
         Vector3 currentInput = new Vector3(loc.x, loc.y, 0.0f);
 
         Vector3 newPos = positionStarted - (inputStarted - currentInput);
+        newPos.x = Mathf.Max(newPos.x, limits.leftLimit + objectHeld.transform.localScale.x/2.0f); 
+        newPos.x = Mathf.Min(newPos.x, limits.rightLimit - objectHeld.transform.localScale.x/2.0f);
+        newPos.y = Mathf.Max(newPos.y, limits.bottomLimit + objectHeld.transform.localScale.y/2.0f);
+        newPos.y = Mathf.Min(newPos.y, limits.topLimit - objectHeld.transform.localScale.y/2.0f);
+
+        //newPos.x = (float)((int)newPos.x + (newPos.x % 1) * 10);
+        //newPos.y = (newPos.y / 0.5f) * 0.5f;
+        //newPos.z = (newPos.z / 0.5f) * 0.5f;
+
         newPos = new Vector3((int)newPos.x, (int)newPos.y, (int)newPos.z);
         objectHeld.transform.position = newPos;
         //Debug.Log(objectHeld.transform.position);

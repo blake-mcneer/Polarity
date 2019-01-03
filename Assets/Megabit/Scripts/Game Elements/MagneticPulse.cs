@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,6 +28,4 @@ public class MagneticPulse : ScriptableObject {
         emission.rateOverTime = 1.0f;
         pulseStrength = 0.0f;
     }
-
-
 }
