@@ -153,7 +153,7 @@ public class MagneticBall : MonoBehaviour {
     void HandleCollisionWithBarrier(Transform collisionTransform)
     {
         AudioManager.Instance.PlayClip(AudioClipCollide);
-        TallyCollision();
+        //TallyCollision();
         int[] indecesAffected = { index };
         Vector3 pos = (collisionTransform.position + transform.position)/2.0f;
         //pos = transform.position + pos;
@@ -169,7 +169,7 @@ public class MagneticBall : MonoBehaviour {
         }
         else
         {
-            TallyCollision();
+            //TallyCollision();
             AudioManager.Instance.PlayClip(AudioClipCollide);
             int[] indecesAffected = { index };
             Vector3 pos = (g.transform.position + transform.position)/2.0f;
