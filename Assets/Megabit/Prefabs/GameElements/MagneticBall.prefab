@@ -119,7 +119,7 @@ MonoBehaviour:
   - {fileID: 1405558358815994, guid: 720386954f3b63341a1e706801478fb0, type: 3}
   AudioClipCollide: {fileID: 82474178244171256}
   AudioClipExplode: {fileID: 82795596211567518}
-  trailPrefab: {fileID: 7217563939820988492, guid: d93d3f36652496240936b0c1059d5291,
+  trailPrefab: {fileID: 8551499126879202246, guid: 8493d45f1f02b470f9f7d7cbf0764145,
     type: 3}
   magneticConstant: 7
   dropSpeed: 0
