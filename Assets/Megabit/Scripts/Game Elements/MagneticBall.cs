@@ -112,6 +112,7 @@ public class MagneticBall : MonoBehaviour {
         {
             UpdateScale();
         }else if (shrinkingAway){
+            Destroy(myTrail);
             Destroy(gameObject);    
         }
 

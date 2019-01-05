@@ -236,10 +236,10 @@ public class GameManager : MonoBehaviour {
                     pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength * pulseAffect * dist;
                 }
                 else{
-                    if (p.specificIndeces.Contains(objectIndex))
-                    {
-                        p.specificIndeces.Remove(objectIndex);
-                    }
+                    //if (p.specificIndeces.Contains(objectIndex))
+                    //{
+                    //    p.specificIndeces.Remove(objectIndex);
+                    //}
                     //RemoveFromCurrentAttractionPulses(objectIndex);
 
                 }
