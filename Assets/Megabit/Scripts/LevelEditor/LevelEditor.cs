@@ -127,6 +127,39 @@ public class LevelEditor : MonoBehaviour
         Vector2 loc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         inputStarted = new Vector3(loc.x, loc.y, 0.0f);
     }
+    float RoundedPosition(int intVal, float decVal)
+    {
+        float returnVal = (float)intVal;
+        if (decVal > 0.75f){
+            returnVal += 1.0f;
+        }else if (decVal > 0.25f){
+            returnVal += 0.5f;
+        }
+        //if (decVal > 0.95f){
+        //    returnVal += 1.0f;
+        //}else if (decVal > 0.85f){
+        //    returnVal += 0.9f;
+        //}else if (decVal > 0.75f){
+        //    returnVal += 0.8f;
+        //}else if (decVal > 0.65f){
+        //    returnVal += 0.7f;
+        //}else if (decVal > 0.55f){
+        //    returnVal += 0.6f;
+        //}else if (decVal > 0.45f){
+        //    returnVal += 0.5f;
+        //}else if (decVal > 0.35f){
+        //    returnVal += 0.4f;
+        //}else if (decVal > 0.25f){
+        //    returnVal += 0.3f;
+        //}else if (decVal > 0.15f){
+        //    returnVal += 0.2f;
+        //}else if (decVal > 0.05){
+        //    returnVal += 0.1f;
+        //}
+
+        return returnVal;
+    }
+
     void MoveObject()
     {
         if (objectHeld == null) return;
@@ -134,18 +167,17 @@ public class LevelEditor : MonoBehaviour
         Vector3 currentInput = new Vector3(loc.x, loc.y, 0.0f);
 
         Vector3 newPos = positionStarted - (inputStarted - currentInput);
-        newPos.x = Mathf.Max(newPos.x, limits.leftLimit + objectHeld.transform.localScale.x/2.0f); 
-        newPos.x = Mathf.Min(newPos.x, limits.rightLimit - objectHeld.transform.localScale.x/2.0f);
-        newPos.y = Mathf.Max(newPos.y, limits.bottomLimit + objectHeld.transform.localScale.y/2.0f);
-        newPos.y = Mathf.Min(newPos.y, limits.topLimit - objectHeld.transform.localScale.y/2.0f);
+        Vector3 intVals = new Vector3((int)newPos.x, (int)newPos.y, (int)newPos.z);
+        Vector3 remVals = new Vector3(newPos.x % intVals.x, newPos.y % intVals.y, 0.0f);
 
-        //newPos.x = (float)((int)newPos.x + (newPos.x % 1) * 10);
-        //newPos.y = (newPos.y / 0.5f) * 0.5f;
-        //newPos.z = (newPos.z / 0.5f) * 0.5f;
+        newPos = new Vector3(RoundedPosition((int)intVals.x, remVals.x), RoundedPosition((int)intVals.y, remVals.y), newPos.z);
 
-        newPos = new Vector3((int)newPos.x, (int)newPos.y, (int)newPos.z);
+        newPos.x = Mathf.Max(newPos.x, limits.leftLimit); 
+        newPos.x = Mathf.Min(newPos.x, limits.rightLimit);
+        newPos.y = Mathf.Max(newPos.y, limits.bottomLimit);
+        newPos.y = Mathf.Min(newPos.y, limits.topLimit);
+
         objectHeld.transform.position = newPos;
-        //Debug.Log(objectHeld.transform.position);
 
     }
 
