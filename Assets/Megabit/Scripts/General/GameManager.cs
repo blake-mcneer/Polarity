@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour {
     public void AddRepulsion(Vector3 pos, int[] affectedIndeces, float repulsionStrength = 0.0f)
     {
         if (repulsionStrength == 0.0f) repulsionStrength = -pulseStrength;
-        repulsionStrength = (-pulseStrength) / 2.5f;
+        //repulsionStrength = (-pulseStrength) / 2.5f;
         MagneticPulse p = CreatePulse(position: pos, strength: repulsionStrength, duration: 0.75f, prefab: repulsionImage);
         p.specificIndeces = affectedIndeces.ToList();
         attractionPulses.Add(p);
