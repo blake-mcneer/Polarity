@@ -21,7 +21,7 @@ public class MagneticBall : MonoBehaviour {
     float scaleSpeed = 4.0f;
     bool shrinkingAway = false;
     bool hasExploded = false;
-    int collisionLimit = 3;
+    int collisionLimit = 10;
     ScreenLimits limits;
     [HideInInspector] public int index;
     [HideInInspector] public bool hasBeenScored = false;
@@ -147,9 +147,9 @@ public class MagneticBall : MonoBehaviour {
         //pos = transform.position - addVec;
         if (index > ball.index)
         {
-            manager.AddRepulsion(pos, indecesAffected, -2.5f);
+            manager.AddRepulsion(pos, indecesAffected, -5.0f);
         }
-        manager.RemoveFromCurrentAttractionPulses(index);
+        //manager.RemoveFromCurrentAttractionPulses(index);
     }
     void HandleCollisionWithBarrier(Transform collisionTransform)
     {
@@ -158,7 +158,7 @@ public class MagneticBall : MonoBehaviour {
         int[] indecesAffected = { index };
         Vector3 pos = (collisionTransform.position + transform.position)/2.0f;
         //pos = transform.position + pos;
-        manager.RemoveFromCurrentAttractionPulses(index);
+        //manager.RemoveFromCurrentAttractionPulses(index);
         manager.AddRepulsion(pos, indecesAffected, -2.5f);
     }
     void HandleCollisionWithGoal(Goal g)
@@ -176,7 +176,7 @@ public class MagneticBall : MonoBehaviour {
             Vector3 pos = (g.transform.position + transform.position)/2.0f;
             //pos = transform.position + pos;
             manager.AddRepulsion(pos, indecesAffected, -2.5f);
-            manager.RemoveFromCurrentAttractionPulses(index);
+            //manager.RemoveFromCurrentAttractionPulses(index);
         }
 
     }
