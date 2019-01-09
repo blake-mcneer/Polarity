@@ -213,6 +213,27 @@ public class GameManager : MonoBehaviour {
         Vector3 pulseLocation = new Vector3(loc.x, loc.y, 1.0f);
         AddPulseAtPosition(pulseLocation);
     }
+    public Vector2 AffectFromNearbyObjects(MagneticBall ball)
+    {
+        float nearbyBallAffectThreshld = 3.0f;
+        Vector2 totalAffect = new Vector2(0.0f, 0.0f);
+        foreach (MagneticBall otherBall in magneticObjects)
+        {
+            if (otherBall == ball || otherBall == null || otherBall.type == ball.type) continue;
+            float distanceApart = Mathf.Abs(Vector3.Distance(otherBall.transform.position, ball.transform.position));
+            if (distanceApart <= nearbyBallAffectThreshld){
+                Debug.Log("Index: " + ball.index + " is distance: " + distanceApart + " from index: " + otherBall.index);
+                float dist = 1.0f / distanceApart;
+                dist = Mathf.Min(dist, maxDistanceAffect);
+                Vector3 affect = (ball.transform.position - otherBall.transform.position).normalized * pulseStrength/5.0f * dist;
+                //otherBall.ActivateShields();
+                //ball.ActivateShields();
+                totalAffect += new Vector2(affect.x, affect.y);
+            }
+        }
+
+        return totalAffect;        
+    }
     public Vector2 AffectOnPosition(Vector2 position, int objectIndex)
     {
         if (pulseDistanceThreshold <= 0.0f) pulseDistanceThreshold = 0.1f;
@@ -234,6 +255,7 @@ public class GameManager : MonoBehaviour {
                     dist = Mathf.Min(dist, maxDistanceAffect);
                     float pulseAffect = p.pulseRemaining / p.pulseDuration;
                     pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength * pulseAffect * dist;
+
                 }
                 else{
                     //if (p.specificIndeces.Contains(objectIndex))
