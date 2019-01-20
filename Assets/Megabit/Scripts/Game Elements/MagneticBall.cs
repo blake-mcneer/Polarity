@@ -11,7 +11,6 @@ public class MagneticBall : MonoBehaviour {
     public GameObject trailPrefab;
     public GameObject shieldComponent;
     public float magneticConstant = 1.0f;
-    public float dropSpeed = 1.0f;
     public float placeholderMagneticField = 0.0f;
     public MagneticType type;
     public int totalCount = 1;
@@ -115,7 +114,7 @@ public class MagneticBall : MonoBehaviour {
         Vector3 limitedPosition = new Vector3(x, y, rawPosition.z);
         return limitedPosition;
     }
-    private void Update()
+    private void FixedUpdate()
     {
         if (manager == null) ConfigureBall();
 
@@ -139,9 +138,8 @@ public class MagneticBall : MonoBehaviour {
         //if (!shieldsShouldBeActivated && shieldsActivated) DeactivateShields();
         float xTarget = transform.position.x + (pulseAffect.x + otherBallEffect.x) * magneticConstant * Time.deltaTime;
         float yTarget = transform.position.y - (pulseAffect.y + otherBallEffect.y) * magneticConstant * Time.deltaTime;
-        yTarget -= dropSpeed * Time.deltaTime;
         Vector3 targetPos = LimitPosition(new Vector3(xTarget, yTarget, 0.0f));
-        targetPos = Vector3.Lerp(transform.position, targetPos, 0.95f);
+        targetPos = Vector3.Lerp(transform.position, targetPos, 0.75f);
         rb.MovePosition(targetPos);
         myTrail.transform.position = transform.position;
     }

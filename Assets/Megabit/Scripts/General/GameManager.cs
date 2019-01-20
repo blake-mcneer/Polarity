@@ -222,7 +222,7 @@ public class GameManager : MonoBehaviour {
             if (otherBall == ball || otherBall == null || otherBall.type == ball.type) continue;
             float distanceApart = Mathf.Abs(Vector3.Distance(otherBall.transform.position, ball.transform.position));
             if (distanceApart <= nearbyBallAffectThreshld){
-                Debug.Log("Index: " + ball.index + " is distance: " + distanceApart + " from index: " + otherBall.index);
+                //Debug.Log("Index: " + ball.index + " is distance: " + distanceApart + " from index: " + otherBall.index);
                 float dist = 1.0f / distanceApart;
                 dist = Mathf.Min(dist, maxDistanceAffect);
                 Vector3 affect = (ball.transform.position - otherBall.transform.position).normalized * pulseStrength/5.0f * dist;
