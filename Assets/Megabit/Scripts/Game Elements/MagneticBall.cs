@@ -9,6 +9,7 @@ public class MagneticBall : MonoBehaviour {
     public AudioSource AudioClipCollide;
     public AudioSource AudioClipExplode;
     public GameObject trailPrefab;
+    public GameObject shieldComponent;
     public float magneticConstant = 1.0f;
     public float dropSpeed = 1.0f;
     public float placeholderMagneticField = 0.0f;
@@ -26,6 +27,7 @@ public class MagneticBall : MonoBehaviour {
     [HideInInspector] public int index;
     [HideInInspector] public bool hasBeenScored = false;
     [HideInInspector] public bool hasBeenAbsorbed = false;
+    [HideInInspector] public bool shieldsActivated = false;
     Vector3 previousVelocity;
     Rigidbody rb;
     GameObject myTrail;
@@ -55,6 +57,17 @@ public class MagneticBall : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         manager = FindObjectOfType<GameManager>();
         SetMaterial();
+    }
+    public void DeactivateShields()
+    {
+        shieldsActivated = false;
+        shieldComponent.SetActive(false);
+    }
+
+    public void ActivateShields()
+    {
+        shieldsActivated = true;
+        shieldComponent.SetActive(true);
     }
 
     public void SetMaterial()
@@ -120,8 +133,12 @@ public class MagneticBall : MonoBehaviour {
 
         rb.velocity = Vector3.zero;
         Vector2 pulseAffect = manager.AffectOnPosition(transform.position, index);
-        float xTarget = transform.position.x + pulseAffect.x * magneticConstant * Time.deltaTime;
-        float yTarget = transform.position.y - pulseAffect.y * magneticConstant * Time.deltaTime;
+        Vector2 otherBallEffect = manager.AffectFromNearbyObjects(this);
+        bool shieldsShouldBeActivated = (Mathf.Abs(otherBallEffect.x) > 0.1f && Mathf.Abs(otherBallEffect.y) > 0.1f);
+        if (shieldsShouldBeActivated && !shieldsActivated) ActivateShields();
+        if (!shieldsShouldBeActivated && shieldsActivated) DeactivateShields();
+        float xTarget = transform.position.x + (pulseAffect.x + otherBallEffect.x) * magneticConstant * Time.deltaTime;
+        float yTarget = transform.position.y - (pulseAffect.y + otherBallEffect.y) * magneticConstant * Time.deltaTime;
         yTarget -= dropSpeed * Time.deltaTime;
         Vector3 targetPos = LimitPosition(new Vector3(xTarget, yTarget, 0.0f));
         rb.MovePosition(targetPos);
