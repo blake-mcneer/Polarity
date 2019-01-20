@@ -135,12 +135,13 @@ public class MagneticBall : MonoBehaviour {
         Vector2 pulseAffect = manager.AffectOnPosition(transform.position, index);
         Vector2 otherBallEffect = manager.AffectFromNearbyObjects(this);
         bool shieldsShouldBeActivated = (Mathf.Abs(otherBallEffect.x) > 0.1f && Mathf.Abs(otherBallEffect.y) > 0.1f);
-        if (shieldsShouldBeActivated && !shieldsActivated) ActivateShields();
-        if (!shieldsShouldBeActivated && shieldsActivated) DeactivateShields();
+        //if (shieldsShouldBeActivated && !shieldsActivated) ActivateShields();
+        //if (!shieldsShouldBeActivated && shieldsActivated) DeactivateShields();
         float xTarget = transform.position.x + (pulseAffect.x + otherBallEffect.x) * magneticConstant * Time.deltaTime;
         float yTarget = transform.position.y - (pulseAffect.y + otherBallEffect.y) * magneticConstant * Time.deltaTime;
         yTarget -= dropSpeed * Time.deltaTime;
         Vector3 targetPos = LimitPosition(new Vector3(xTarget, yTarget, 0.0f));
+        targetPos = Vector3.Lerp(transform.position, targetPos, 0.95f);
         rb.MovePosition(targetPos);
         myTrail.transform.position = transform.position;
     }

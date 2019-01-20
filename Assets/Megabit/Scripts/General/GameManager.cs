@@ -254,6 +254,7 @@ public class GameManager : MonoBehaviour {
                     float dist = 1.0f / distanceApart;
                     dist = Mathf.Min(dist, maxDistanceAffect);
                     float pulseAffect = p.pulseRemaining / p.pulseDuration;
+                    pulseAffect = 1.0f;
                     pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength * pulseAffect * dist;
 
                 }
