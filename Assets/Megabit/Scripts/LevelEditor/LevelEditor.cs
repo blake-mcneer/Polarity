@@ -99,7 +99,7 @@ public class LevelEditor : MonoBehaviour
                 borderPiecePanel.gameObject.SetActive(true);
                 borderPiecePanel.SetBorderPiece(borderPiece);
             }
-            else if (tagHit == "Barrier")
+            else if (tagHit == "OrbitalRing")
             {
                 GameObject attractorObject = hit.collider.transform.parent.gameObject;
                 Attractor attractor = attractorObject.GetComponent<Attractor>();

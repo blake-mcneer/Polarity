@@ -27,6 +27,10 @@ public class MagneticBall : MonoBehaviour {
     [HideInInspector] public bool hasBeenScored = false;
     [HideInInspector] public bool hasBeenAbsorbed = false;
     [HideInInspector] public bool shieldsActivated = false;
+    [HideInInspector] public bool lockedInOrbit = false;
+    [HideInInspector] public Vector3 orbitalLockPosition = Vector3.zero;
+    [HideInInspector] public Attractor attachedAttractor;
+    [HideInInspector] public Transform originalParent;
     Vector3 previousVelocity;
     Rigidbody rb;
     GameObject myTrail;
@@ -36,6 +40,7 @@ public class MagneticBall : MonoBehaviour {
         ConfigureScreenLimits();
         ConfigureBall();
         myTrail = Instantiate(trailPrefab, transform.parent);
+        originalParent = transform.parent;
     }
     void ConfigureScreenLimits()
     {
@@ -131,13 +136,16 @@ public class MagneticBall : MonoBehaviour {
         if (shrinkingAway) return;
 
         rb.velocity = Vector3.zero;
-        Vector2 pulseAffect = manager.AffectOnPosition(transform.position, index);
-        Vector2 otherBallEffect = manager.AffectFromNearbyObjects(this);
-        bool shieldsShouldBeActivated = (Mathf.Abs(otherBallEffect.x) > 0.1f && Mathf.Abs(otherBallEffect.y) > 0.1f);
+        Vector3 forceOnBall = manager.TotalForceOnBall(this);
+        if (lockedInOrbit && (Mathf.Abs(forceOnBall.x) > 0.1f || Mathf.Abs(forceOnBall.y) > 0.1f))
+        {
+            attachedAttractor.ReleaseBall(this);
+        }
+        //bool shieldsShouldBeActivated = (Mathf.Abs(forceOnBall.x) > 0.1f && Mathf.Abs(forceOnBall.y) > 0.1f);
         //if (shieldsShouldBeActivated && !shieldsActivated) ActivateShields();
         //if (!shieldsShouldBeActivated && shieldsActivated) DeactivateShields();
-        float xTarget = transform.position.x + (pulseAffect.x + otherBallEffect.x) * magneticConstant * Time.deltaTime;
-        float yTarget = transform.position.y - (pulseAffect.y + otherBallEffect.y) * magneticConstant * Time.deltaTime;
+        float xTarget = transform.position.x + (forceOnBall.x) * magneticConstant * Time.deltaTime;
+        float yTarget = transform.position.y - (forceOnBall.y) * magneticConstant * Time.deltaTime;
         Vector3 targetPos = LimitPosition(new Vector3(xTarget, yTarget, 0.0f));
         targetPos = Vector3.Lerp(transform.position, targetPos, 0.75f);
         rb.MovePosition(targetPos);
@@ -167,6 +175,7 @@ public class MagneticBall : MonoBehaviour {
         }
         //manager.RemoveFromCurrentAttractionPulses(index);
     }
+
     void HandleCollisionWithBarrier(Transform collisionTransform)
     {
         AudioManager.Instance.PlayClip(AudioClipCollide);
@@ -176,6 +185,10 @@ public class MagneticBall : MonoBehaviour {
         //pos = transform.position + pos;
         //manager.RemoveFromCurrentAttractionPulses(index);
         manager.AddRepulsion(pos, indecesAffected, -2.5f);
+    }
+    void HandleCollisionWithAttractor(Attractor a)
+    {
+        a.CaptureBall(this);
     }
     void HandleCollisionWithGoal(Goal g)
     {
@@ -217,23 +230,28 @@ public class MagneticBall : MonoBehaviour {
             HandleCollisionWithBarrier(collision.transform);
         }
     }
-    
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "OrbitalRing" && !lockedInOrbit)
+    //    {
+    //        Attractor a = collision.gameObject.transform.parent.gameObject.GetComponent<Attractor>();
+    //        HandleCollisionWithAttractor(a);
+    //    }
+
+    //}
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Finish")
         {
             Goal g = other.transform.parent.GetComponent<Goal>();
             HandleCollisionWithGoal(g);
+        }else if (other.tag == "OrbitalRing" && ! lockedInOrbit)
+        {
+            Attractor a = other.gameObject.transform.parent.gameObject.GetComponent<Attractor>();
+            HandleCollisionWithAttractor(a);
         }
+
     }
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.tag == "Finish")
-    //    {
-    //        Goal g = other.transform.parent.GetComponent<Goal>();
-    //        HandleCollisionWithGoal(g);
-    //    }
-    //}
     public void AbsorbObject(MagneticBall obj)
     {
         if (obj.hasBeenAbsorbed) return;

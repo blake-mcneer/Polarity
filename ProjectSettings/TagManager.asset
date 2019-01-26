@@ -10,6 +10,7 @@ TagManager:
   - Goal
   - BorderPiece
   - Background
+  - OrbitalRing
   layers:
   - Default
   - TransparentFX

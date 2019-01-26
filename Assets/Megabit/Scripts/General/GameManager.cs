@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour {
     public float pulseDurationSetting = 5.0f;
     public float pulseDisplaySize = 4.0f;
     public float pulseStrength = 4.0f;
-    public float pulseDistanceThreshold = .25f;
     public float affectLimit = 2.5f;    
     public float drainSpeed = 1.0f;
     public bool gameComplete = false;
@@ -23,6 +22,8 @@ public class GameManager : MonoBehaviour {
     [HideInInspector] public float seconds = 0.0f;
     float maxDistanceAffect = 0.75f;
     float maxPulseAffect = 1.0f;
+    float pulseDistanceThreshold = 0.0f;
+
     UI userInterface;
     [HideInInspector] public List<MagneticPulse> preconfiguredPulses = new List<MagneticPulse>();
     [HideInInspector] public List<MagneticPulse> attractionPulses = new List<MagneticPulse>();
@@ -213,10 +214,57 @@ public class GameManager : MonoBehaviour {
         Vector3 pulseLocation = new Vector3(loc.x, loc.y, 1.0f);
         AddPulseAtPosition(pulseLocation);
     }
-    public Vector2 AffectFromNearbyObjects(MagneticBall ball)
+    Vector3 AffectOnBallFromUserTaps(MagneticBall ball)
     {
-        float nearbyBallAffectThreshld = 3.0f;
-        Vector2 totalAffect = new Vector2(0.0f, 0.0f);
+        Vector3 totalForce = Vector3.zero;
+
+        for (int i = 0; i < attractionPulses.Count; i++)
+        {
+            MagneticPulse p = attractionPulses[i];
+            if (p.specificIndeces.Contains(ball.index))
+            {
+                Vector3 vecA = new Vector3(ball.transform.position.x, ball.transform.position.y, 0.0f);
+                Vector3 vecB = new Vector3(p.pulseLocation.x, p.pulseLocation.y, 0.0f);
+
+                float distanceApart = Mathf.Abs(Vector3.Distance(vecA, vecB));
+                //if (distanceApart > pulseDistanceThreshold)
+                //{
+                    float dist = 1.0f / distanceApart;
+                    dist = Mathf.Min(dist, maxDistanceAffect);
+                    dist = 1.0f;
+                    float pulseAffect = p.pulseRemaining / p.pulseDuration;
+                    //pulseAffect = 1.0f;
+                    totalForce += (new Vector3(ball.transform.position.x, ball  .transform.position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength * pulseAffect * dist;
+
+                //}
+            }
+        }
+        return totalForce;
+    }
+    Vector3 AffectOnBallFromAttractors(MagneticBall ball)
+    {
+        Vector3 totalForce = Vector3.zero;
+        foreach (MagneticPulse p in preconfiguredPulses)
+        {
+            Vector3 vecA = new Vector3(ball.transform.position.x, ball.transform.position.y, 0.0f);
+            Vector3 vecB = new Vector3(p.pulseLocation.x, p.pulseLocation.y, 0.0f);
+
+            float distanceApart = Mathf.Abs(Vector3.Distance(ball.transform.position, p.pulseLocation));
+            if (distanceApart > pulseDistanceThreshold)
+            {
+                float dist = 1.0f / distanceApart;
+                dist = Mathf.Min(dist, maxDistanceAffect);
+                totalForce += (new Vector3(ball.transform.position.x, ball.transform.position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength * dist;
+            }
+        }
+        return totalForce;
+    }
+    Vector3 AffectOnBallFromNearbyMagneticBalls(MagneticBall ball)
+    {
+        if (ball.lockedInOrbit) return Vector2.zero;
+
+        float nearbyBallAffectThreshld = 1.5f;
+        Vector3 totalAffect = new Vector3(0.0f, 0.0f, 0.0f);
         foreach (MagneticBall otherBall in magneticObjects)
         {
             if (otherBall == ball || otherBall == null || otherBall.type == ball.type) continue;
@@ -228,66 +276,85 @@ public class GameManager : MonoBehaviour {
                 Vector3 affect = (ball.transform.position - otherBall.transform.position).normalized * pulseStrength/5.0f * dist;
                 //otherBall.ActivateShields();
                 //ball.ActivateShields();
-                totalAffect += new Vector2(affect.x, affect.y);
+                totalAffect += new Vector3(affect.x, affect.y, 0.0f);
             }
         }
-
         return totalAffect;        
     }
-    public Vector2 AffectOnPosition(Vector2 position, int objectIndex)
+    public Vector3 TotalForceOnBall(MagneticBall ball)
     {
-        if (pulseDistanceThreshold <= 0.0f) pulseDistanceThreshold = 0.1f;
-
-        Vector3 pulsePower = new Vector2(0.0f, 0.0f);
-        List<MagneticPulse> pulsesReached = new List<MagneticPulse>();
-        for (int i = 0; i < attractionPulses.Count; i++)
+        Vector3 totalForce = Vector3.zero;
+        totalForce += AffectOnBallFromUserTaps(ball);
+        if (!ball.lockedInOrbit)
         {
-            MagneticPulse p = attractionPulses[i];
-            if (p.specificIndeces.Contains(objectIndex))
-            {
-                Vector3 vecA = new Vector3(position.x, position.y, 0.0f);
-                Vector3 vecB = new Vector3(p.pulseLocation.x,p.pulseLocation.y, 0.0f);
-
-                float distanceApart = Mathf.Abs(Vector3.Distance(vecA, vecB));
-                if (distanceApart > pulseDistanceThreshold)
-                {
-                    float dist = 1.0f / distanceApart;
-                    dist = Mathf.Min(dist, maxDistanceAffect);
-                    float pulseAffect = p.pulseRemaining / p.pulseDuration;
-                    pulseAffect = 1.0f;
-                    pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength * pulseAffect * dist;
-
-                }
-                else{
-                    //if (p.specificIndeces.Contains(objectIndex))
-                    //{
-                    //    p.specificIndeces.Remove(objectIndex);
-                    //}
-                    //RemoveFromCurrentAttractionPulses(objectIndex);
-
-                }
-            }
+            totalForce += AffectOnBallFromAttractors(ball);
+            totalForce += AffectOnBallFromNearbyMagneticBalls(ball);
         }
 
-        foreach (MagneticPulse p in preconfiguredPulses)
-        {
-            Vector3 vecA = new Vector3(position.x, position.y, 0.0f);
-            Vector3 vecB = new Vector3(p.pulseLocation.x, p.pulseLocation.y, 0.0f);
-
-            float distanceApart = Mathf.Abs(Vector3.Distance(position, p.pulseLocation));
-            if (distanceApart > pulseDistanceThreshold)
-            {
-                float dist =  1.0f / distanceApart;
-                dist = Mathf.Min(dist, maxDistanceAffect);
-                pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength * dist;
-            }
-        }
-
-        float xVal = Mathf.Max(-pulsePower.x,-maxPulseAffect);
-        float yVal = Mathf.Min(pulsePower.y, maxPulseAffect);
-        Vector2 returnVec = new Vector2(xVal, yVal);
-        return returnVec;
+        return ClippedPulse(totalForce);
     }
+    Vector3 ClippedPulse(Vector3 originalPulse)
+    {
+        float xVal = Mathf.Max(-originalPulse.x, -maxPulseAffect);
+        float yVal = Mathf.Min(originalPulse.y, maxPulseAffect);
+        return new Vector3(xVal, yVal, 0.0f);
+    }
+
+    //public Vector2 AffectOnPosition(Vector2 position, int objectIndex, bool isInOrbit = false)
+    //{
+
+    //    Vector3 pulsePower = new Vector2(0.0f, 0.0f);
+    //    List<MagneticPulse> pulsesReached = new List<MagneticPulse>();
+    //    for (int i = 0; i < attractionPulses.Count; i++)
+    //    {
+    //        MagneticPulse p = attractionPulses[i];
+    //        if (p.specificIndeces.Contains(objectIndex))
+    //        {
+    //            Vector3 vecA = new Vector3(position.x, position.y, 0.0f);
+    //            Vector3 vecB = new Vector3(p.pulseLocation.x,p.pulseLocation.y, 0.0f);
+
+    //            float distanceApart = Mathf.Abs(Vector3.Distance(vecA, vecB));
+    //            if (distanceApart > pulseDistanceThreshold)
+    //            {
+    //                float dist = 1.0f / distanceApart;
+    //                dist = Mathf.Min(dist, maxDistanceAffect);
+    //                float pulseAffect = p.pulseRemaining / p.pulseDuration;
+    //                pulseAffect = 1.0f;
+    //                pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength * pulseAffect * dist;
+
+    //            }
+    //            else{
+    //                //if (p.specificIndeces.Contains(objectIndex))
+    //                //{
+    //                //    p.specificIndeces.Remove(objectIndex);
+    //                //}
+    //                //RemoveFromCurrentAttractionPulses(objectIndex);
+
+    //            }
+    //        }
+    //    }
+    //    if (!isInOrbit)
+    //    {
+    //        foreach (MagneticPulse p in preconfiguredPulses)
+    //        {
+    //            Vector3 vecA = new Vector3(position.x, position.y, 0.0f);
+    //            Vector3 vecB = new Vector3(p.pulseLocation.x, p.pulseLocation.y, 0.0f);
+
+    //            float distanceApart = Mathf.Abs(Vector3.Distance(position, p.pulseLocation));
+    //            if (distanceApart > pulseDistanceThreshold)
+    //            {
+    //                float dist = 1.0f / distanceApart;
+    //                dist = Mathf.Min(dist, maxDistanceAffect);
+    //                pulsePower += (new Vector3(position.x, position.y, p.pulseLocation.z) - p.pulseLocation).normalized * p.pulseStrength * dist;
+    //            }
+    //        }
+    //    }
+
+    //    float xVal = Mathf.Max(-pulsePower.x,-maxPulseAffect);
+    //    float yVal = Mathf.Min(pulsePower.y, maxPulseAffect);
+    //    Vector2 returnVec = new Vector2(xVal, yVal);
+    //    return returnVec;
+    //}
 
     bool TouchingUI(Vector2 position)
     {
